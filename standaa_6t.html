@@ -12,12 +12,12 @@
 // Data Setup
 //============================================
 var teamlist = new Array();
-teamlist[1] = {num:1, wins:0, losses:0, name:"McNeer"     };
-teamlist[2] = {num:2, wins:0, losses:0, name:"Titus" };
-teamlist[3] = {num:3, wins:0, losses:0, name:"Stafford"   };
-teamlist[4] = {num:4, wins:0, losses:0, name:"Aley"     };
-teamlist[5] = {num:5, wins:0, losses:0, name:"Lukens"   };
-teamlist[6] = {num:6, wins:0, losses:0, name:"Rundlett"   };
+teamlist[1] = {num:1, wins:0, losses:0, name:"McNeer"    };
+teamlist[2] = {num:2, wins:0, losses:0, name:"Titus"     };
+teamlist[3] = {num:3, wins:0, losses:0, name:"Stafford"  };
+teamlist[4] = {num:4, wins:0, losses:0, name:"Aley"      };
+teamlist[5] = {num:5, wins:0, losses:0, name:"Lukens"    };
+teamlist[6] = {num:6, wins:0, losses:0, name:"Rundlett"  };
 
 var playdates = ["09/05","09/12","09/19","09/26","10/03","10/10","10/17","10/24","11/07"]
 
@@ -69,26 +69,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [4,5];
-//	match.games[0].scores = [25,12];
-//	match.games[1].scores = [20,25];
-//	match.games[2].scores = [25,19];
-//	setWins(match);
+	match.games[0].scores = [25,17];
+	match.games[1].scores = [25,15];
+	match.games[2].scores = [27,25];
+	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [1,2];
-//	match.games[0].scores = [13,25];
-//	match.games[1].scores = [17,25];
-//	match.games[2].scores = [14,25];
-//	setWins(match);
+	match.games[0].scores = [17,25];
+	match.games[1].scores = [21,25];
+	match.games[2].scores = [19,25];
+	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [3,6];
-//	match.games[0].scores = [17,25];
-//	match.games[1].scores = [16,25];
-//	match.games[2].scores = [25,20];
-//	setWins(match);
+	match.games[0].scores = [25,19];
+	match.games[1].scores = [08,25];
+	match.games[2].scores = [25,20];
+	setWins(match);
 
 
 // Matches - Week 3
