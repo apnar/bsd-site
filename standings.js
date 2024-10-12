@@ -12,6 +12,78 @@ var loser    = []; // INDEX: Playoff Match Number. Holds losing team number for 
 var dates    = []; // new Array();
 
 //
+// FUNCTION: getTeamNum <team>
+// PARM    : team
+//             "Sn"       -- Indicates Playoff Seed Number
+//             "Wxx"      -- Indicates WINNER of playoff match #xx
+//             "Winnerxx" -- Indicates WINNER of playoff match #xx
+//             "Lxx"      -- Indicates LOSER  of playoff match #xx
+//             "Loserxx"  -- Indicates LOSER  of playoff match #xx
+//             <n>        -- Team Number in regular season.  Returned as-is.
+// PURPOSE : Return team number (1-N) for <team>
+//           For "Sn", looks up in [seeds] array
+//           For "Wxx", looks up in [winner] array
+//           For "Lxx", looks up in [loser] array
+//
+function getTeamNum(team) {
+	if ((typeof team) === "number") {
+		// Team number specified, just return it
+		return team;
+	}
+
+	// Otherwise, a string with one or two digits at the end.
+	var digitCount;
+	if (isNaN(team.substring(team.length-2,team.length-1))) {
+		digitCount = 1;
+	} else {
+		digitCount = 2;
+	}
+
+	var label = team.substring(0,team.length-digitCount);
+	var num   = team.substring(team.length-digitCount,team.length);
+
+	if (label === "S" || label === "Seed") {
+		return seeds[num-1];
+	}
+	
+	if (label === "W" || label === "Winner") {
+		return winner[num];
+	}
+
+	if (label === "L" || label === "Loser") {
+		return loser[num];
+	}
+	
+	alert("Unknown label for team <" + team + "> = " + label);
+	return team;
+}
+
+// -------------------------------------------------------------
+
+//
+// FUNCTION: getTeamName <team>
+// PARM    : team (see getTeamNum() above)
+// PURPOSE : Return HTML string for name of <team> using [teamlist] array.
+//           If team number for team is not identified (e.g., "W10" specified
+//           but 10th match not yet played, so "W10" lookup in [winner] 
+//           array returns 0), return the input string (e.g., "W10").
+//
+function getTeamName(team) {
+	var t = getTeamNum(team);
+	if (isNaN(t)) {
+		t = "<i>" + team + "</i>";
+	} else if (t>0) {
+		t = "<b>" + teamlist[t-1].name + "</b>";
+	} else {
+		// Handle playoff not completed (getTeamNum() = 0)
+		t = "<b>" + team + "</b>";
+	}
+	return t;
+}
+
+// -------------------------------------------------------------
+
+//
 // FUNCTION: setWins
 // PARM    : match
 // PURPOSE : Set match.winCount and match.lossCount based on game scores in match{}
@@ -19,13 +91,14 @@ var dates    = []; // new Array();
 function setWins(match) {
 	match.winCount = 0;
 	match.lossCount = 0;
-	if (match.games[0].scores != null) {
+	if (match.games[0].scores !== null) {
 		for (var g=0; g<match.games.length; g++) {
-			if (match.games[g].scores != null) {
-				if (match.games[g].scores[0] > match.games[g].scores[1])
+			if (match.games[g].scores !== null) {
+				if (match.games[g].scores[0] > match.games[g].scores[1]) {
 					match.winCount++;
-				else
+				} else {
 					match.lossCount++;
+				}
 			}
 		}
 	}
@@ -43,74 +116,6 @@ function setWins(match) {
 		winner[match.num] = 0;
 		loser[match.num] = 0;
 	}
-}
-
-// -------------------------------------------------------------
-
-//
-// FUNCTION: getTeamNum <team>
-// PARM    : team
-//             "Sn"       -- Indicates Playoff Seed Number
-//             "Wxx"      -- Indicates WINNER of playoff match #xx
-//             "Winnerxx" -- Indicates WINNER of playoff match #xx
-//             "Lxx"      -- Indicates LOSER  of playoff match #xx
-//             "Loserxx"  -- Indicates LOSER  of playoff match #xx
-//             <n>        -- Team Number in regular season.  Returned as-is.
-// PURPOSE : Return team number (1-N) for <team>
-//           For "Sn", looks up in [seeds] array
-//           For "Wxx", looks up in [winner] array
-//           For "Lxx", looks up in [loser] array
-//
-function getTeamNum(team) {
-	if ((typeof team) == "number") {
-		// Team number specified, just return it
-		return team;
-	}
-
-	// Otherwise, a string with one or two digits at the end.
-	var digitCount;
-	if (isNaN(team.substring(team.length-2,team.length-1))) {
-		digitCount = 1;
-	} else {
-		digitCount = 2;
-	}
-
-	var label = team.substring(0,team.length-digitCount);
-	var num   = team.substring(team.length-digitCount,team.length);
-
-	if (label == "S" || label == "Seed") {
-		return seeds[num-1];
-	} else if (label == "W" || label == "Winner") {
-		return winner[num];
-	} else if (label == "L" || label == "Loser") {
-		return loser[num];
-	} else {
-		alert("Unknown label = " + label);
-		return team;
-	}
-}
-
-// -------------------------------------------------------------
-
-//
-// FUNCTION: getTeamName <team>
-// PARM    : team (see getTeamNum() above)
-// PURPOSE : Return HTML string for name of <team> using [teamlist] array.
-//           If team number for team is not identified (e.g., "W10" specified
-//           but 10th match not yet played, so "W10" lookup in [winner] 
-//           array returns 0), return the input string (e.g., "W10").
-//
-function getTeamName(team) {
-	var t = getTeamNum(team);
-	if (isNaN(t)) {
-		t = "<i>" + t + "</i>";
-	} else if (t>0) {
-		t = "<b>" + teamlist[t-1].name + "</b>";
-	} else {
-		// Handle playoff not completed (getTeamNum() = 0)
-		t = "<b>" + team + "</b>";
-	}
-	return t;
 }
 
 // -------------------------------------------------------------
@@ -133,7 +138,7 @@ function computeRecord() {
 	if (!teamlist[0]) {
 		// Reset indices to start at 0 because Javascript's "sort"
 		// will eventually do the same thing.
-		teamlist = teamlist.filter(function(val){return val});
+		teamlist = teamlist.filter(function(val){return val;});
 	}
 
 	for (var d=0; d<dates.length; d++) {
@@ -186,56 +191,55 @@ function compareTeamWins(a, b) {
 	// Return negative if a < b; zero if a == b; positive if a > b
 	if (a.wins != b.wins) {
 		return b.wins - a.wins;
-	} else {
-		// When teams have the same number of wins, need to break
-		// the tie by checking head-to-head matches to determine who
-		// has the most wins.
-		var aWins = 0;
-		var bWins = 0;
-		var aPos;
-		var bPos;
+	}
+	
+	// When teams have the same number of wins, need to break the tie
+	// by checking head-to-head matches to determine who has the most wins.
+	var aWins = 0;
+	var bWins = 0;
+	var aPos;
+	var bPos;
 
-		//alert("Team " + a.num + " team " + b.num);
-		for (var d=0; d<dates.length; d++) {
-			if (!dates[d].playoffs) {
-				for (var m=0; m<dates[d].matches.length; m++) {
-					var match = dates[d].matches[m];
-					if (match.teams) {
-						// match.teams should be two element array [team#,team#]
-						//alert(match.teams[0]);
-						if (match.teams[0] == a.num && match.teams[1] == b.num) {
-							//alert("1 Date " + d + " match " + m);
-							aPos = 0; bPos = 1;
-						} else if (match.teams[0] == b.num && match.teams[1] == a.num) {
-							//alert("2 Date " + d + " match " + m);
-							aPos = 1; bPos = 0;
-						} else {
-							aPos = -1; bPos = -1;
-						}
-						if (aPos >= 0) {
-							for (var g=0; g<match.games.length; g++) {
-								var game = match.games[g];
-								if (game.scores != null) {
-									if (game.scores[aPos] > game.scores[bPos]) {
-										aWins++;
-									} else {
-										bWins++;
-									}
+	//alert("Team " + a.num + " team " + b.num);
+	for (var d=0; d<dates.length; d++) {
+		if (!dates[d].playoffs) {
+			for (var m=0; m<dates[d].matches.length; m++) {
+				var match = dates[d].matches[m];
+				if (match.teams) {
+					// match.teams should be two element array [team#,team#]
+					//alert(match.teams[0]);
+					if (match.teams[0] == a.num && match.teams[1] == b.num) {
+						//alert("1 Date " + d + " match " + m);
+						aPos = 0; bPos = 1;
+					} else if (match.teams[0] == b.num && match.teams[1] == a.num) {
+						//alert("2 Date " + d + " match " + m);
+						aPos = 1; bPos = 0;
+					} else {
+						aPos = -1; bPos = -1;
+					}
+					if (aPos >= 0) {
+						for (var g=0; g<match.games.length; g++) {
+							var game = match.games[g];
+							if (game.scores != null) {
+								if (game.scores[aPos] > game.scores[bPos]) {
+									aWins++;
+								} else {
+									bWins++;
 								}
 							}
-						} // teams info is valid
-					} // teams exist for this match
-				} // for matches
-			} // if playoffs
-		} // for dates
+						}
+					} // teams info is valid
+				} // teams exist for this match
+			} // for matches
+		} // if playoffs
+	} // for dates
 
-		// Head to head record overall
-		if (aWins != bWins) {
-			return bWins - aWins;
-		} else {
-			return false;
-		}
+	// Head to head record overall
+	if (aWins != bWins) {
+		return bWins - aWins;
 	}
+	
+	return false;
 } // compareTeamWins()
 
 // -------------------------------------------------------------
@@ -245,7 +249,7 @@ function writeScheduleTable() {
 	// Schedule Table
 	//============================================
 	// Sort on team number
-	teamlist.sort(function(a,b) {return a.num - b.num});
+	teamlist.sort(function(a,b) {return a.num - b.num;});
 
 	var unplayedWeek = 0;
 	var nextWeek = false;
@@ -259,7 +263,7 @@ function writeScheduleTable() {
 	for (var d=0; d<playdates.length; d++) {
 		document.write("<tr>");
 
-		if ((typeof dates[d].matches[0].winCount === "undefined")) {
+		if ((dates[d].matches[0].winCount === undefined)) {
 			unplayedWeek++;
 		}
 		if (unplayedWeek==1) {
@@ -320,7 +324,7 @@ function writePlayoffScheduleTable() {
 	// Schedule Table
 	//============================================
 	// Sort on team number
-	teamlist.sort(function(a,b) {return a.num - b.num});
+	teamlist.sort(function(a,b) {return a.num - b.num;});
 
 	var unplayedWeek = 0;
 	var nextWeek = false;
@@ -336,7 +340,7 @@ function writePlayoffScheduleTable() {
 	for (var d=0; d<playdates.length; d++) {
 		document.write("<tr>");
 
-		if ((typeof dates[d].matches[0].winCount === "undefined")) {
+		if ((dates[d].matches[0].winCount === undefined)) {
 			unplayedWeek++;
 		}
 		if (unplayedWeek==1) {
@@ -424,7 +428,7 @@ function writeResultsTable() {
 	// Results Table
 	//============================================
 	document.write("<tr>");
-   document.write("<th>Winner<br></th>");
+    document.write("<th>Winner<br></th>");
 	document.write("<th>Games</th>");
 	document.write("<th>Loser</th>");
 	document.write("<th>Games</th>");
@@ -450,7 +454,7 @@ function writeResultsTable() {
 						} else {
 							teamNum = 0;
 						}
-						if (typeof match.winCount === 'undefined') {
+						if (match.winCount === undefined) {
 							alert('Problem with wins/losses in match ' + match.num);
 						}
 						document.write(teamlist[getTeamNum(teamNum)-1].name + "<br/>");
@@ -555,44 +559,44 @@ function writeSeedsTable() {
 
 function writePlayoffDiagramFour(indent) {
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed1") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S1") + "</td>");
 	document.write("<td></td><td></td><td></td><td></td><td rowspan='6'><table border='1'><tbody>");
 	writeSeedsTable();
 	document.write("</tbody></table></td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'>#1</td><td class='team'>" + getTeamName("Winner1") + "</td>");
+	document.write("<td class='match'>#1</td><td class='team'>" + getTeamName("W1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed4") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S4") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td style='border:0'></td><td class='match'>#3</td><td colspan=2 class='team'>" + getTeamName("Winner3") + "</td>");
+	document.write("<td style='border:0'></td><td class='match'>#3</td><td colspan=2 class='team'>" + getTeamName("W3") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed2") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'>#2</td><td class='team'>" + getTeamName("Winner2") + "</td>");
+	document.write("<td class='match'>#2</td><td class='team'>" + getTeamName("W2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed3") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S3") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td></td><td class='match'>#6</td><td colspan=3 class='team'>" + getTeamName("Winner6") + "</td>");
+	document.write("<td></td><td></td><td></td><td class='match'>#6</td><td colspan=3 class='team'>" + getTeamName("W6") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
 	document.write("<td></td><td></td><td></td><td></td><td></td>");
 	if (getTeamNum("W3") != getTeamNum("W6")) {
-		document.write("<td></td><td class='match'>#7 *</td><td class='team'>" + getTeamName("Winner7") + "</td>");
+		document.write("<td></td><td class='match'>#7 *</td><td class='team'>" + getTeamName("W7") + "</td>");
 	} else {
 		document.write("<td><b>Champion</b></td>");
 	}
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='team'>" + getTeamName("Loser3") + "</td><td></td><td></td>");
+	document.write("<td></td><td></td><td class='team'>" + getTeamName("L3") + "</td><td></td><td></td>");
 	if (getTeamNum("W3") != getTeamNum("W6")) {
-		document.write("<td></td><td class='team'>" + getTeamName("Loser6") + "</td><td><b>Champion</b></td>");
+		document.write("<td></td><td class='team'>" + getTeamName("L6") + "</td><td><b>Champion</b></td>");
 	} else {
 		document.write("<td>&nbsp;</td>");
 	}
@@ -601,16 +605,16 @@ function writePlayoffDiagramFour(indent) {
 	document.write("<td>&nbsp;</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='match'>#5</td><td class='team'>" + getTeamName("Winner5") + "</td>");
+	document.write("<td></td><td></td><td class='match'>#5</td><td class='team'>" + getTeamName("W5") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='team'>" + getTeamName("Loser1") + "</td>");
+	document.write("<td></td><td class='team'>" + getTeamName("L1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='match'>#4</td><td class='team'>" + getTeamName("Winner4") + "</td>");
+	document.write("<td></td><td class='match'>#4</td><td class='team'>" + getTeamName("W4") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='team'>" + getTeamName("Loser2") + "</td>");
+	document.write("<td></td><td class='team'>" + getTeamName("L2") + "</td>");
 	document.write("</tr>");
 } // writePlayoffDiagramFour
 
@@ -618,71 +622,71 @@ function writePlayoffDiagramFour(indent) {
 
 function writePlayoffDiagramSix() {
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed4") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S4") + "</td>");
 	document.write("<td></td><td></td><td></td><td></td><td></td><td colspan='2' rowspan='7'><table border='1'><tbody>");
 	writeSeedsTable();
 	document.write("</tbody></table></td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'>#1</td><td class='team'>" + getTeamName("Winner1") + "</td>");
+	document.write("<td class='match'>#1</td><td class='team'>" + getTeamName("W1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed5") + "</td><td class='match'>#2</td><td colspan=2 class='team'>" + getTeamName("Winner2") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S5") + "</td><td class='match'>#2</td><td colspan=2 class='team'>" + getTeamName("W2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='team'>" + getTeamName("Seed1") + "</td>");
+	document.write("<td></td><td class='team'>" + getTeamName("S1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td style='border:0'></td><td></td><td colspan=2 class='match'>#7</td><td colspan=2 class='team'>" + getTeamName("Winner7") + "</td>");
+	document.write("<td style='border:0'></td><td></td><td colspan=2 class='match'>#7</td><td colspan=2 class='team'>" + getTeamName("W7") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='team'>" + getTeamName("Seed2") + "</td>");
+	document.write("<td></td><td class='team'>" + getTeamName("S2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed3") + "</td><td class='match'>#4</td><td colspan=2 class='team'>" + getTeamName("Winner4") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S3") + "</td><td class='match'>#4</td><td colspan=2 class='team'>" + getTeamName("W4") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'>#3</td><td class='team'>" + getTeamName("Winner3") + "</td>");
+	document.write("<td class='match'>#3</td><td class='team'>" + getTeamName("W3") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed6") + "</td><td></td><td></td><td></td><td></td><td class='match'>#10</td><td class='team'>" + getTeamName("Winner10") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S6") + "</td><td></td><td></td><td></td><td></td><td class='match'>#10</td><td class='team'>" + getTeamName("W10") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
 	document.write("<td></td><td></td><td></td><td></td><td></td><td></td>");
 	if (getTeamNum("W7") != getTeamNum("W10")) {
-		document.write("<td class='match'>#11 *</td><td class='team'>" + getTeamName("Winner11") + "</td>");
+		document.write("<td class='match'>#11 *</td><td class='team'>" + getTeamName("W11") + "</td>");
 	} else {
 		document.write("<td><b>Champion</b></td>");
 	}
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td></td><td></td><td class='team'>" + getTeamName("Loser7") + "</td><td></td>");
+	document.write("<td></td><td></td><td></td><td></td><td class='team'>" + getTeamName("L7") + "</td><td></td>");
 	if (getTeamNum("W7") != getTeamNum("W10")) {
-		document.write("<td class='team'>" + getTeamName("Loser10") + "</td>");
+		document.write("<td class='team'>" + getTeamName("L10") + "</td>");
 	} else {
 		document.write("<td>&nbsp;</td>");
 	}
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='team'>" + getTeamName("Loser2") + "</td>");
+	document.write("<td></td><td></td><td class='team'>" + getTeamName("L2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='match'>#5</td><td class='team'>" + getTeamName("Winner5") + "</td><td class='match'>#9</td><td class='team'>" + getTeamName("Winner9") + "</td>");
+	document.write("<td></td><td></td><td class='match'>#5</td><td class='team'>" + getTeamName("W5") + "</td><td class='match'>#9</td><td class='team'>" + getTeamName("W9") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='team'>" + getTeamName("Loser3") + "</td>");
+	document.write("<td></td><td></td><td class='team'>" + getTeamName("L3") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td style='border:0'></td><td></td><td></td><td class='match'>#8</td><td class='team'>" + getTeamName("Winner8") + "</td>");
+	document.write("<td style='border:0'></td><td></td><td></td><td class='match'>#8</td><td class='team'>" + getTeamName("W8") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='team'>" + getTeamName("Loser1") + "</td>");
+	document.write("<td></td><td></td><td class='team'>" + getTeamName("L1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='match'>#6</td><td class='team'>" + getTeamName("Winner6") + "</td>");
+	document.write("<td></td><td></td><td class='match'>#6</td><td class='team'>" + getTeamName("W6") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='team'>" + getTeamName("Loser4") + "</td>");
+	document.write("<td></td><td></td><td class='team'>" + getTeamName("L4") + "</td>");
 	document.write("</tr>");
 } // writePlayoffDiagramSix()
 
@@ -693,70 +697,70 @@ function writePlayoffDiagramSixAlternate() {
 	// NET, on week 2 we reverse the normal order since the two losing team matches (normally
 	// matches 5 & 6) cannot play at the same time.
 	document.write("<tr>");
-	document.write("  <td class='team'>" + getTeamName("Seed4") + "</td>");
+	document.write("  <td class='team'>" + getTeamName("S4") + "</td>");
 	document.write("  <td></td><td></td><td></td><td></td><td></td>");
 	document.write("  <td rowspan='7'><table border='1'><tbody>"); writeSeedsTable(); document.write("</tbody></table></td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td class='match'>#1</td><td class='team'>" + getTeamName("Winner1") + "</td>");
+	document.write("  <td class='match'>#1</td><td class='team'>" + getTeamName("W1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td class='team'>" + getTeamName("Seed5") + "</td><td class='match'>#2</td><td colspan=2 class='team'>" + getTeamName("Winner2") + "</td>");
+	document.write("  <td class='team'>" + getTeamName("S5") + "</td><td class='match'>#2</td><td colspan=2 class='team'>" + getTeamName("W2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td class='team'>" + getTeamName("Seed1") + "</td>");
+	document.write("  <td></td><td class='team'>" + getTeamName("S1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td style='border:0'></td><td></td><td colspan=2 class='match'>#5</td><td colspan=2 class='team'>" + getTeamName("Winner5") + "</td>");
+	document.write("  <td style='border:0'></td><td></td><td colspan=2 class='match'>#5</td><td colspan=2 class='team'>" + getTeamName("W5") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td class='team'>" + getTeamName("Seed2") + "</td>");
+	document.write("  <td></td><td class='team'>" + getTeamName("S2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td class='team'>" + getTeamName("Seed3") + "</td><td class='match'>#4</td><td colspan=2 class='team'>" + getTeamName("Winner4") + "</td>");
+	document.write("  <td class='team'>" + getTeamName("S3") + "</td><td class='match'>#4</td><td colspan=2 class='team'>" + getTeamName("W4") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td class='match'>#3</td><td class='team'>" + getTeamName("Winner3") + "</td>");
+	document.write("  <td class='match'>#3</td><td class='team'>" + getTeamName("W3") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td class='team'>" + getTeamName("Seed6") + "</td><td></td><td></td><td></td><td></td><td class='match'>#10</td><td colspan=2 class='team'>" + getTeamName("Winner10") + "</td>");
+	document.write("  <td class='team'>" + getTeamName("S6") + "</td><td></td><td></td><td></td><td></td><td class='match'>#10</td><td colspan=2 class='team'>" + getTeamName("W10") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
 	document.write("  <td></td><td></td><td></td><td></td><td></td><td></td>");
 	if (getTeamNum("W5") != getTeamNum("W10")) {
-		document.write("  <td></td><td class='match'>#11 *</td><td class='team'>" + getTeamName("Winner11") + "</td>");
+		document.write("  <td></td><td class='match'>#11 *</td><td class='team'>" + getTeamName("W11") + "</td>");
 	} else {
 		document.write("  <td><b>Champion</b></td>");
 	}
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td></td><td></td><td></td><td class='team'>" + getTeamName("Loser5") + "</td><td></td>");
+	document.write("  <td></td><td></td><td></td><td></td><td class='team'>" + getTeamName("L5") + "</td><td></td>");
 	if (getTeamNum("W5") != getTeamNum("W10")) {
-		document.write("<td></td><td class='team'>" + getTeamName("Loser10") + "</td>");
+		document.write("<td></td><td class='team'>" + getTeamName("L10") + "</td>");
 	} else {
 		document.write("<td>&nbsp;</td>");
 	}
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td></td><td class='team'>" + getTeamName("Loser2") + "</td>");
+	document.write("  <td></td><td></td><td class='team'>" + getTeamName("L2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td></td><td class='match'>#6</td><td class='team'>" + getTeamName("Winner6") + "</td><td class='match'>#9</td><td class='team'>" + getTeamName("Winner9") + "</td>");
+	document.write("  <td></td><td></td><td class='match'>#6</td><td class='team'>" + getTeamName("W6") + "</td><td class='match'>#9</td><td class='team'>" + getTeamName("W9") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td></td><td class='team'>" + getTeamName("Loser3") + "</td>");
+	document.write("  <td></td><td></td><td class='team'>" + getTeamName("L3") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td style='border:0'></td><td></td><td></td><td class='match'>#8</td><td class='team'>" + getTeamName("Winner8") + "</td>");
+	document.write("  <td style='border:0'></td><td></td><td></td><td class='match'>#8</td><td class='team'>" + getTeamName("W8") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td></td><td class='team'>" + getTeamName("Loser1") + "</td>");
+	document.write("  <td></td><td></td><td class='team'>" + getTeamName("L1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td></td><td class='match'>#7</td><td class='team'>" + getTeamName("Winner7") + "</td>");
+	document.write("  <td></td><td></td><td class='match'>#7</td><td class='team'>" + getTeamName("W7") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("  <td></td><td></td><td class='team'>" + getTeamName("Loser4") + "</td>");
+	document.write("  <td></td><td></td><td class='team'>" + getTeamName("L4") + "</td>");
 	document.write("</tr>");
 } // writePlayoffDiagramSixAlternate()
 
@@ -764,55 +768,55 @@ function writePlayoffDiagramSixAlternate() {
 
 function writePlayoffDiagramEight() {
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed1") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S1") + "</td>");
 	document.write("<td></td><td></td><td></td><td></td><td colspan='4' rowspan='7'><table border='1'><tbody>");
 	writeSeedsTable();
 	document.write("</tbody></table></td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'>#1</td><td class='team'>" + getTeamName("Winner1") + "</td>");
+	document.write("<td class='match'>#1</td><td class='team'>" + getTeamName("W1") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed8") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S8") + "</td>");
 	document.write("</tr>");
 	document.write("<tr/>");
 	document.write("<tr>");
-	document.write("<td class='match'></td><td class='match'>#3</td><td class='team'>" + getTeamName("Winner3") + "</td>");
+	document.write("<td class='match'></td><td class='match'>#3</td><td class='team'>" + getTeamName("W3") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed4") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S4") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'>#2</td><td class='team'>" + getTeamName("Winner2") + "</td>");
+	document.write("<td class='match'>#2</td><td class='team'>" + getTeamName("W2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed5") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S5") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'></td><td class='match'></td><td class='match'>#11</td><td class='team'>" + getTeamName("Winner11") + "</td>");
+	document.write("<td class='match'></td><td class='match'></td><td class='match'>#11</td><td class='team'>" + getTeamName("W11") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed3") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S3") + "</td>");
 	document.write("<td></td><td></td><td></td><td></td><td></td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'>#4</td><td class='team'>" + getTeamName("Winner4") + "</td>");
+	document.write("<td class='match'>#4</td><td class='team'>" + getTeamName("W4") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed6") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S6") + "</td>");
 	document.write("</tr>");
 	document.write("<tr/>");
 	document.write("<tr>");
-	document.write("<td class='match'></td><td class='match'>#6</td><td class='team'>" + getTeamName("Winner6") + "</td>");
+	document.write("<td class='match'></td><td class='match'>#6</td><td class='team'>" + getTeamName("W6") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed2") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='match'>#5</td><td class='team'>" + getTeamName("Winner5") + "</td>");
+	document.write("<td class='match'>#5</td><td class='team'>" + getTeamName("W5") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td class='team'>" + getTeamName("Seed7") + "</td>");
+	document.write("<td class='team'>" + getTeamName("S7") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
 	document.write("<td class='match'></td>");
@@ -824,62 +828,62 @@ function writePlayoffDiagramEight() {
 	document.write("<td class='match'></td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='team'>" + getTeamName("Loser1") + "</td>");
+	document.write("<td></td><td class='team'>" + getTeamName("L1") + "</td>");
 	document.write("<td></td><td></td><td></td><td></td><td></td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='match'>#7</td><td class='team'>" + getTeamName("Winner7") + "</td>");
+	document.write("<td></td><td class='match'>#7</td><td class='team'>" + getTeamName("W7") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
 	document.write("<td></td><td></td>");
 	document.write("</tr>");
 	document.write("<tr/>");
 	document.write("<tr>");
-	document.write("<td></td><td class='team'>" + getTeamName("Loser2") + "</td>");
+	document.write("<td></td><td class='team'>" + getTeamName("L2") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td class='match'>#9</td><td class='team'>" + getTeamName("Winner9") + "</td>");
+	document.write("<td></td><td></td><td class='match'>#9</td><td class='team'>" + getTeamName("W9") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='team'>" + getTeamName("Loser4") + "</td>");
+	document.write("<td></td><td class='team'>" + getTeamName("L4") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='match'>#8</td><td class='team'>" + getTeamName("Winner8") + "</td>");
+	document.write("<td></td><td class='match'>#8</td><td class='team'>" + getTeamName("W8") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td class='team'>" + getTeamName("Loser5") + "</td><td></td><td class='match'>#12</td><td class='team'>" + getTeamName("Winner12") + "</td>");
-	document.write("</tr>");
-	document.write("<tr>");
-	document.write("</tr>");
-	document.write("<tr>");
-	document.write("<td></td><td></td><td class='team'>" + getTeamName("Loser3") + "</td>");
-	document.write("</tr>");
-	document.write("<tr>");
-	document.write("<td></td><td></td><td class='match'>#10</td><td class='team'>" + getTeamName("Winner10") + "</td>");
-	document.write("</tr>");
-	document.write("<tr>");
-	document.write("<td></td><td></td><td class='team'>" + getTeamName("Loser6") + "</td><td></td><td class='match'>#13</td><td class='team'>" + getTeamName("Winner13") + "</td>");
+	document.write("<td></td><td class='team'>" + getTeamName("L5") + "</td><td></td><td class='match'>#12</td><td class='team'>" + getTeamName("W12") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
 	document.write("</tr>");
 	document.write("<tr>");
+	document.write("<td></td><td></td><td class='team'>" + getTeamName("L3") + "</td>");
+	document.write("</tr>");
+	document.write("<tr>");
+	document.write("<td></td><td></td><td class='match'>#10</td><td class='team'>" + getTeamName("W10") + "</td>");
+	document.write("</tr>");
+	document.write("<tr>");
+	document.write("<td></td><td></td><td class='team'>" + getTeamName("L6") + "</td><td></td><td class='match'>#13</td><td class='team'>" + getTeamName("W13") + "</td>");
+	document.write("</tr>");
 	document.write("<tr>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td></td><td></td><td></td><td></td><td colspan=1 class='team'>" + getTeamName("Winner14") + "</td>");
+	document.write("<tr>");
+	document.write("</tr>");
+	document.write("<tr>");
+	document.write("<td></td><td></td><td></td><td></td><td></td><td></td><td colspan=1 class='team'>" + getTeamName("W14") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
 	document.write("<td></td><td></td><td></td><td></td><td></td><td class='match'>#14</td>");
 	if (getTeamNum("W12") != getTeamNum("W14")) {
-		document.write("<td class='match'>#15 *</td><td class='team'>" + getTeamName("Winner15") + "</td>");
+		document.write("<td class='match'>#15 *</td><td class='team'>" + getTeamName("W15") + "</td>");
 	} else {
 		document.write("<td><b>Champion</b></td>");
 	}
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td></td><td></td><td class='team'>" + getTeamName("Loser11") + "</td><td></td>");
+	document.write("<td></td><td></td><td></td><td></td><td class='team'>" + getTeamName("L11") + "</td><td></td>");
 	if (getTeamNum("W12") != getTeamNum("W14")) {
-		document.write("<td class='team'>" + getTeamName("Loser14") + "</td>");
+		document.write("<td class='team'>" + getTeamName("L14") + "</td>");
 	} else {
 		document.write("<td>&nbsp;</td>");
 	}
@@ -888,7 +892,7 @@ function writePlayoffDiagramEight() {
 	document.write("<td></td><td></td><td></td>");
 	document.write("</tr>");
 	document.write("<tr>");
-	document.write("<td></td><td></td><td></td><td></td><td></td><td class='team'>" + getTeamName("Winner11") + "</td>");
+	document.write("<td></td><td></td><td></td><td></td><td></td><td class='team'>" + getTeamName("W11") + "</td>");
 	document.write("</tr>");
 	document.write("<tr>");
 	document.write("<td></td><td></td><td></td>");
