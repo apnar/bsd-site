@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+    <title>Bump Set Drink BB Division Playoff Schedules/Results</title>
+    <link rel="stylesheet" type="text/css" href="bsdstyle.css">
+    <script type="text/javascript" src="standings.js"></script>
+    <script>
+	//============================================
+	// Data Setup
+	//============================================
+	var teamlist = []; // new Array();
+	teamlist[0] = {num:1, name:"Azarm"       , wins:0, losses:0};
+	teamlist[1] = {num:2, name:"Chen"        , wins:0, losses:0};
+	teamlist[2] = {num:3, name:"Alerte-Reyes", wins:0, losses:0};
+	teamlist[3] = {num:4, name:"Ravick"      , wins:0, losses:0};
+
+
+
+	var seeds = [2,4,1,3];
+	var playdates = ["10/17","10/24","11/07"];
+	var dates = [];
+	var date;
+	var match;
+
+	for (var d=0; d<playdates.length; d++) {
+		dates[d] = {}; // new Object();
+		dates[d].date = playdates[d];
+		dates[d].matches = []; // new Array();
+		for (var m=0; m<4; m++) {
+			dates[d].matches[m] = {}; // new Object();
+			dates[d].matches[m].games = []; // new Array();
+			for (var g=0; g<3; g++) {
+				dates[d].matches[m].games[g] = []; // new Array();
+			}
+			dates[d].matches[m].court = 6;	// Almost always on this court
+		}
+	}
+
+
+	// Matches - Playoff Week 1 ============================
+	date = dates[0];
+
+	match = date.matches[0];
+	match.time = "7:00";
+	match.num = 1;
+	match.teams = ["S1","S4"]; 
+	match.work = "S3";
+
+//	match.games[0].scores = [25,25];
+//	match.games[1].scores = [25,25];
+//	match.games[2].scores = [25,25];
+//	setWins(match);
+
+	match = date.matches[1];
+	match.time = "7:50";
+	match.num = 2;
+	match.teams = ["S2","S3"]; 
+	match.work = "S4";
+
+//	match.games[0].scores = [25,25];
+//	match.games[1].scores = [25,25];
+//	match.games[2].scores = [25,25];
+//	setWins(match);
+
+
+	// Matches - Playoff Week 2 ============================
+	date = dates[1];
+
+	match = date.matches[0];
+	match.time = "7:00";
+	match.num = 3;
+	match.teams = ["W1","W2"]; 
+	match.work = "L1";
+	match.court = 5;
+
+//	match.games[0].scores = [25,25];
+//	match.games[1].scores = [25,25];
+//	match.games[2].scores = [25,25];
+//	setWins(match);
+
+	match = date.matches[1];
+	match.time = "7:50";
+	match.num = 4;
+	match.teams = ["L1","L2"]; 
+	match.work = "L3";
+	match.court = 5;
+
+//	match.games[0].scores = [25,25];
+//	match.games[1].scores = [25,25];
+//	match.games[2].scores = [25,25];
+//	setWins(match);
+
+
+	// Matches - Playoff Week 3 ============================
+	date = dates[2];
+
+	match = date.matches[0];
+	match.time = "7:00";
+	match.num = 5;
+	match.teams = ["L3","W4"]; 
+	match.work = "W3";
+
+//	match.games[0].scores = [25,25];
+//	match.games[1].scores = [25,25];
+//	match.games[2].scores = [25,25];
+//	setWins(match);
+
+	match = date.matches[1];
+	match.time = "7:50";
+	match.num = 6;
+	match.teams = ["W3","W5"]; 
+	match.work = "L5";
+
+//	match.games[0].scores = [25,25];
+//	match.games[1].scores = [25,25];
+//	match.games[2].scores = [25,25];
+//	setWins(match);
+
+	// Comment this whole section out if ONLY 2 matches
+	match = date.matches[2];
+	match.time = "8:40";
+	match.num = 7;
+	match.teams = ["W6","L6"];
+	match.work = "L5";
+
+//	match.games[0].scores = [25,25];
+//	match.games[1].scores = [25,25];
+//	match.games[2].scores = [25,25];
+//	setWins(match);
+
+  </script>
+  </head>
+  <body>
+    <script>
+      writeDivisionPlayoffBracket("BB", 4, "", "standbb_4t.html");
+    </script>
+  </body>
+</html>
