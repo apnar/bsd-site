@@ -18,7 +18,7 @@
 	teamlist[4] = {num: 5, name: "Chandrasekaran", wins: 0, losses: 0};
 	teamlist[5] = {num: 6, name: "Toohey"        , wins: 0, losses: 0};
 
-	var seeds = [1,2,6,5,4,3]; // Team numbers in seed order
+	var seeds = [1,2,6,5,4,3]; // Team numbers in seed order S1-S6
 	var playdates = ["10/17","10/24","11/07"];
 	var dates = [];
 	var date;
@@ -85,6 +85,7 @@
 //	match.games[1].scores = [25,25];
 //	match.games[2].scores = [25,25];
 //	setWins(match);
+
 
 	// Matches - Playoff Week 2 ============================
 	date = dates[1];
@@ -161,13 +162,13 @@
 //	match.games[2].scores = [25,25];
 //	setWins(match);
 
-	// Leave this section commented out if ONLY 2 matches
+	// Comment this whole section out if ONLY 2 matches
 	match = date.matches[2];
 	match.time = "8:40";
 	match.num = 11;
 	match.teams = ["W10","L10"];
 	match.work = "L9";
-	
+
 //	match.games[0].scores = [25,25];
 //	match.games[1].scores = [25,25];
 //	match.games[2].scores = [25,25];
