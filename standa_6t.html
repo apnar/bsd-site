@@ -11,7 +11,7 @@
 //============================================
 // Data Setup
 //============================================
-var teamlist = new Array();
+var teamlist = [];
 teamlist[1] = {num:1, wins:0, losses:0, name:"Dreyfus"        };
 teamlist[2] = {num:2, wins:0, losses:0, name:"Annamalai"      };
 teamlist[3] = {num:3, wins:0, losses:0, name:"Eisert"         };
@@ -21,21 +21,23 @@ teamlist[6] = {num:6, wins:0, losses:0, name:"Toohey"         };
 
 var playdates = ["09/05","09/12","09/19","09/26","10/03","10/10","10/17","10/24","11/07"]
 
-dates = new Array();
-for (d=0; d<playdates.length; d++) {
-	dates[d] = new Object();
+dates = [];
+for (var d=0; d<playdates.length; d++) {
+	dates[d] = {};
 	dates[d].date = playdates[d];
 	dates[d].matches = new Array();
-	for (m=0; m<4; m++) {
-		dates[d].matches[m] = new Object();
-		dates[d].matches[m].games = new Array();
-		for (g=0; g<3; g++) {
+	for (var m=0; m<4; m++) {
+		dates[d].matches[m] = {};
+		dates[d].matches[m].games = [];
+		for (var g=0; g<3; g++) {
 			dates[d].matches[m].games[g] = new Array();
 		}
 		dates[d].matches[m].court = 2; // Almost always on this court
 	}
 }
 
+var date;
+var match;
 
 // Matches - Week 1
 	date = dates[0];
