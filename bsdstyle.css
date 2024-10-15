@@ -15,23 +15,27 @@ a:visited { color:#808080; }
 a:link    { color:#a52a2a; }
 th { font-size:small; text-align:center; font-weight:bold; }
 
-table#playoff    { border:0; padding:10; text-align:center; }
-table#playoff td { padding-left:20; padding-right:20; }
-table#playoff td.match { color:red; margin:20; }
-table#playoff td.team { border-style:dotted; border-width:1; color:blue; }
+table#standings    { border: 2px solid black; padding:0; text-align:center; width=450; }
+table#standings th { border: 1px solid black; padding:0; text-align:center; font-size:larger; font-weight:bold; }
+table#standings td { border: 1px solid black; padding-left:7; padding-right:7; font-size:larger; }
 
-table#schedule    { border: 1px solid black; padding:0; text-align:center; }
-table#schedule th { border: 1px solid black; padding:0; text-align:center; }
-table#schedule td { border: 1px solid black; padding:0; text-align:center; }
+table#schedule     { border: 2px solid black; }
+table#schedule  th { border: 1px solid black; padding:3; text-align:center; }
+table#schedule  td { border: 1px solid black; padding:3; text-align:center; }
+table#schedule  tr#next { font-weight:bold; }
 
-table#results    { border: 1px solid black; padding:0; text-align:center; }
-table#results th { border: 1px solid black; padding:0; text-align:center; }
-table#results td { border: 1px solid black; padding:0; text-align:center; }
-table#results td#scores { text-align:left; }
+table#results      { border: 2px solid black; }
+table#results   th { border: 1px solid black; padding:3; text-align:center; }
+table#results   td { border: 1px solid black; padding:3; text-align:center; }
+table#results   td#scores { text-align:left; }
 
-table#seeds    { border-style:double; border-collapse:collapse; text-align:center; }
-table#seeds td { border-style:double; }
-table#seeds th { border-style:double; font-size:large; font-weight:bolder; }
+table#seeds        { border-style:double; border-collapse:collapse; text-align:center; }
+table#seeds     td { border-style:double; }
+table#seeds     th { border-style:double; font-size:large; font-weight:bolder; }
+
+table#playoff      { border:0; padding:10; text-align:center; }
+table#playoff   td { padding-left:20; padding-right:20; }
+table#playoff   td.match { color:red; margin:20; font-weight:bold; }
+table#playoff   td.team { border-style:dotted; border-width:1; color:blue; }
 
 ul {list-style: none; padding-left: 0;}
-
