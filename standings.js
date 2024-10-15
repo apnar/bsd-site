@@ -56,30 +56,43 @@ function getTeamNum(team) {
 	
 	alert("Unknown label for team <" + team + "> = " + label);
 	return team;
-}
+} // getTeamNum()
 
 // -------------------------------------------------------------
 
 //
-// FUNCTION: getTeamName <team>
+// FUNCTION: getTeamName <team> <plain>
 // PARM    : team (see getTeamNum() above)
+//           plain    -- optional.  Any string will cause the team name
+//                       to NOT be enclosed in HTML formatting tags.
 // PURPOSE : Return HTML string for name of <team> using [teamlist] array.
 //           If team number for team is not identified (e.g., "W10" specified
 //           but 10th match not yet played, so "W10" lookup in [winner] 
 //           array returns 0), return the input string (e.g., "W10").
+// DEFAULT : Returned string will be enclosed in HTML formatting tags.
 //
-function getTeamName(team) {
+function getTeamName(team, plain) {
 	var t = getTeamNum(team);
+	var bold1   = "<b>";
+	var bold2   = "</b>";
+	var italic1 = "<i>";
+	var italic2 = "</i>";
+	if (plain !== undefined) {
+		bold1   = "";
+		bold2   = "";
+		// italic1 = "";
+		// italic2 = "";
+	}
 	if (isNaN(t)) {
-		t = "<i>" + team + "</i>";
+		t = italic1 + team + italic2;
 	} else if (t>0) {
-		t = "<b>" + teamlist[t-1].name + "</b>";
+		t = bold1 + teamlist[t-1].name + bold2;
 	} else {
 		// Handle playoff not completed (getTeamNum() = 0)
-		t = "<b>" + team + "</b>";
+		t = italic1 + team + italic2;;
 	}
 	return t;
-}
+} // getTeamName()
 
 // -------------------------------------------------------------
 
@@ -116,7 +129,7 @@ function setWins(match) {
 		winner[match.num] = 0;
 		loser[match.num] = 0;
 	}
-}
+} // setWins()
 
 // -------------------------------------------------------------
 
@@ -130,7 +143,7 @@ function boldScore(score1, score2) {
 	if (score2 < 10)     { document.write("0"); }
 	document.write(score2);
 	if (score1 < score2) { document.write("</b>"); }
-}
+} // boldScore()
 
 // -------------------------------------------------------------
 
@@ -164,7 +177,7 @@ function computeRecord() {
 			}
 		}
 	}
-}
+} // computeRecord()
 
 // -------------------------------------------------------------
 
@@ -172,8 +185,7 @@ function writeStandings(level) {
 	//============================================
 	// Standings Table
 	//============================================
-	//teamlist.sort(function(a,b) {return b.wins - a.wins});
-	teamlist.sort(compareTeamWins);
+	teamlist.sort(compareTwoTeams); // compare function, see below
 	for (var t=0; t<teamlist.length; t++) {
 		document.write("<tr>");
 		document.write("<td align='center'>" + teamlist[t].num + "</td>");
@@ -182,23 +194,42 @@ function writeStandings(level) {
 		document.write("<td align='center'>" + teamlist[t].losses + "</td>");
 		document.write("</tr>");
 	}
-}
+} // writeStandings()
 
 // -------------------------------------------------------------
 
-function compareTeamWins(a, b) {
-	// a & b are teamlist[] elements
-	// Return negative if a < b; zero if a == b; positive if a > b
+//
+// FUNCTION : compareTwoTeams
+// PARM     : a & b -- teamlist[] elements
+// PURPOSE  : Used as compare function in writeStandings().
+//            Negative return value ==> team a is lower  than team b
+//            Positive return value ==> team a is higher than team b
+//            Zero     return value ==> team a is the same as team b
+// ALGORITHM: 1. Team with higher overall wins sorts toward end of list.
+//            2. If wins are identical, compare teams head-to-head
+//               record.  Team with higher number of wins head-to-head
+//               sorts toward end of list.
+//            3. If head-to-head wins are identical, compare teams
+//               head-to-head for game scores.  Team with higher game
+//               scores head-to-head sorts toward end of list.
+//
+function compareTwoTeams(a, b) {
+	// Return negative if a has more overall game wins than b
+	// (this presumes both teams played the same number of games)
 	if (a.wins != b.wins) {
 		return b.wins - a.wins;
 	}
 	
-	// When teams have the same number of wins, need to break the tie
-	// by checking head-to-head matches to determine who has the most wins.
+	// When teams have the same number of wins, break the tie by checking
+	// head-to-head matches to determine who has the most wins.  At the
+	// same time, keep track of total points for each team to use as tie
+	// breaker if head-to-head game wins are the same.
 	var aWins = 0;
 	var bWins = 0;
-	var aPos;
-	var bPos;
+	var aPoints = 0;
+	var bPoints = 0;
+	var aIndex;
+	var bIndex;
 
 	//alert("Team " + a.num + " team " + b.num);
 	for (var d=0; d<dates.length; d++) {
@@ -210,49 +241,55 @@ function compareTeamWins(a, b) {
 					//alert(match.teams[0]);
 					if (match.teams[0] == a.num && match.teams[1] == b.num) {
 						//alert("1 Date " + d + " match " + m);
-						aPos = 0; bPos = 1;
+						aIndex = 0; bIndex = 1;
 					} else if (match.teams[0] == b.num && match.teams[1] == a.num) {
 						//alert("2 Date " + d + " match " + m);
-						aPos = 1; bPos = 0;
+						aIndex = 1; bIndex = 0;
 					} else {
-						aPos = -1; bPos = -1;
+						aIndex = -1; bIndex = -1;
 					}
-					if (aPos >= 0) {
+					if (aIndex >= 0) {
 						for (var g=0; g<match.games.length; g++) {
 							var game = match.games[g];
 							if (game.scores != null) {
-								if (game.scores[aPos] > game.scores[bPos]) {
+								if (game.scores[aIndex] > game.scores[bIndex]) {
 									aWins++;
 								} else {
 									bWins++;
 								}
+								aPoints += game.scores[aIndex];
+								bPoints += game.scores[bIndex];
 							}
-						}
-					} // teams info is valid
+						} // loop through games in head-to-head match
+					} // head-to-head match found
 				} // teams exist for this match
-			} // for matches
-		} // if playoffs
-	} // for dates
+			} // for matches on this date
+		} // if NOT playoffs
+	} // for ALL dates
 
-	// Head to head record overall
+	// Head to head record overall game wins
 	if (aWins != bWins) {
 		return bWins - aWins;
 	}
-	
-	return false;
-} // compareTeamWins()
+
+	// Head to head record overall points
+	if (aPoints != bPoints) {
+		return bPoints - aPoints;
+	}
+
+	return 0;
+} // compareTwoTeams()
 
 // -------------------------------------------------------------
 
 function writeScheduleTable() {
 	//============================================
-	// Schedule Table
+	// Schedule Table (REGULAR SEASON)
 	//============================================
 	// Sort on team number
 	teamlist.sort(function(a,b) {return a.num - b.num;});
 
 	var unplayedWeek = 0;
-	var nextWeek = false;
 
 	document.write("<tr>");
 	document.write("<th>Date</th>");
@@ -261,58 +298,42 @@ function writeScheduleTable() {
 	document.write("<th>Match</th>");
 	document.write("</tr>");
 	for (var d=0; d<playdates.length; d++) {
-		document.write("<tr>");
 
+		var rowid = "";
 		if ((dates[d].matches[0].winCount === undefined)) {
-			unplayedWeek++;
-		}
-		if (unplayedWeek==1) {
-			nextWeek = true;
-		} else {
-			nextWeek = false;
+			if ( ++unplayedWeek == 1 ) {
+				rowid = "id='next'";
+			}
 		}
 
-		// Times
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
+		document.write("<tr " + rowid + ">");
+
+		document.write("<td>");
 		document.write(dates[d].date);
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
-		for (var m=0; m<dates[d].matches.length; m++) {
-			if (dates[d].matches[m].teams != null) {
-				document.write("<b>" + dates[d].matches[m].time + "</b><br/>");
-			}
-		}
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
 
-		// Court
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
-		for (var m=0; m<dates[d].matches.length; m++) {
-			if (dates[d].matches[m].teams != null) {
-				document.write(dates[d].matches[m].court + "<br/>");
-			}
+		document.write("<td>");
+		for (var m=0; m<dates[d].matches.length-1; m++) {
+			document.write(dates[d].matches[m].time + "<br/>");
 		}
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
 
-		// Teams
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
-		if (!dates[d].playoffs) {
-			for (var m=0; m<dates[d].matches.length; m++) {
-				if (dates[d].matches[m].teams != null) {
-					document.write(dates[d].matches[m].teams[0] + " vs " + dates[d].matches[m].teams[1] + "<br/>");
-				}
-			}
+		document.write("<td>");
+		for (var m=0; m<dates[d].matches.length-1; m++) {
+			document.write(dates[d].matches[m].court + "<br/>");
+		}
+		document.write("</td>");
+
+		document.write("<td>");
+		if (dates[d].playoffs) {
+			document.write("Playoffs<br/>");
 		} else {
-			document.write("Playoffs");
+			for (var m=0; m<dates[d].matches.length-1; m++) {
+				document.write(dates[d].matches[m].teams[0] + " vs " + dates[d].matches[m].teams[1] + "<br/>");
+			}
 		}
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
+
 		document.write("</tr>");
 	}
 } // writeScheduleTable()
@@ -327,7 +348,6 @@ function writePlayoffScheduleTable() {
 	teamlist.sort(function(a,b) {return a.num - b.num;});
 
 	var unplayedWeek = 0;
-	var nextWeek = false;
 
 	document.write("<tr>");
 	document.write("<th>Date</th>");
@@ -337,85 +357,69 @@ function writePlayoffScheduleTable() {
 	document.write("<th>Match</th>");
 	document.write("<th>Work</th>");
 	document.write("</tr>");
+
 	for (var d=0; d<playdates.length; d++) {
-		document.write("<tr>");
 
+		var rowid = "";
 		if ((dates[d].matches[0].winCount === undefined)) {
-			unplayedWeek++;
-		}
-		if (unplayedWeek==1) {
-			nextWeek = true;
-		} else {
-			nextWeek = false;
+			if ( ++unplayedWeek == 1 ) {
+				rowid = "id='next'";
+			}
 		}
 
-		// Dates
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
+		document.write("<tr " + rowid + ">");
+
+		document.write("<td>");
 		document.write(dates[d].date);
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
 
-		// Match Num
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
+		document.write("<td>");
 		for (var m=0; m<dates[d].matches.length; m++) {
 			if (dates[d].matches[m].teams != null) {
 				document.write(dates[d].matches[m].num + "<br/>");
 			}
 		}
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
 
-		// Times
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
+		document.write("<td>");
 		for (var m=0; m<dates[d].matches.length; m++) {
 			if (dates[d].matches[m].teams != null) {
 				document.write(dates[d].matches[m].time + "<br/>");
 			}
 		}
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
 
-		// Court
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
+		document.write("<td>");
 		for (var m=0; m<dates[d].matches.length; m++) {
 			if (dates[d].matches[m].teams != null) {
 				document.write(dates[d].matches[m].court + "<br/>");
 			}
 		}
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
 
 		// Teams
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
-		if (!dates[d].playoffs) {
+		document.write("<td>");
+		if (dates[d].playoffs) {
+			document.write("Playoffs");
+		} else {
 			for (var m=0; m<dates[d].matches.length; m++) {
 				if (dates[d].matches[m].teams != null) {
-					var t1 = getTeamName(dates[d].matches[m].teams[0]);
-					var t2 = getTeamName(dates[d].matches[m].teams[1]);
+					var t1 = getTeamName(dates[d].matches[m].teams[0], "plain");
+					var t2 = getTeamName(dates[d].matches[m].teams[1], "plain");
 					document.write(t1 + " vs " + t2 + "<br/>");
 				}
 			}
-		} else {
-			document.write("Playoffs");
 		}
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
 
 		// Work Team
-		document.write("<td align='center'><small>");
-		if (nextWeek) document.write("<b>");
+		document.write("<td>");
 		for (var m=0; m<dates[d].matches.length; m++) {
 			if (dates[d].matches[m].work != null) {
-				document.write(getTeamName(dates[d].matches[m].work) + "<br/>");
+				document.write(getTeamName(dates[d].matches[m].work, "plain") + "<br/>");
 			}
 		}
-		if (nextWeek) document.write("</b>");
-		document.write("</small></td>");
+		document.write("</td>");
 
 		document.write("</tr>");
 	}
@@ -428,7 +432,7 @@ function writeResultsTable() {
 	// Results Table
 	//============================================
 	document.write("<tr>");
-    document.write("<th>Winner<br></th>");
+   document.write("<th>Winner<br></th>");
 	document.write("<th>Games</th>");
 	document.write("<th>Loser</th>");
 	document.write("<th>Games</th>");
@@ -442,7 +446,7 @@ function writeResultsTable() {
 				document.write("<tr>");
 
 				// Winning Team
-				document.write("<td><small>");
+				document.write("<td>");
 				for (var m=0; m<dates[d].matches.length; m++) {
 					if (dates[d].matches[m].teams != null) {
 						var match = dates[d].matches[m];
@@ -460,10 +464,10 @@ function writeResultsTable() {
 						document.write(teamlist[getTeamNum(teamNum)-1].name + "<br/>");
 					}
 				}
-				document.write("</small></td>");
+				document.write("</td>");
 
 				// Winning Team games won
-				document.write("<td align='center'><small>");
+				document.write("<td>");
 				for (var m=0; m<dates[d].matches.length; m++) {
 					if (dates[d].matches[m].teams != null) {
 						var match = dates[d].matches[m];
@@ -476,10 +480,10 @@ function writeResultsTable() {
 						document.write("&nbsp;<br/>");
 					}
 				}
-				document.write("</small></td>");
+				document.write("</td>");
 
 				// Losing Team
-				document.write("<td><small>");
+				document.write("<td>");
 				for (var m=0; m<dates[d].matches.length; m++) {
 					if (dates[d].matches[m].teams != null) {
 						var match = dates[d].matches[m];
@@ -494,10 +498,10 @@ function writeResultsTable() {
 						document.write(teamlist[getTeamNum(teamNum)-1].name + "<br/>");
 					}
 				}
-				document.write("</small></td>");
+				document.write("</td>");
 
 				// Losing Team games won
-				document.write("<td align='center'><small>");
+				document.write("<td>");
 				for (var m=0; m<dates[d].matches.length; m++) {
 					if (dates[d].matches[m].teams != null) {
 						var match = dates[d].matches[m];
@@ -510,10 +514,10 @@ function writeResultsTable() {
 						document.write("&nbsp;<br/>");
 					}
 				}
-				document.write("</small></td>");
+				document.write("</td>");
 
 				// Scores
-				document.write("<td id='scores'><small>");
+				document.write("<td id='scores'>");
 				for (var m=0; m<dates[d].matches.length; m++) {
 					if (dates[d].matches[m].teams != null) {
 						var match = dates[d].matches[m];
@@ -533,7 +537,7 @@ function writeResultsTable() {
 						document.write("<br/>");
 					}
 				}
-				document.write("</small></td>");
+				document.write("</td>");
 				document.write("</tr>");
 			}
 		}
@@ -553,11 +557,11 @@ function writeSeedsTable() {
 		document.write("<td align='center'>" + teamlist[seeds[s]-1].name + "<br></th>");
 		document.write("</tr>");
 	}
-}
+} // writeSeedsTable()
 
 // -------------------------------------------------------------
 
-function writePlayoffDiagramFour(indent) {
+function writePlayoffDiagramFour() {
 	document.write("<tr>");
 	document.write("<td class='team'>" + getTeamName("S1") + "</td>");
 	document.write("<td></td><td></td><td></td><td></td><td rowspan='6'><table border='1'><tbody>");
@@ -909,6 +913,66 @@ function writePlayoffDiagramEight() {
 	document.write("<td></td><td></td><td></td>");
 	document.write("</tr>");
 } // writePlayoffDiagramEight()
+
+// -------------------------------------------------------------
+
+//
+// FUNCTION: writeDivisionResultsTables <division>
+// PARM    : division        - String; division name (e.g., "AA")
+// PURPOSE : Generate body text in generated HTML to show the regular
+//           season tables (standings & schedule & results) for a division.
+//
+function writeDivisionResultsTables (division) {
+	document.write("<h1 align='center'>" + division.toUpperCase() + " Division Standings &amp; Schedule</h1>");
+	document.write("<hr> <br>");
+	document.write("<center>");
+	document.write("  <table id='standings'>");
+	document.write("    <tbody>");
+	document.write("      <tr>");
+	document.write("        <th width='14%'><b>Team</b></td>");
+	document.write("        <th width='43%'><b>Captain</b></td>");
+	document.write("        <th width='14%'><b>Wins</b></td>");
+	document.write("        <th width='14%'><b>Losses</b></td>");
+	document.write("      </tr>");
+
+	computeRecord();
+	writeStandings(division.toLowerCase());
+
+	document.write("    </tbody>");
+	document.write("  </table>");
+	document.write("  <br>");
+	document.write("  <table cellspacing='5' cellpadding='5' border='0'>");
+	document.write("    <tbody>");
+	document.write("      <tr>");
+	document.write("        <td valign='top'>");
+	document.write("          <table id='schedule'>");
+	document.write("            <tbody>");
+
+	writeScheduleTable();
+
+	document.write("            </tbody>");
+	document.write("          </table>");
+	document.write("        </td>");
+	document.write("        <td valign='top'>");
+	document.write("          <table id='results'>");
+	document.write("            <tbody>");
+
+	writeResultsTable();
+
+	document.write("            </tbody>");
+	document.write("          </table>");
+	document.write("        </td>");
+	document.write("      </tr>");
+	document.write("    </tbody>");
+	document.write("  </table>");
+	document.write("</center>");
+	document.write("<hr>");
+	document.write("<font face='Helvetica, Arial, sans-serif' size='-1'>");
+	document.write("Send comments/suggestions about this page to the <a href='mailto:webmaster@bumpsetdrink.com'>Webmaster</a>.<br>");
+	document.write("Send comments/suggestions about the league to: <a href='mailto:comments@bumpsetdrink.com'>Comments</a>");
+	document.write("</font>");
+
+} // writeDivisionResultsTables()
 
 // -------------------------------------------------------------
 
