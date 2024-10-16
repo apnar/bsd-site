@@ -181,15 +181,34 @@ function computeRecord() {
 
 // -------------------------------------------------------------
 
+var teamTieBreakerInfo; // INDEX: 1-n
+
 function writeStandings(level) {
 	//============================================
 	// Standings Table
 	//============================================
+	teamTieBreakerInfo = [];
 	teamlist.sort(compareTwoTeams); // compare function, see below
 	for (var t=0; t<teamlist.length; t++) {
+		var tieBreakerTag = "";
+		var N = teamlist[t].num; // Shorthand team number for below
+		if (teamTieBreakerInfo[N]) {
+			var lines = teamTieBreakerInfo[N].includes("<br>") ? 5 : 3;
+			var STYLE = "<style>" + 
+			  " .showTieBreaker"   + N + " { font-weight:bold; font-size:65%; }" + 
+			  " .hiddenTieBreaker" + N + " { position:absolute; width:35em; height:" + lines + "em; font-size:65%; color:white; background:rgba(32,108,160,1.00); font-style:italic; visibility:visible; display:none; }" +
+			  " .showTieBreaker"   + N + ":hover + .hiddenTieBreaker" + N + " { visibility:visible; display:block; }" +
+			  "</style>";
+			document.write(STYLE);
+
+			tieBreakerTag =  "<span class='showTieBreaker" + N + "'><a ref=''> &nbsp; &nbsp; TIE</a></span>";
+			tieBreakerTag += "<span class='hiddenTieBreaker" + N + "'><p>" + teamTieBreakerInfo[N] + "</p></span>";
+			console.log ("Tag: " + tieBreakerTag);
+			console.log ("Style: " + STYLE);
+		}
 		document.write("<tr>");
 		document.write("<td align='center'>" + teamlist[t].num + "</td>");
-		document.write("<td><a href='roster" + level + ".html'>" + teamlist[t].name + "</a> <span class='nickname'>" + (teamlist[t].nickname ? teamlist[t].nickname : "") + "</span></td>");
+		document.write("<td><div><a href='roster" + level + ".html'>" + teamlist[t].name + "</a> <span class='nickname'>" + (teamlist[t].nickname ? teamlist[t].nickname : "") + "</span>" + tieBreakerTag + "</div></td>");
 		document.write("<td align='center'>" + teamlist[t].wins + "</td>");
 		document.write("<td align='center'>" + teamlist[t].losses + "</td>");
 		document.write("</tr>");
@@ -231,24 +250,37 @@ function compareTwoTeams(a, b) {
 	var aIndex;
 	var bIndex;
 
-	//alert("Team " + a.num + " team " + b.num);
+	var tieBreakerInfoA = "";
+	var tieBreakerInfoB = "";
+
+	if (teamTieBreakerInfo[a.num]) {
+		tieBreakerInfoA = teamTieBreakerInfo[a.num] + "<br>";
+	} else {
+		tieBreakerInfoA = "";
+	}
+	if (teamTieBreakerInfo[b.num]) {
+		tieBreakerInfoB = teamTieBreakerInfo[b.num] + "<br>";
+	} else {
+		tieBreakerInfoB = "";
+	}
+
+	console.log("TIE: Team " + a.num + " (" + a.name + ") vs Team " + b.num + " (" + b.name + ")");
+
 	for (var d=0; d<dates.length; d++) {
 		if (!dates[d].playoffs) {
 			for (var m=0; m<dates[d].matches.length; m++) {
 				var match = dates[d].matches[m];
 				if (match.teams) {
 					// match.teams should be two element array [team#,team#]
-					//alert(match.teams[0]);
 					if (match.teams[0] == a.num && match.teams[1] == b.num) {
-						//alert("1 Date " + d + " match " + m);
 						aIndex = 0; bIndex = 1;
 					} else if (match.teams[0] == b.num && match.teams[1] == a.num) {
-						//alert("2 Date " + d + " match " + m);
 						aIndex = 1; bIndex = 0;
 					} else {
 						aIndex = -1; bIndex = -1;
 					}
 					if (aIndex >= 0) {
+						// Found a head-to-head match for the two teams being compared
 						for (var g=0; g<match.games.length; g++) {
 							var game = match.games[g];
 							if (game.scores != null) {
@@ -266,6 +298,11 @@ function compareTwoTeams(a, b) {
 			} // for matches on this date
 		} // if NOT playoffs
 	} // for ALL dates
+
+	tieBreakerInfoA += "Head to Head Versus Team " + teamlist[b.num-1].name + ": " + aWins + "-" + bWins + " games, " + aPoints + "-" + bPoints + " points";
+	tieBreakerInfoB += "Head to Head Versus Team " + teamlist[a.num-1].name + ": " + bWins + "-" + aWins + " games, " + bPoints + "-" + aPoints + " points";
+	teamTieBreakerInfo[a.num] = tieBreakerInfoA;
+	teamTieBreakerInfo[b.num] = tieBreakerInfoB;
 
 	// Head to head record overall game wins
 	if (aWins != bWins) {
@@ -302,7 +339,7 @@ function writeScheduleTable() {
 		var rowid = "";
 		if ((dates[d].matches[0].winCount === undefined)) {
 			if ( ++unplayedWeek == 1 ) {
-				rowid = "id='next'";
+				rowid = "id='next'"; // See bsdstyle.css -- gets bold text
 			}
 		}
 
@@ -313,20 +350,29 @@ function writeScheduleTable() {
 		document.write("</td>");
 
 		document.write("<td>");
-		for (var m=0; m<dates[d].matches.length-1; m++) {
-			document.write(dates[d].matches[m].time + "<br/>");
-		}
-		document.write("</td>");
-
-		document.write("<td>");
-		for (var m=0; m<dates[d].matches.length-1; m++) {
-			document.write(dates[d].matches[m].court + "<br/>");
+		if (dates[d].playoffs) {
+			document.write("&nbsp;");
+		} else {
+			console.log (d + " (" + dates[d].date + "): matches=" + dates[d].matches.length);
+			for (var m=0; m<dates[d].matches.length-1; m++) {
+				document.write(dates[d].matches[m].time + "<br/>");
+			}
 		}
 		document.write("</td>");
 
 		document.write("<td>");
 		if (dates[d].playoffs) {
-			document.write("Playoffs<br/>");
+			document.write("&nbsp;");
+		} else {
+			for (var m=0; m<dates[d].matches.length-1; m++) {
+				document.write(dates[d].matches[m].court + "<br/>");
+			}
+		}
+		document.write("</td>");
+
+		document.write("<td>");
+		if (dates[d].playoffs) {
+			document.write("Playoffs");
 		} else {
 			for (var m=0; m<dates[d].matches.length-1; m++) {
 				document.write(dates[d].matches[m].teams[0] + " vs " + dates[d].matches[m].teams[1] + "<br/>");
@@ -335,7 +381,7 @@ function writeScheduleTable() {
 		document.write("</td>");
 
 		document.write("</tr>");
-	}
+	} // loop through all play dates
 } // writeScheduleTable()
 
 // -------------------------------------------------------------
