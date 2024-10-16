@@ -11,7 +11,7 @@
 //============================================
 // Data Setup
 //============================================
-var teamlist = new Array();
+var teamlist = [];
 teamlist[1] = {num:1, wins:0, losses:0, name:"Pachiyappan" };
 teamlist[2] = {num:2, wins:0, losses:0, name:"Kumar"       };
 teamlist[3] = {num:3, wins:0, losses:0, name:"Vasquez"     };
@@ -21,21 +21,23 @@ teamlist[6] = {num:6, wins:0, losses:0, name:"Schiff"      };
 
 var playdates = ["09/05","09/12","09/19","09/26","10/03","10/10","10/17","10/24","11/07"]
 
-dates = new Array();
-for (d=0; d<playdates.length; d++) {
-	dates[d] = new Object();
+dates = [];
+for (var d=0; d<playdates.length; d++) {
+	dates[d] = {};
 	dates[d].date = playdates[d];
 	dates[d].matches = new Array();
-	for (m=0; m<4; m++) {
-		dates[d].matches[m] = new Object();
-		dates[d].matches[m].games = new Array();
-		for (g=0; g<3; g++) {
+	for (var m=0; m<4; m++) {
+		dates[d].matches[m] = {};
+		dates[d].matches[m].games = [];
+		for (var g=0; g<3; g++) {
 			dates[d].matches[m].games[g] = new Array();
 		}
 		dates[d].matches[m].court = 5; // Almost always on this court
 	}
 }
 
+var date;
+var match;
 
 // Matches - Week 1
 	date = dates[0];
@@ -219,56 +221,8 @@ for (d=0; d<playdates.length; d++) {
     </script>
   </head>
   <body>
-    <center>
-      <h1>BBB Division Standings &amp; Schedule</h1>
-    </center>
-    <hr> <br>
-    <center>
-      <table width="447" cellpadding="7" bordercolor="#000000"
-        border="1">
-        <tbody>
-          <tr>
-            <td width="14%" height="16" valign="top"><b>Team</b></td>
-            <td width="43%" height="16" valign="top"><b>Captain</b></td>
-            <td width="14%" height="16" valign="top"><b>Wins</b></td>
-            <td width="14%" height="16" valign="top"><b>Losses</b></td>
-          </tr>
-          <script>
-            computeRecord();
-            writeStandings("bbb");
-          </script>
-        </tbody>
-      </table>
-      <br>
-      <table cellspacing="2" cellpadding="2" border="0">
-        <tbody>
-          <tr>
-            <td valign="top">
-              <table style="font-size:larger;" border="1">
-                <tbody>
-                  <script>
-                    writeScheduleTable();
-                  </script>
-                </tbody>
-              </table>
-            </td>
-            <td valign="top">
-              <table style="font-size:larger;" border="1">
-                <tbody>
-                  <script>
-                    writeResultsTable();
-                  </script>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </center>
-    <hr>
-    <font face="Helvetica, Arial, sans-serif" size="-1">
-      Send comments/suggestions about this page to the <a href="mailto:webmaster@bumpsetdrink.com">Webmaster</a>.<br>
-      Send comments/suggestions about the league to: <a href="mailto:comments@bumpsetdrink.com">Comments</a>
-    </font>
+    <script>
+        writeDivisionResultsTables("BBB");
+    </script>
   </body>
 </html>
