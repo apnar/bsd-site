@@ -89,7 +89,7 @@ function getTeamName(team, plain) {
 		t = bold1 + teamlist[t-1].name + bold2;
 	} else {
 		// Handle playoff not completed (getTeamNum() = 0)
-		t = italic1 + team + italic2;;
+		t = italic1 + team + italic2;
 	}
 	return t;
 } // getTeamName()
