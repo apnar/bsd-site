@@ -9,7 +9,7 @@ body {
 	color: rgb(0,0,0);
 }
 
-span.nickname { font-size: 120%; color: red; text-shadow: 1px 1px #000000; }
+span.nickname   { font-size:120%; color:red; text-shadow:1px 1px #000000; }
 
 a:visited { color:#808080; }
 a:link    { color:#a52a2a; }
