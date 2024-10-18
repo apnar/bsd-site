@@ -99,19 +99,18 @@ function getTeamName(team, plain) {
 //
 // FUNCTION: setWins
 // PARM    : match
-// PURPOSE : Set match.winCount and match.lossCount based on game scores in match{}
+// PURPOSE : Record match results in the match.winCount & match.lossCount
+//           fields.  As well, record results in the winner[] & loser[] arrays
 //
 function setWins(match) {
 	match.winCount = 0;
 	match.lossCount = 0;
-	if (match.games[0].scores !== null) {
-		for (var g=0; g<match.games.length; g++) {
-			if (match.games[g].scores !== null) {
-				if (match.games[g].scores[0] > match.games[g].scores[1]) {
-					match.winCount++;
-				} else {
-					match.lossCount++;
-				}
+	for (var g=0; g<match.games.length; g++) {
+		if (match.games[g].scores != null) {
+			if (match.games[g].scores[0] > match.games[g].scores[1]) {
+				match.winCount++;
+			} else {
+				match.lossCount++;
 			}
 		}
 	}
@@ -181,7 +180,7 @@ function computeRecord() {
 
 // -------------------------------------------------------------
 
-var teamTieBreakerInfo; // INDEX: 1-n
+var teamTieBreakerInfo; // GLOBAL ARRAY.  INDEX: 1-n
 
 function writeStandings(level) {
 	//============================================
@@ -411,7 +410,7 @@ function writeScheduleTable() {
 
 function writePlayoffScheduleTable() {
 	//============================================
-	// Schedule Table
+	// Schedule Table (PLAYOFFS)
 	//============================================
 	// Sort on team number
 	teamlist.sort(function(a,b) {return a.num - b.num;});
@@ -498,10 +497,10 @@ function writePlayoffScheduleTable() {
 
 function writeResultsTable() {
 	//============================================
-	// Results Table
+	// Results Table (REGULAR SEASON & PLAYOFFS)
 	//============================================
 	document.write("<tr>");
-   document.write("<th>Winner<br></th>");
+	document.write("<th>Winner<br></th>");
 	document.write("<th>Games</th>");
 	document.write("<th>Loser</th>");
 	document.write("<th>Games</th>");
@@ -1057,13 +1056,13 @@ function writeDivisionResultsTables (division) {
 function writeDivisionPlayoffBracket(division, teamcount, use_alternate, standings_file) {
 	document.write("  <h1 align=\"center\">" + division.toUpperCase() + " Division Playoff Bracket<br></h1>");
 	document.write("  <hr>");
-  	document.write("  <center>");
+	document.write("  <center>");
 	document.write("    <b>FORMAT</b><br>");
-  	document.write("    All Playoff match games start at 4 points, win by 2, with a cap of");
+	document.write("    All Playoff match games start at 4 points, win by 2, with a cap of");
 	document.write("    30 in the first two games and no cap in the third game (if played).");
-  	document.write("  </center>");
+	document.write("  </center>");
 	document.write("  <hr>");
-  	document.write("  <table id=\"playoff\">");
+	document.write("  <table id=\"playoff\">");
 
 	if (teamcount == 4) {
 		writePlayoffDiagramFour();
@@ -1075,38 +1074,38 @@ function writeDivisionPlayoffBracket(division, teamcount, use_alternate, standin
 		writePlayoffDiagramSix();
 	}
 
-  	document.write("  </table>");
+	document.write("  </table>");
 	document.write("  <br>");
-  	document.write("  <table>");
+	document.write("  <table>");
 	document.write("    <tbody valign=\"top\">");
-  	document.write("      <tr>");
+	document.write("      <tr>");
 	document.write("        <td>");
-  	document.write("          <table id=\"schedule\">");
+	document.write("          <table id=\"schedule\">");
 	document.write("            <tbody>");
 
-  	writePlayoffScheduleTable();
+	writePlayoffScheduleTable();
 
 	document.write("            </tbody>");
-  	document.write("          </table>");
+	document.write("          </table>");
 	document.write("        </td>");
-  	document.write("        <td> <br> </td>");
-  	document.write("        <td>");
+	document.write("        <td> <br> </td>");
+	document.write("        <td>");
 	document.write("          <table id=\"results\">");
-  	document.write("            <tbody>");
+	document.write("            <tbody>");
 
 	writeResultsTable();
 
-  	document.write("            </tbody>");
+	document.write("            </tbody>");
 	document.write("          </table>");
-  	document.write("        </td>");
+	document.write("        </td>");
 	document.write("      </tr>");
-  	document.write("    </tbody>");
+	document.write("    </tbody>");
 	document.write("  </table>");
-  	document.write("  <p>");
+	document.write("  <p>");
 	document.write("  <small>");
-  	document.write("    <a href=\"roster" + division.toLowerCase() + ".html\">Team Rosters</a> <br>");
+	document.write("    <a href=\"roster" + division.toLowerCase() + ".html\">Team Rosters</a> <br>");
 	document.write("    <a href=\"" + standings_file + "\">Final Regular Season Standings</a>");
-  	document.write("  </small>");
+	document.write("  </small>");
 	document.write("  </p>");
 
 } // writeDivisionPlayoffBracket()
