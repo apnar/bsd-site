@@ -2,26 +2,37 @@
  * POST /api/submit
  */
 export async function onRequestPost(context) {
-  try {
-    let input = await context.request.formData();
-    // Convert FormData to JSON
-    // NOTE: Allows multiple values per key
-    let output = {};
-    for (let [key, value] of input) {
-      let tmp = output[key];
-      if (tmp === undefined) {
-        output[key] = value;
-      } else {
-        output[key] = [].concat(tmp, value);
-      }
-    }
-    let pretty = JSON.stringify(output, null, 2);
-    return new Response(pretty, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    });
-  } catch (err) {
-    return new Response('Error parsing JSON content', { status: 400 });
-  }
+  return await submitHandler(context);
 }
+
+async function submitHandler(context) {
+  const body = await context.request.formData();
+
+  const { firstname, lastname, email, phone } =
+    Object.fromEntries(body);
+
+  const reqBody = {
+    fields: {
+      "First Name": firstname,
+      "Last Name": lastname,
+      "Email": email,
+      "Phone": phone,
+    },
+  };
+
+  return HandleAirtableData({ body: reqBody, env: env });
+}
+
+const HandleAirtableData = async function onRequest({ body, env }) {
+  return fetch(
+    `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(env.AIRTABLE_TABLE_ID,)}`,
+    {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        Authorization: `Bearer ${env.AIRTABLE_API_KEY}`,
+        "Content-type": `application/json`,
+      },
+    },
+  );
+};
