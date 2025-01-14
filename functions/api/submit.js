@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
 async function submitHandler(context) {
   const body = await context.request.formData();
 
-  const { firstname, lastname, email, phone } =
+  const { firstname, lastname, email, phone, redirect } =
     Object.fromEntries(body);
 
   const reqBody = {
@@ -20,19 +20,17 @@ async function submitHandler(context) {
     },
   };
 
-  return HandleAirtableData({ body: reqBody, env: context.env });
-}
-
-const HandleAirtableData = async function onRequest({ body, env }) {
-  return fetch(
-    `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(env.AIRTABLE_TABLE_ID,)}`,
+  fetch(
+    `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_TABLE_ID,)}`,
     {
       method: "POST",
-      body: JSON.stringify(body),
+      body: JSON.stringify(reqBody),
       headers: {
-        Authorization: `Bearer ${env.AIRTABLE_API_KEY}`,
+        Authorization: `Bearer ${context.env.AIRTABLE_API_KEY}`,
         "Content-type": `application/json`,
       },
     },
   );
+
+  return Response.redirect(redirect, 303)
 };
