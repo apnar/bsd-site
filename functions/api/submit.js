@@ -20,7 +20,7 @@ async function submitHandler(context) {
     },
   };
 
-  return fetch(
+  const resp = await fetch(
     `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_TABLE_ID,)}`,
     {
       method: "POST",
