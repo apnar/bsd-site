@@ -20,7 +20,7 @@ async function submitHandler(context) {
     },
   };
 
-  fetch(
+  return fetch(
     `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_TABLE_ID,)}`,
     {
       method: "POST",
@@ -32,5 +32,5 @@ async function submitHandler(context) {
     },
   );
 
-  return Response.redirect(redirect, 303)
+  return Response.redirect(redirect, 303);
 };
