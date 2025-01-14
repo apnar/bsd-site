@@ -20,7 +20,7 @@ async function submitHandler(context) {
     },
   };
 
-  return HandleAirtableData({ body: reqBody, env: env });
+  return HandleAirtableData({ body: reqBody, env: context.env });
 }
 
 const HandleAirtableData = async function onRequest({ body, env }) {
