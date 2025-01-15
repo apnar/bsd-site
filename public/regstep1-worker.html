@@ -187,7 +187,7 @@
     <br/>
     <input name="subject" value="BSD Registration" type="hidden">
     <input name="recipient" value="registration@bumpsetdrink.com,webmaster@bumpsetdrink.com,dee@bumpsetdrink.com,steve@bumpsetdrink.com" type= "hidden">
-    <input name="required" value="firstname,lastname,phone,email,gendermale,captain,experience,liability" type= "hidden">
+    <input name="required" value="firstname,lastname,phone,email,gendermale,captain,experience,liability,height_in,height_ft" type= "hidden">
     <input name="redirect" value="https://www.bumpsetdrink.com/regstep2.html" type="hidden">
 
     <!-- <table style="border-collapse: collapse; width: 90%;"> -->
@@ -232,8 +232,8 @@
             </div></span>
           </td>
           <td valign="center">
-            <input name="gendermale" id="male_yes" value="yes" type="radio" required> <label for="male_yes">Yes</label> &nbsp; &nbsp;
-            <input name="gendermale" id="male_no"  value="no"  type="radio" required> <label for="male_no" >No</label>
+            <input name="gendermale" id="male_yes" value="true" type="radio" required> <label for="male_yes">Yes</label> &nbsp; &nbsp;
+            <input name="gendermale" id="male_no"  value="false"  type="radio" required> <label for="male_no" >No</label>
           </td>
         </tr>
 
@@ -260,7 +260,27 @@
 
         <tr>
           <td align="center" valign="center">Height:<br/></td>
-          <td valign="center"><input name="height" size="60" maxlength=60 type="text" placeholder="5' 8&quot;" required />
+          <td valign="center">
+          <select name="height_ft" id="height_ft" required>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+          </select> Feet
+          <select name="height_in" id="height_in" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6" selected>6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+          </select> Inches (round up to nearest inch)
           <span class="validity"></span>
         </tr>
 
@@ -369,20 +389,20 @@
           <i>Check the boxes for dates that you <u>CANNOT</u> play</i></td>
           <td valign="center">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; TRYOUTS:
-            <input type="checkbox" id="miss0808" name="miss0808" value="08/08" onchange="checkMissingNonPlayoffs()">Aug  8</input>
-            <input type="checkbox" id="miss0815" name="miss0815" value="08/15" onchange="checkMissingNonPlayoffs()">Aug 15</input>
-            <input type="checkbox" id="miss0822" name="miss0822" value="08/22" onchange="checkMissingNonPlayoffs()">Aug 22</input>
+            <input type="checkbox" id="miss0308" name="miss0306" value="03/06" onchange="checkMissingNonPlayoffs()">Mar  6</input>
+            <input type="checkbox" id="miss0313" name="miss0313" value="03/13" onchange="checkMissingNonPlayoffs()">Mar 13</input>
+            <input type="checkbox" id="miss0320" name="miss0320" value="03/20" onchange="checkMissingNonPlayoffs()">Mar 20</input>
             <br>REGULAR SEASON:
-            <input type="checkbox" id="miss0905" name="miss0905" value="09/05" onchange="checkMissingNonPlayoffs()">Sep  5</input>
-            <input type="checkbox" id="miss0912" name="miss0912" value="09/12" onchange="checkMissingNonPlayoffs()">Sep 12</input>
-            <input type="checkbox" id="miss0919" name="miss0919" value="09/19" onchange="checkMissingNonPlayoffs()">Sep 19</input>
-            <input type="checkbox" id="miss0926" name="miss0926" value="09/26" onchange="checkMissingNonPlayoffs()">Sep 26</input>
-            <input type="checkbox" id="miss1003" name="miss1003" value="10/03" onchange="checkMissingNonPlayoffs()">Oct  3</input>
-            <input type="checkbox" id="miss1010" name="miss1010" value="10/10" onchange="checkMissingNonPlayoffs()">Oct 10</input>
+            <input type="checkbox" id="miss0403" name="miss0403" value="04/03" onchange="checkMissingNonPlayoffs()">Apr  3</input>
+            <input type="checkbox" id="miss0410" name="miss0410" value="04/10" onchange="checkMissingNonPlayoffs()">Apr 10</input>
+            <input type="checkbox" id="miss0417" name="miss0417" value="04/17" onchange="checkMissingNonPlayoffs()">Apr 17</input>
+            <input type="checkbox" id="miss0424" name="miss0424" value="04/24" onchange="checkMissingNonPlayoffs()">Apr 24</input>
+            <input type="checkbox" id="miss0501" name="miss0501" value="05/01" onchange="checkMissingNonPlayoffs()">May  1</input>
+            <input type="checkbox" id="miss0508" name="miss0508" value="05/08" onchange="checkMissingNonPlayoffs()">May  8</input>
             <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; PLAYOFFS:
-            <input type="checkbox" id="miss1017" name="miss1017" value="10/17" onchange="checkMissingPlayoffs()"   >Oct 17</input>
-            <input type="checkbox" id="miss1024" name="miss1024" value="10/24" onchange="checkMissingPlayoffs()"   >Oct 24</input>
-            <input type="checkbox" id="miss1107" name="miss1107" value="11/07" onchange="checkMissingPlayoffs()"   >Nov  7</input>
+            <input type="checkbox" id="miss0515" name="miss0515" value="05/15" onchange="checkMissingPlayoffs()"   >May 15</input>
+            <input type="checkbox" id="miss0522" name="miss0522" value="05/22" onchange="checkMissingPlayoffs()"   >May 22</input>
+            <input type="checkbox" id="miss0529" name="miss0529" value="05/29" onchange="checkMissingPlayoffs()"   >May 29</input>
           </td>
         </tr>
 
