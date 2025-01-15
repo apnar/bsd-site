@@ -416,7 +416,7 @@
             to play.&nbsp; We will contact all players directly who are requested
             to attend the first week.
             </i></p>
-            <input type="checkbox" name="tryoutweekone" value="yes">Yes</input>
+            <input type="checkbox" name="tryoutweekone" value="true">Yes</input>
             <!-- <input name="tryoutweekone" id="yes" value="yes" type="radio"> <label for="yes">Yes</label> &nbsp; &nbsp; -->
           </td>
         </tr>
@@ -492,7 +492,7 @@
       function is_element_checked(e) {
         count += (document.getElementById(e).checked) ? 1 : 0;
       }
-      ["miss0808", "miss0815", "miss0822", "miss0905", "miss0912", "miss0919", "miss0926", "miss1003", "miss1010"].forEach(is_element_checked);
+      ["miss0306", "miss0313", "miss0320", "miss0403", "miss0410", "miss0417", "miss0424", "miss0501", "miss0508"].forEach(is_element_checked);
       if (count > 3) {
         if (count > lastcount) {
           alert("Are you sure you want to play this season?  You've listed quite a few dates (tryouts & regular season) that you will miss.");
@@ -506,7 +506,7 @@
       function is_element_checked(e) {
         count += (document.getElementById(e).checked) ? 1 : 0;
       }
-      ["miss1017", "miss1024", "miss1107"].forEach(is_element_checked);
+      ["miss0515", "miss0522", "miss0529"].forEach(is_element_checked);
       if (count > 2) {
         alert("Are you really going to miss all playoff matches?  Captains have requested we only accept players who plan to play at least 1 match of the playoffs.");
       }
