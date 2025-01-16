@@ -9,7 +9,7 @@ async function submitHandler(context) {
   try {
   const body = await context.request.formData();
 
-  const { redirect, firstname, lastname, phone, email, gendermale, pronouns,
+  const { redirect, errorsite, firstname, lastname, phone, email, gendermale, pronouns,
     mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,
     experience, note_to_directors, referby, emergencyinfo, tryoutweekone } =
     Object.fromEntries(body);
@@ -80,7 +80,7 @@ async function submitHandler(context) {
 
   if (!resp.ok) {
     // redirecting to error site
-    //return Response.redirect(redirect, 303);
+    return Response.redirect(errorsite, 303);
   }
 
     let pretty = JSON.stringify([...body], null, 2);
@@ -97,5 +97,6 @@ async function submitHandler(context) {
   }
   catch (error) {
     console.error(error.message);
+    return Response.redirect(errorsite, 303);
   }
 };
