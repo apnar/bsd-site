@@ -9,16 +9,34 @@ async function submitHandler(context) {
   const body = await context.request.formData();
 
   const { redirect, firstname, lastname, phone, email, gendermale, pronouns,
-    height_ft, height_in, age, birthdate, pairing_info, captian, experience,
-    note_to_directors, referby, emergencyinfo, tryoutweekone } =
+    mypronouns, height_ft, height_in, age, birthdate, pairing_info, captian,
+    experience, note_to_directors, referby, emergencyinfo, tryoutweekone } =
     Object.fromEntries(body);
-  
+
+// use dummy birthdate if its blank  
   let mybirthdate = '1970-01-01';
   if (birthdate !== "") { mybirthdate = birthdate; }
-  const height = height_ft + "\'" + height_in + '"'; 
-  const missing = [];
-  const position = [];
 
+// combine height into single string
+  const height = height_ft + "\'" + height_in + '"'; 
+
+// put all missing dates into an array
+  const missing = [];
+  for (let [key, value] of body) {
+    if (key.indexOf("miss") === 0) {
+       missing.push(key);
+    } 
+  }
+
+// put all positions into an array
+  const position = [];
+  for (let [key, value] of body) {
+    if (key.indexOf("p_") === 0) {
+       position.push(value);
+    } 
+  }
+
+// build data to submit
   const reqBody = {
     fields: {
       "First Name": firstname,
@@ -42,6 +60,7 @@ async function submitHandler(context) {
     },
   };
 
+// submit to airtable
   const resp = await fetch(
     `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_TABLE_ID,)}`,
     {
