@@ -24,7 +24,7 @@ async function submitHandler(context) {
   const missing = [];
   for (let [key, value] of body) {
     if (key.indexOf("miss") === 0) {
-       missing.push(key);
+       missing.push(value);
     } 
   }
 
