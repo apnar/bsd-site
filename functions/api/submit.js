@@ -52,5 +52,6 @@ async function submitHandler(context) {
     },
   );
 
-  return Response.redirect(redirect, 303);
+  return resp;
+  //return Response.redirect(redirect, 303);
 };
