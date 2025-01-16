@@ -13,7 +13,8 @@ async function submitHandler(context) {
     note_to_directors, referby, emergencyinfo, tryoutweekone } =
     Object.fromEntries(body);
   
-  if (birthdate === "") { birthdate = '1970-01-01'; }
+  let mybirthdate = '1970-01-01';
+  if (birthdate !== "") { mybirthdate = birthdate; }
   const height = height_ft + "\'" + height_in + '"'; 
   const missing = [];
   const position = [];
@@ -28,7 +29,7 @@ async function submitHandler(context) {
       "Pronoun": pronouns,
       "Height": height,
       "Age": age,
-      //"Birthdate": birthdate,
+      "Birthdate": mybirthdate,
       "Pairing Info": pairing_info,
       "Captain": captian,
       "Experience": experience,
