@@ -28,7 +28,7 @@ async function submitHandler(context) {
       "Pronoun": pronouns,
       "Height": height,
       "Age": age,
-      "Birthdate": birthdate,
+      //"Birthdate": birthdate,
       "Pairing Info": pairing_info,
       "Captain": captian,
       "Experience": experience,
