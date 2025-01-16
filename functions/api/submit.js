@@ -27,7 +27,7 @@ async function submitHandler(context) {
       "Pronoun": pronouns,
       "Height": height,
       "Age": age,
-      "Birthday": birthdate,
+      "Birthdate": birthdate,
       "Pairing Info": pairing_info,
       "Captain": captian,
       "Experience": experience,
@@ -36,7 +36,7 @@ async function submitHandler(context) {
       "Refer": referby,
       "Emergency Contact": emergencyinfo,
       "Missing Dates": missing,
-      "Requested Week 1": tryoutweekone,
+      "Requested Week 1": (tryoutweekone === 'true'),
     },
   };
 
