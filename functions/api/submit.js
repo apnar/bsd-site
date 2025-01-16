@@ -73,15 +73,15 @@ async function submitHandler(context) {
     },
   );
 
-//    let pretty = JSON.stringify([...body], null, 2);
-//    pretty += JSON.stringify(resp);
-//    return new Response(pretty, {
-//      headers: {
-//        'Content-Type': 'application/json;charset=utf-8',
-//      },
-//    });
+    let pretty = JSON.stringify([...body], null, 2);
+    pretty += JSON.stringify(resp);
+    return new Response(pretty, {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    });
 
 
-  return resp;
+//  return resp;
   //return Response.redirect(redirect, 303);
 };
