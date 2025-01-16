@@ -52,8 +52,7 @@ async function submitHandler(context) {
     },
   );
 
-    let input = await context.request.formData();
-    let pretty = JSON.stringify([...input], null, 2);
+    let pretty = JSON.stringify([...body], null, 2);
     pretty += resp;
     return new Response(pretty, {
       headers: {
