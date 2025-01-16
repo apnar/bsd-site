@@ -52,6 +52,16 @@ async function submitHandler(context) {
     },
   );
 
-  return resp;
+    let input = await context.request.formData();
+    let pretty = JSON.stringify([...input], null, 2);
+    pretty += resp;
+    return new Response(pretty, {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    });
+
+
+  //return resp;
   //return Response.redirect(redirect, 303);
 };
