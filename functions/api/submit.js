@@ -93,9 +93,9 @@ async function submitHandler(context) {
     //});
 
   //debug - shows airtable respose
-    return resp;
+    //return resp;
 
-  //return Response.redirect(redirect, 303);
+  return Response.redirect(redirect, 303);
   }
   catch (error) {
     console.error(error.message);
