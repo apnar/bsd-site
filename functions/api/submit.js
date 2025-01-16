@@ -9,7 +9,7 @@ async function submitHandler(context) {
   const body = await context.request.formData();
 
   const { redirect, firstname, lastname, phone, email, gendermale, pronouns,
-    mypronouns, height_ft, height_in, age, birthdate, pairing_info, captian,
+    mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,
     experience, note_to_directors, referby, emergencyinfo, tryoutweekone } =
     Object.fromEntries(body);
 
@@ -49,7 +49,7 @@ async function submitHandler(context) {
       "Age": age,
       "Birthdate": mybirthdate,
       "Pairing Info": pairing_info,
-      "Captain": captian,
+      "Captain": captain,
       "Experience": experience,
       "Position": position,
       "Additional Info": note_to_directors,
