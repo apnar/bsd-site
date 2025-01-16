@@ -13,6 +13,7 @@ async function submitHandler(context) {
     note_to_directors, referby, emergencyinfo, tryoutweekone } =
     Object.fromEntries(body);
   
+  if (birthdate === "") { birthdate = '1970-01-01'; }
   const height = height_ft + "\'" + height_in + '"'; 
   const missing = [];
   const position = [];
