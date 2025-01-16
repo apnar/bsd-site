@@ -53,7 +53,7 @@ async function submitHandler(context) {
   );
 
     let pretty = JSON.stringify([...body], null, 2);
-    pretty += resp;
+    pretty += JSON.stringify(resp);
     return new Response(pretty, {
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
