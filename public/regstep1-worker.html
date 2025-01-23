@@ -108,7 +108,7 @@
   <form action="/api/submit" method="post">
     <h3>Welcome to the BumpSetDrink Online Registration Page!</h3>
 
-    <span class="yowza">REGISTRATION FOR FALL 2024 IS NOW OPEN!</span>
+    <span class="yowza">REGISTRATION FOR SPRING 2025 IS NOW OPEN!</span>
     <!-- WHEN REGISTRATION IS TO BE OPEN, ENSURE "SUBMIT" BUTTON AT BOTTOM IS AVAILABLE -->
 
     <p class="c4">
@@ -140,11 +140,11 @@
     <!-- REMEMBER: When setting up for next season, uncomment the "Send Registration Info" button at bottom -->
     <!-- REMEMBER: -->
     <ul>
-      <li><b>Mon Jul 29</b> &mdash; Registration ends ($85 all players thru this date; $95 afterward)
-      <li><b>Aug 8, Aug 15, Aug 22</b> &mdash; Preseason/tryouts (<i>the first tryouts are focused mostly on <u>NEW</u> players</i>)</li>
-      <li><b>Aug 29</b> &mdash; NO PLAY (division drafts take place during this time)
-      <li><b>Sep 5 thru Oct 10</b> &mdash; Regular season</li>
-      <li><b>Oct 17, Oct 24, Nov 7</b> &mdash; Playoffs! <i>(no matches on Halloween!)</i></li>
+      <li><b>Mon Feb 24</b> &mdash; Registration ends ($90 all players thru this date; $100 afterward)
+      <li><b>Mar 6, Mar 13, Mar 20</b> &mdash; Preseason/tryouts (<i>the first tryouts are focused mostly on <u>NEW</u> players</i>)</li>
+      <li><b>Mar 27</b> &mdash; NO PLAY (division drafts take place during this time)
+      <li><b>Apr 3 thru May 8</b> &mdash; Regular season</li>
+      <li><b>May 15, May 22, May 29</b> &mdash; Playoffs!</li>
     </ul>
 
     <p class="c4"><span class="hey">IMPORTANT DISCLAIMER:</span>
@@ -387,10 +387,10 @@
 
         <tr>
           <td align="center" valign="center">Dates You Will <b><u>MISS</u></b><br><br>
-          <i>Check the boxes for dates that you <u>CANNOT</u> play</i></td>
+          <i>Check the boxes for dates that you <b><u>CANNOT</u></b> play</i></td>
           <td valign="center">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; TRYOUTS:
-            <input type="checkbox" id="miss0308" name="miss0306" value="03/06" onchange="checkMissingNonPlayoffs()">Mar  6</input>
+            <input type="checkbox" id="miss0306" name="miss0306" value="03/08" onchange="checkMissingNonPlayoffs()">Mar  8</input>
             <input type="checkbox" id="miss0313" name="miss0313" value="03/13" onchange="checkMissingNonPlayoffs()">Mar 13</input>
             <input type="checkbox" id="miss0320" name="miss0320" value="03/20" onchange="checkMissingNonPlayoffs()">Mar 20</input>
             <br>REGULAR SEASON:
@@ -493,7 +493,7 @@
       function is_element_checked(e) {
         count += (document.getElementById(e).checked) ? 1 : 0;
       }
-      ["miss0306", "miss0313", "miss0320", "miss0403", "miss0410", "miss0417", "miss0424", "miss0501", "miss0508"].forEach(is_element_checked);
+      ["miss0308", "miss0313", "miss0320", "miss0403", "miss0410", "miss0417", "miss0424", "miss0501", "miss0508"].forEach(is_element_checked);
       if (count > 3) {
         if (count > lastcount) {
           alert("Are you sure you want to play this season?  You've listed quite a few dates (tryouts & regular season) that you will miss.");
@@ -508,7 +508,7 @@
         count += (document.getElementById(e).checked) ? 1 : 0;
       }
       ["miss0515", "miss0522", "miss0529"].forEach(is_element_checked);
-      if (count > 2) {
+      if (count == 3) {
         alert("Are you really going to miss all playoff matches?  Captains have requested we only accept players who plan to play at least 1 match of the playoffs.");
       }
     }
