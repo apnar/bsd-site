@@ -66,7 +66,7 @@ async function submitHandler(context) {
 
 // add birthday if we have it
   if (birthdate !== "") {
-    reqBody.fileds.push("Birthdate", birthdate);
+    reqBody.fileds.push({"Birthdate", birthdate});
   }
 
   console.log(JSON.stringify(reqBody));
@@ -83,6 +83,8 @@ async function submitHandler(context) {
       },
     },
   );
+
+  console.log(JSON.stringify(resp));
 
   //debug - shows submitted values
     //let pretty = JSON.stringify([...body], null, 2);
