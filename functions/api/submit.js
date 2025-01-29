@@ -20,7 +20,7 @@ async function submitHandler(context) {
 
 // use dummy birthdate if its blank  
   let mybirthdate = ""; // 1970-01-01';
-  if (birthdate !== "") { mybirthdate = birthdate; }
+  if (birthdate) { mybirthdate = birthdate; }
 
 // combine height into single string
   const height = height_ft + "\'" + height_in + '"'; 
