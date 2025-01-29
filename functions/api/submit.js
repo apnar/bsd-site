@@ -18,10 +18,6 @@ async function submitHandler(context) {
   let combpronouns = pronouns;
   if (pronouns === "Not Listed") { combpronouns = mypronouns; }
 
-// use dummy birthdate if its blank  
-  let mybirthdate = '1970-01-01';
-  if (birthdate !== "") { mybirthdate = birthdate; }
-
 // combine height into single string
   const height = height_ft + "\'" + height_in + '"'; 
 
@@ -42,7 +38,7 @@ async function submitHandler(context) {
   }
 
 // build data to submit
-  const reqBody = {
+  let reqBody = {
     fields: {
       "First Name": firstname,
       "Last Name": lastname,
@@ -52,7 +48,6 @@ async function submitHandler(context) {
       "Pronoun": combpronouns,
       "Height": height,
       "Age": age,
-      "Birthdate": mybirthdate,
       "Pairing Info": pairing_info,
       "Captain": captain,
       "Experience": experience,
@@ -64,6 +59,13 @@ async function submitHandler(context) {
       "Requested Week 1": (tryoutweekone === 'true'),
     },
   };
+
+// add birthday if we have it
+  if (birthdate !== "") {
+    reqBody.fields['Birthdate'] = birthdate;
+  }
+
+  console.log(JSON.stringify(reqBody));
 
 // submit to airtable
   const resp = await fetch(
@@ -78,10 +80,7 @@ async function submitHandler(context) {
     },
   );
 
-  if (!resp.ok) {
-    // redirecting to error site
-    return Response.redirect(errorsite, 303);
-  }
+  console.log(JSON.stringify(resp));
 
   //debug - shows submitted values
     //let pretty = JSON.stringify([...body], null, 2);
@@ -93,7 +92,12 @@ async function submitHandler(context) {
     //});
 
   //debug - shows airtable respose
-    //return resp;
+  //  return resp;
+
+  if (!resp.ok) {
+    // redirecting to error site
+    return Response.redirect(errorsite, 303);
+  }
 
   return Response.redirect(redirect, 303);
   }
