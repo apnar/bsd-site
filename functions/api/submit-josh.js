@@ -66,7 +66,7 @@ async function submitHandler(context) {
 
 // add birthday if we have it
   if (birthdate !== "") {
-    reqBody['fileds']['Birthdate'] = birthdate;
+    reqBody.fields['Birthdate'] = birthdate;
   }
 
   console.log(JSON.stringify(reqBody));
