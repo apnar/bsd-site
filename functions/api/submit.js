@@ -19,7 +19,7 @@ async function submitHandler(context) {
   if (pronouns === "Not Listed") { combpronouns = mypronouns; }
 
 // use dummy birthdate if its blank  
-  let mybirthdate = '1970-01-01';
+  let mybirthdate = ""; // 1970-01-01';
   if (birthdate !== "") { mybirthdate = birthdate; }
 
 // combine height into single string
@@ -52,7 +52,7 @@ async function submitHandler(context) {
       "Pronoun": combpronouns,
       "Height": height,
       "Age": age,
-      "Birthdate": birthdate,
+      "Birthdate": mybirthdate,
       "Pairing Info": pairing_info,
       "Captain": captain,
       "Experience": experience,
