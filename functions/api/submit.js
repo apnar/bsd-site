@@ -52,7 +52,7 @@ async function submitHandler(context) {
       "Pronoun": combpronouns,
       "Height": height,
       "Age": age,
-      "Birthdate": mybirthdate,
+      "Birthdate": birthdate,
       "Pairing Info": pairing_info,
       "Captain": captain,
       "Experience": experience,
