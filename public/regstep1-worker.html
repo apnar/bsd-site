@@ -196,13 +196,13 @@
       <tbody>
         <tr>
           <td align="center" valign="center">First Name:</td>
-          <td valign="center"><input name="firstname" size="30" type="text" required />
+          <td valign="center"><input name="firstname" size="30" type="text" required pattern=".*\S+.*" />
           <span class="validity"></span>
         </tr>
 
         <tr>
           <td align="center" valign="center">Last Name:</td>
-          <td valign="center"><input name="lastname" size="30" type="text" required />
+          <td valign="center"><input name="lastname" size="30" type="text" required pattern=".*\S+.*" />
           <span class="validity"></span>
         </tr>
 
@@ -216,6 +216,7 @@
           <td align="center" valign="center">E-mail Address:</td>
           <td valign="center"><input name="email" size="50" type="email" placeholder="name@gmail.com" required />
           <span class="validity"></span>
+          <br/><br/>
           <span class="bold"> &nbsp; &nbsp; &nbsp; <u>NOTE</u>: BSD primarily uses emails to communicate with players</span>
         </tr>
 
@@ -292,7 +293,7 @@
             <input name="age" type="radio" id="18-19" value="18-19"       onclick="hideBirthDate()" > <label for="18-19">       18-19</label> &nbsp; &nbsp;
             <input name="age" type="radio" id="16-17" value="16-17"       onclick="showBirthDate(1)"> <label for="16-17">       16-17</label> &nbsp; &nbsp;
             <input name="age" type="radio" id="14-15" value="14-15"       onclick="showBirthDate(0)"> <label for="14-15">       14-15</label> &nbsp; &nbsp;
-            <span class="optional" id="birthdateField">
+            <br/><span class="optional" id="birthdateField">
               Birthdate:
               <input name="birthdate" size="10" type="text" maxlength="10">
               <i>mm/dd/yyyy</i>
@@ -325,7 +326,7 @@
             If requesting to pair, specify with whom to pair and the reason for pairing.  <b>OTHERWISE LEAVE BLANK.</b><br/>
              
             <textarea name="pairing_info" cols="60" rows="2" wrap="soft"></textarea><br/>
-            <small><i><u>NOTE</u>: Players 14-15 years old are <b>required</b> to pair with their parent /
+            <small><i></u>: Players 14-15 years old are <b>required</b> to pair with their parent /
             guardian.</i></small>
           </td>
         </tr>
@@ -411,9 +412,9 @@
           <td align="center" valign="center">Want to Play Tryouts Week 1?</td>
           <td valign="center">
             <p><i>This season week 1 of the tryouts is limited to 96 players and 
-            will be mostly focused on skills drills for <u>NEW</u> players.<br>
+            will be mostly focused on skills drills for <u>NEW</u> players.<br><br>
             Returning players who check "yes" here will be considered for any
-            available slots that week but should <b>NOT</b> assume they will get<br>
+            available slots that week but should <b>NOT</b> assume they will get
             to play.&nbsp; We will contact all players directly who are requested
             to attend the first week.
             </i></p>
