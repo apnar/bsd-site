@@ -196,13 +196,13 @@
       <tbody>
         <tr>
           <td align="center" valign="center">First Name:</td>
-          <td valign="center"><input name="firstname" size="30" type="text" required pattern=".*\S+.*" />
+          <td valign="center"><input name="firstname" size="30" type="text" pattern="^\S" title="Cannot start with a space" required />
           <span class="validity"></span>
         </tr>
 
         <tr>
           <td align="center" valign="center">Last Name:</td>
-          <td valign="center"><input name="lastname" size="30" type="text" required pattern=".*\S+.*" />
+          <td valign="center"><input name="lastname"  size="30" type="text" pattern="^\S" title="Cannot start with a space" required />
           <span class="validity"></span>
         </tr>
 
@@ -214,9 +214,9 @@
 
         <tr>
           <td align="center" valign="center">E-mail Address:</td>
-          <td valign="center"><input name="email" size="50" type="email" placeholder="name@gmail.com" required />
+          <td valign="center"><input name="email" size="50" type="email" pattern="^\S+@\S+([.]\S+)+" placeholder="name@gmail.com" required />
           <span class="validity"></span>
-          <br/><br/>
+		  <br/><br/>
           <span class="bold"> &nbsp; &nbsp; &nbsp; <u>NOTE</u>: BSD primarily uses emails to communicate with players</span>
         </tr>
 
@@ -293,10 +293,10 @@
             <input name="age" type="radio" id="18-19" value="18-19"       onclick="hideBirthDate()" > <label for="18-19">       18-19</label> &nbsp; &nbsp;
             <input name="age" type="radio" id="16-17" value="16-17"       onclick="showBirthDate(1)"> <label for="16-17">       16-17</label> &nbsp; &nbsp;
             <input name="age" type="radio" id="14-15" value="14-15"       onclick="showBirthDate(0)"> <label for="14-15">       14-15</label> &nbsp; &nbsp;
-            <br/><span class="optional" id="birthdateField">
+            <span class="optional" id="birthdateField">
+              <br/> &nbsp; &nbsp; &nbsp; &nbsp;
               Birthdate:
-              <input name="birthdate" size="10" type="text" maxlength="10">
-              <i>mm/dd/yyyy</i>
+              <input name="birthdate" size="10" type="text" pattern="^[0-1][0-9]/[0-3][0-9]/(19|20)\d\d$" placeholder="mm/dd/yyyy" maxlength="10">
             </span>
             <span> &nbsp; </span>
             <span style="position:relative; width: 450px; valign:center;">
@@ -326,7 +326,7 @@
             If requesting to pair, specify with whom to pair and the reason for pairing.  <b>OTHERWISE LEAVE BLANK.</b><br/>
              
             <textarea name="pairing_info" cols="60" rows="2" wrap="soft"></textarea><br/>
-            <small><i></u>: Players 14-15 years old are <b>required</b> to pair with their parent /
+            <small><i>Players 14-15 years old are <b>required</b> to pair with their parent /
             guardian.</i></small>
           </td>
         </tr>
