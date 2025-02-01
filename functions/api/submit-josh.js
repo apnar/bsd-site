@@ -18,10 +18,6 @@ async function submitHandler(context) {
   let combpronouns = pronouns;
   if (pronouns === "Not Listed") { combpronouns = mypronouns; }
 
-// use dummy birthdate if its blank  
-  let mybirthdate = '1970-01-01';
-  if (birthdate !== "") { mybirthdate = birthdate; }
-
 // combine height into single string
   const height = height_ft + "\'" + height_in + '"'; 
 
@@ -86,6 +82,8 @@ async function submitHandler(context) {
 
   console.log(JSON.stringify(resp));
 
+
+
   //debug - shows submitted values
     //let pretty = JSON.stringify([...body], null, 2);
     //pretty += JSON.stringify(resp);
@@ -96,12 +94,49 @@ async function submitHandler(context) {
     //});
 
   //debug - shows airtable respose
-    return resp;
+  //  return resp;
 
   if (!resp.ok) {
     // redirecting to error site
     return Response.redirect(errorsite, 303);
   }
+
+  const squareReqBody = {
+    "checkout_options": {
+      "ask_for_shipping_address": "false",
+      "allow_tipping": "false",
+      "enable_coupon": "false",
+      "enable_loyalty": "false",
+      "redirect_url": "https://bumpsetdrink.com/thankyou",
+    },
+    "quick_pay": {
+      "location_id": "LM5PAYQK9AZA1",
+      "name": "BSD Spring 2025",
+      "price_money": {
+        "amount": 100,
+        "currency": "USD"
+      }
+    },
+    "pre_populated_data": {
+      "buyer_email": email,
+      "buyer_phone_number": "+1-" + phone,
+    }
+  };
+
+  const squareResp = await fetch(
+    `https://connect.squareupsandbox.com/v2/online-checkout/payment-links`,
+    {
+      method: "POST",
+      body: JSON.stringify(squareReqBody),
+      headers: {
+        Square-Version: `2025-01-23`,
+        Authorization: `Bearer ${context.env.SQUARE_API_KEY}`,
+        "Content-type": `application/json`,
+      },
+    },
+  );
+
+  return squareResp;
 
   return Response.redirect(redirect, 303);
   }
