@@ -2,6 +2,8 @@
  * POST /api/submit
  */
 export async function onRequestGet(context) {
+  const errorsite = "regerror.html";
+  const redirect = "regcomplete.html";
   try {
 
   const { searchParams } = new URL(context.request.url);
@@ -24,6 +26,11 @@ export async function onRequestGet(context) {
 
   const atJson = await resp.json();
   console.log(atJson);
+
+  if (!resp.ok) {
+    // redirecting to error site
+    return Response.redirect(errorsite, 303);
+  }
 
   const myRecordID = atJson.records[0].id;
   const myOrderID = atJson.records[0].fields.order_id;
@@ -82,12 +89,7 @@ export async function onRequestGet(context) {
   const updateJson = await updateResp.json();
   console.log(updateJson);
 
-  if (!resp.ok) {
-    // redirecting to error site
-    return Response.redirect(errorsite, 303);
-  }
-
-  if (!resp.ok) {
+  if (!updateResp.ok) {
     // redirecting to error site
     return Response.redirect(errorsite, 303);
   }

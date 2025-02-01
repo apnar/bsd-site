@@ -6,6 +6,7 @@ export async function onRequestPost(context) {
 }
 
 async function submitHandler(context) {
+  const errorsite = "regerror.html";
   try {
   const body = await context.request.formData();
 
@@ -14,9 +15,8 @@ async function submitHandler(context) {
 // cost of item in cents
   const itemCost = 100;
 // redirect on error to
-  const errorsite = "regerror.html";
 
-  const { redirect, firstname, lastname, phone, email, gendermale, pronouns,
+  const { firstname, lastname, phone, email, gendermale, pronouns,
     mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,
     experience, note_to_directors, referby, emergencyinfo, tryoutweekone } =
     Object.fromEntries(body);
