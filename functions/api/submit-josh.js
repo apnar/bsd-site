@@ -90,8 +90,8 @@ async function submitHandler(context) {
   console.log(squareJson);
 
   const square_url = squareJson.url;
-  //const orderid = squareResp.payment_link['order_id'];
-  const orderid = 12343214;
+  const orderid = squareJson.payment_link['order_id'];
+  //const orderid = 12343214;
  
   console.log("url: " + square_url + "  orderid: " + orderid);
 
@@ -152,10 +152,10 @@ async function submitHandler(context) {
     //});
 
   //debug - shows airtable respose
-  //  return resp;
+    return resp;
 
   //debug - show square respones
-  return squareJson;
+  //return squareJson;
 
   if (!resp.ok) {
     // redirecting to error site
