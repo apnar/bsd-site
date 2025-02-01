@@ -1,11 +1,7 @@
 /**
  * POST /api/submit
  */
-export async function onRequestPost(context) {
-  return await submitHandler(context);
-}
-
-async function submitHandler(context) {
+export async function onRequestGet(context) {
   try {
 
   const { searchParams } = new URL(request.url);
