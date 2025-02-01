@@ -88,7 +88,9 @@ async function submitHandler(context) {
 
 
   const square_url = squareResp.url;
-  const orderid = squareResp.payment_link.order_id;
+  const orderid = squareResp.payment_link['order_id'];
+ 
+  console.log("url: " + square_url + "  orderid: " + orderid);
 
 // build data to submit to Air table
   let reqBody = {
@@ -136,8 +138,6 @@ async function submitHandler(context) {
   );
 
   console.log(JSON.stringify(resp));
-
-
 
   //debug - shows submitted values
     //let pretty = JSON.stringify([...body], null, 2);
