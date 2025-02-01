@@ -26,7 +26,7 @@ export async function onRequestGet(context) {
   console.log(atJson);
 
   const myRecordID = atJson.records['id'];
-  const myOrderID = atJson.records.fields['order_id'];
+//  const myOrderID = atJson.records.fields['order_id'];
 
 
 
