@@ -51,9 +51,7 @@ export async function onRequestGet(context) {
     return Response.redirect(errorsite, 303);
   }
 
-
-
-  let amountPaid = 90.00;
+  let amountPaid = squareJson.order.tenders.amount_money.amount / 100;
 
   let updateBody = {
     "records": [
