@@ -86,8 +86,10 @@ async function submitHandler(context) {
     },
   );
 
+  const squareJson = await squareResp.json();
+  console.log(squareJson);
 
-  const square_url = squareResp.url;
+  const square_url = squareJson.url;
   //const orderid = squareResp.payment_link['order_id'];
   const orderid = 12343214;
  
