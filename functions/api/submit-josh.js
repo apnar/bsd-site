@@ -155,7 +155,7 @@ async function submitHandler(context) {
   //  return resp;
 
   //debug - show square respones
-  return squareResp;
+  return squareJson;
 
   if (!resp.ok) {
     // redirecting to error site
