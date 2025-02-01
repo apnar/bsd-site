@@ -30,7 +30,7 @@ export async function onRequestGet(context) {
 
   console.log("My record ID is: " + myRecordID + " Order ID is: " + myOrderID);
 
-  let amountPaid = $90.00";
+  let amountPaid = "90.00";
 
   let updateBody = {
     "records": [
