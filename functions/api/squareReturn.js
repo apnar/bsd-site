@@ -4,7 +4,7 @@
 export async function onRequestGet(context) {
   try {
 
-  const { searchParams } = new URL(request.url);
+  const { searchParams } = new URL(context.url);
   let myid = searchParams.get('id');
   console.log("Found redirect ID: " + myid);
 
