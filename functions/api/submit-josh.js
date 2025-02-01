@@ -9,6 +9,11 @@ async function submitHandler(context) {
   try {
   const body = await context.request.formData();
 
+// name to show for item in Square
+  const itemName = "BSD Spring 2025 Fee";
+// cost of item in cents
+  const itemCost = 100;
+
   const { redirect, errorsite, firstname, lastname, phone, email, gendermale, pronouns,
     mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,
     experience, note_to_directors, referby, emergencyinfo, tryoutweekone } =
@@ -37,7 +42,55 @@ async function submitHandler(context) {
     } 
   }
 
-// build data to submit
+  const myid = Date.now().toString(36) + Math.random().toString(36).substr(2);
+
+  const squareReqBody = {
+    "checkout_options": {
+      "ask_for_shipping_address": false,
+      "allow_tipping": false,
+      "enable_coupon": false,
+      "enable_loyalty": false,
+      "redirect_url": "https://bumpsetdrink.com/api/square?id="+myid,
+    },
+    "quick_pay": {
+      "location_id": "LM5PAYQK9AZA1",
+      "name": itemName,
+      "price_money": {
+        "amount": itemCost,
+        "currency": "USD"
+      }
+    },
+    "pre_populated_data": {
+      "buyer_email": email,
+      "buyer_phone_number": "+1-" + phone,
+      "buyer_address": {
+        "first_name": firstname,
+        "last_name": lastname
+      }
+    }
+  };
+
+  console.log(JSON.stringify(squareReqBody));
+
+// call square to create payment page
+  const squareResp = await fetch(
+    `https://connect.squareupsandbox.com/v2/online-checkout/payment-links`,
+    {
+      method: "POST",
+      body: JSON.stringify(squareReqBody),
+      headers: {
+        "Square-Version": `2025-01-23`,
+        Authorization: `Bearer ${context.env.SQUARE_API_KEY}`,
+        "Content-type": `application/json`,
+      },
+    },
+  );
+
+
+  const square_url = squareResp.url;
+  const orderid = squareResp.payment_link.order_id;
+
+// build data to submit to Air table
   let reqBody = {
     fields: {
       "First Name": firstname,
@@ -57,6 +110,8 @@ async function submitHandler(context) {
       "Emergency Contact": emergencyinfo,
       "Missing Dates": missing,
       "Requested Week 1": (tryoutweekone === 'true'),
+      "redirect_id": myid,
+      "order_id": orderid,
     },
   };
 
@@ -96,53 +151,13 @@ async function submitHandler(context) {
   //debug - shows airtable respose
   //  return resp;
 
+  //debug - show square respones
+  return squareResp;
+
   if (!resp.ok) {
     // redirecting to error site
     return Response.redirect(errorsite, 303);
   }
-
-  const squareReqBody = {
-    "checkout_options": {
-      "ask_for_shipping_address": false,
-      "allow_tipping": false,
-      "enable_coupon": false,
-      "enable_loyalty": false,
-      "redirect_url": "https://bumpsetdrink.com/thankyou",
-    },
-    "quick_pay": {
-      "location_id": "LM5PAYQK9AZA1",
-      "name": "BSD Spring 2025",
-      "price_money": {
-        "amount": 100,
-        "currency": "USD"
-      }
-    },
-    "pre_populated_data": {
-      "buyer_email": email,
-      "buyer_phone_number": "+1-" + phone,
-      "buyer_address": {
-        "first_name": firstname,
-        "last_name": lastname
-      }
-    }
-  };
-
-  console.log(JSON.stringify(squareReqBody));
-
-  const squareResp = await fetch(
-    `https://connect.squareupsandbox.com/v2/online-checkout/payment-links`,
-    {
-      method: "POST",
-      body: JSON.stringify(squareReqBody),
-      headers: {
-        "Square-Version": `2025-01-23`,
-        Authorization: `Bearer ${context.env.SQUARE_API_KEY}`,
-        "Content-type": `application/json`,
-      },
-    },
-  );
-
-  return squareResp;
 
   return Response.redirect(redirect, 303);
   }
