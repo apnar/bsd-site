@@ -13,8 +13,10 @@ async function submitHandler(context) {
   const itemName = "BSD Spring 2025 Fee";
 // cost of item in cents
   const itemCost = 100;
+// redirect on error to
+  const errorsite = "regerror.html";
 
-  const { redirect, errorsite, firstname, lastname, phone, email, gendermale, pronouns,
+  const { redirect, firstname, lastname, phone, email, gendermale, pronouns,
     mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,
     experience, note_to_directors, referby, emergencyinfo, tryoutweekone } =
     Object.fromEntries(body);
@@ -42,8 +44,10 @@ async function submitHandler(context) {
     } 
   }
 
+// create unique ID to match on redirect back
   const myid = Date.now().toString(36) + Math.random().toString(36).substr(2);
 
+// build body to send to Square
   const squareReqBody = {
     "checkout_options": {
       "ask_for_shipping_address": false,
@@ -89,8 +93,16 @@ async function submitHandler(context) {
   const squareJson = await squareResp.json();
   console.log(squareJson);
 
+  if (!squareResp.ok) {
+    // redirecting to error site
+    return Response.redirect(errorsite, 303);
+  }
+
+
   const square_url = squareJson.payment_link['url'];
   const orderid = squareJson.payment_link['order_id'];
+
+  console.log("Will redirect to this url: " + square_url);
  
 // build data to submit to Air table
   let reqBody = {
@@ -140,15 +152,6 @@ async function submitHandler(context) {
   const atJson = await resp.json();
 
   console.log(atJson);
-
-  //debug - shows submitted values
-    //let pretty = JSON.stringify([...body], null, 2);
-    //pretty += JSON.stringify(resp);
-    //return new Response(pretty, {
-    //  headers: {
-    //    'Content-Type': 'application/json;charset=utf-8',
-    //  },
-    //});
 
   if (!resp.ok) {
     // redirecting to error site
