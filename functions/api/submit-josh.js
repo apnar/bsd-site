@@ -70,7 +70,7 @@ async function submitHandler(context) {
     }
   };
 
-  console.log(JSON.stringify(squareReqBody));
+  console.log(squareReqBody);
 
 // call square to create payment page
   const squareResp = await fetch(
@@ -89,9 +89,8 @@ async function submitHandler(context) {
   const squareJson = await squareResp.json();
   console.log(squareJson);
 
-  const square_url = squareJson.url;
+  const square_url = squareJson.payment_link['url'];
   const orderid = squareJson.payment_link['order_id'];
-  //const orderid = 12343214;
  
   console.log("url: " + square_url + "  orderid: " + orderid);
 
@@ -125,7 +124,7 @@ async function submitHandler(context) {
     reqBody.fields['Birthdate'] = birthdate;
   }
 
-  console.log(JSON.stringify(reqBody));
+  console.log(reqBody);
 
 // submit to airtable
   const resp = await fetch(
@@ -140,7 +139,9 @@ async function submitHandler(context) {
     },
   );
 
-  console.log(JSON.stringify(resp));
+  const atJson = await resp.json();
+
+  console.log(atJson);
 
   //debug - shows submitted values
     //let pretty = JSON.stringify([...body], null, 2);
