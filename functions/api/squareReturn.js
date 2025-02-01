@@ -8,14 +8,28 @@ export async function onRequestGet(context) {
   let myid = searchParams.get('id');
   console.log("Found redirect ID: " + myid);
 
-  //debug - shows submitted values
-    let pretty = JSON.stringify([...body], null, 2);
-    pretty += JSON.stringify(resp);
-    return new Response(pretty, {
+  let myGet = "fields%5B%5D=order_id&filterByFormula=redirect_id%3D%22m6lk6rbgepa9vrmugpa%22";
+
+// submit to airtable
+  const resp = await fetch(
+    `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_TABLE_ID,)}?${myGet}`,
+    {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Bearer ${context.env.AIRTABLE_API_KEY}`,
+        "Content-type": `application/json`,
       },
-    });
+    },
+  );
+
+  const atJson = await resp.json();
+
+  console.log(atJson);
+
+  if (!resp.ok) {
+    // redirecting to error site
+    return Response.redirect(errorsite, 303);
+  }
 
   if (!resp.ok) {
     // redirecting to error site
