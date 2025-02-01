@@ -30,6 +30,29 @@ export async function onRequestGet(context) {
 
   console.log("My record ID is: " + myRecordID + " Order ID is: " + myOrderID);
 
+// call square to create payment page
+  const squareResp = await fetch(
+    `https://connect.squareupsandbox.com/v2/orders/${myOrderID}`,
+    {
+      method: "GET",
+      headers: {
+        "Square-Version": `2025-01-23`,
+        Authorization: `Bearer ${context.env.SQUARE_API_KEY}`,
+        "Content-type": `application/json`,
+      },
+    },
+  );
+
+  const squareJson = await squareResp.json();
+  console.log(squareJson);
+
+  if (!squareResp.ok) {
+    // redirecting to error site
+    return Response.redirect(errorsite, 303);
+  }
+
+
+
   let amountPaid = 90.00;
 
   let updateBody = {
