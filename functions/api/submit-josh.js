@@ -98,12 +98,9 @@ async function submitHandler(context) {
     return Response.redirect(errorsite, 303);
   }
 
-
   const square_url = squareJson.payment_link['url'];
   const orderid = squareJson.payment_link['order_id'];
 
-  console.log("Will redirect to this url: " + square_url);
- 
 // build data to submit to Air table
   let reqBody = {
     fields: {
@@ -158,6 +155,7 @@ async function submitHandler(context) {
     return Response.redirect(errorsite, 303);
   }
 
+  console.log("Redirecting to url: " + square_url);
   return Response.redirect(square_url, 303);
   }
   catch (error) {
