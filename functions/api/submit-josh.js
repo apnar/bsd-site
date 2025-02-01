@@ -129,7 +129,7 @@ async function submitHandler(context) {
       method: "POST",
       body: JSON.stringify(squareReqBody),
       headers: {
-        Square-Version: `2025-01-23`,
+        "Square-Version": `2025-01-23`,
         Authorization: `Bearer ${context.env.SQUARE_API_KEY}`,
         "Content-type": `application/json`,
       },
