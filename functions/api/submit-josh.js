@@ -103,10 +103,10 @@ async function submitHandler(context) {
 
   const squareReqBody = {
     "checkout_options": {
-      "ask_for_shipping_address": "false",
-      "allow_tipping": "false",
-      "enable_coupon": "false",
-      "enable_loyalty": "false",
+      "ask_for_shipping_address": false,
+      "allow_tipping": false,
+      "enable_coupon": false,
+      "enable_loyalty": false,
       "redirect_url": "https://bumpsetdrink.com/thankyou",
     },
     "quick_pay": {
