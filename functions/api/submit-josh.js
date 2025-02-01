@@ -123,6 +123,8 @@ async function submitHandler(context) {
     }
   };
 
+  console.log(JSON.stringify(squareReqBody));
+
   const squareResp = await fetch(
     `https://connect.squareupsandbox.com/v2/online-checkout/payment-links`,
     {
