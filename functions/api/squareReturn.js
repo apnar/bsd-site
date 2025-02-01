@@ -55,6 +55,8 @@ export async function onRequestGet(context) {
         Authorization: `Bearer ${context.env.AIRTABLE_API_KEY}`,
         "Content-type": `application/json`,
       },
+    }
+  );
 
   const updateJson = await updateResp.json();
   console.log(updateJson);
