@@ -8,7 +8,7 @@ export async function onRequestGet(context) {
   let myid = searchParams.get('id');
   console.log("Found redirect ID: " + myid);
 
-  let myGet = "fields%5B%5D=order_id&filterByFormula=redirect_id%3D%22m6lk6rbgepa9vrmugpa%22";
+  let myGet = "fields%5B%5D=order_id&filterByFormula=%7Bredirect_id%7D%3D'" + myid + "'";
 
 // submit to airtable
   const resp = await fetch(
