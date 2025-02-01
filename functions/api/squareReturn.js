@@ -28,7 +28,7 @@ export async function onRequestGet(context) {
   const myRecordID = atJson.records['id'];
 //  const myOrderID = atJson.records.fields['order_id'];
 
-
+  console.log("My record ID is: " + myRecordID);
 
   let amountPaid = "$90.00";
 
