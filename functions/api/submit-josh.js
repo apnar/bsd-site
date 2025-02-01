@@ -50,7 +50,7 @@ async function submitHandler(context) {
       "allow_tipping": false,
       "enable_coupon": false,
       "enable_loyalty": false,
-      "redirect_url": "https://bumpsetdrink.com/api/square?id="+myid,
+      "redirect_url": "https://www.bumpsetdrink.com/api/square?id="+myid,
     },
     "quick_pay": {
       "location_id": "LM5PAYQK9AZA1",
@@ -88,7 +88,8 @@ async function submitHandler(context) {
 
 
   const square_url = squareResp.url;
-  const orderid = squareResp.payment_link['order_id'];
+  //const orderid = squareResp.payment_link['order_id'];
+  const orderid = 12343214;
  
   console.log("url: " + square_url + "  orderid: " + orderid);
 
