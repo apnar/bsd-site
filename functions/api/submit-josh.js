@@ -120,6 +120,10 @@ async function submitHandler(context) {
     "pre_populated_data": {
       "buyer_email": email,
       "buyer_phone_number": "+1-" + phone,
+      "buyer_address": {
+        "first_name": firstname,
+        "last_name": lastname
+      }
     }
   };
 
