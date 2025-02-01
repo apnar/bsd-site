@@ -50,7 +50,7 @@ async function submitHandler(context) {
       "allow_tipping": false,
       "enable_coupon": false,
       "enable_loyalty": false,
-      "redirect_url": "https://www.bumpsetdrink.com/api/square?id="+myid,
+      "redirect_url": "https://www.bumpsetdrink.com/api/squareReturn?id="+myid,
     },
     "quick_pay": {
       "location_id": "LM5PAYQK9AZA1",
@@ -92,8 +92,6 @@ async function submitHandler(context) {
   const square_url = squareJson.payment_link['url'];
   const orderid = squareJson.payment_link['order_id'];
  
-  console.log("url: " + square_url + "  orderid: " + orderid);
-
 // build data to submit to Air table
   let reqBody = {
     fields: {
@@ -152,18 +150,12 @@ async function submitHandler(context) {
     //  },
     //});
 
-  //debug - shows airtable respose
-    return resp;
-
-  //debug - show square respones
-  //return squareJson;
-
   if (!resp.ok) {
     // redirecting to error site
     return Response.redirect(errorsite, 303);
   }
 
-  return Response.redirect(redirect, 303);
+  return Response.redirect(square_url, 303);
   }
   catch (error) {
     console.error(error.message);
