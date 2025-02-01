@@ -8,6 +8,10 @@ export async function onRequestPost(context) {
 async function submitHandler(context) {
   try {
 
+  const { searchParams } = new URL(request.url);
+  let myid = searchParams.get('id');
+  console.log("Found redirect ID: " + myid);
+
   //debug - shows submitted values
     let pretty = JSON.stringify([...body], null, 2);
     pretty += JSON.stringify(resp);
