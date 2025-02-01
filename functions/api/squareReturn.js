@@ -10,7 +10,7 @@ export async function onRequestGet(context) {
 
   let myGet = "fields%5B%5D=order_id&filterByFormula=%7Bredirect_id%7D%3D'" + myid + "'";
 
-// submit to airtable
+// use redirect ID to look up order id in airtable
   const resp = await fetch(
     `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_TABLE_ID,)}?${myGet}`,
     {
@@ -23,8 +23,41 @@ export async function onRequestGet(context) {
   );
 
   const atJson = await resp.json();
-
   console.log(atJson);
+
+  const myRecordID = atJson.records['id'];
+  const myOrderID = atJson.records.fields['order_id'];
+
+
+
+  let amountPaid = "$90.00";
+
+  let updateBody = {
+    "records": [
+    {
+      "id": myRecordID,
+       fields: {
+        "Paid": amountPaid,
+       }
+    }
+   ]
+  };
+
+  console.log(updateBody);
+
+// submit to airtable
+  const updateResp = await fetch(
+    `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_TABLE_ID,)}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(updateBody),
+      headers: {
+        Authorization: `Bearer ${context.env.AIRTABLE_API_KEY}`,
+        "Content-type": `application/json`,
+      },
+
+  const updateJson = await updateResp.json();
+  console.log(updateJson);
 
   if (!resp.ok) {
     // redirecting to error site
