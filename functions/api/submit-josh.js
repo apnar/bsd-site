@@ -6,7 +6,7 @@ export async function onRequestPost(context) {
 }
 
 async function submitHandler(context) {
-  const errorsite = "regerror.html";
+  const errorsite = "https://www.bumpsetdrink.com/regerror.html";
   try {
   const body = await context.request.formData();
 
@@ -14,7 +14,6 @@ async function submitHandler(context) {
   const itemName = "BSD Spring 2025 Fee";
 // cost of item in cents
   const itemCost = 100;
-// redirect on error to
 
   const { firstname, lastname, phone, email, gendermale, pronouns,
     mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,

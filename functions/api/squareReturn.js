@@ -2,8 +2,8 @@
  * POST /api/submit
  */
 export async function onRequestGet(context) {
-  const errorsite = "regerror.html";
-  const redirect = "regcomplete.html";
+  const errorsite = "https://www.bumpsetdrink.com/regerror.html";
+  const redirect = "https://www.bumpsetdrink.com/regcomplete.html";
   try {
 
   const { searchParams } = new URL(context.request.url);
