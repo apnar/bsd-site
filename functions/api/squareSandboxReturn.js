@@ -105,32 +105,32 @@ export async function onRequestGet(context) {
 // build data to submit to Air table
 let paidBody = {
   fields: {
-    "First Name": firstname,
-    "Last Name": lastname,
-    "Phone": phone,
-    "Email": email,
-    "Male": (gendermale === 'true'),
-    "Pronoun": combpronouns,
-    "Height": height,
-    "Age": age,
-    "Pairing Info": pairing_info,
-    "Captain": captain,
-    "Experience": experience,
-    "Position": position,
-    "Additional Info": note_to_directors,
-    "Refer": referby,
-    "Emergency Contact": emergencyinfo,
-    "Missing Dates": missing,
-    "Requested Week 1": (tryoutweekone === 'true'),
-    "redirect_id": myid,
-    "order_id": orderid,
+    "First Name": atJson.records[0].fields['First Name'],
+    "Last Name": atJson.records[0].fields['Last Name'],
+    "Phone": atJson.records[0].fields['Phone'],
+    "Email": atJson.records[0].fields['Email'],
+    "Male": atJson.records[0].fields['Male'],
+    "Pronoun": atJson.records[0].fields['Pronoun'],
+    "Height": atJson.records[0].fields['Height'],
+    "Age": atJson.records[0].fields['Age'],
+    "Pairing Info": atJson.records[0].fields['Pairing Info'],
+    "Captain": atJson.records[0].fields['Captain'],
+    "Experience": atJson.records[0].fields['Experience'],
+    "Position": atJson.records[0].fields['Position'],
+    "Additional Info": atJson.records[0].fields['Additional Info'],
+    "Refer": atJson.records[0].fields['Refer'],
+    "Emergency Contact": atJson.records[0].fields['Emergency Contact'],
+    "Missing Dates": atJson.records[0].fields['Missing Dates'],
+    "Requested Week 1": atJson.records[0].fields['Requested Week 1'],
+    "redirect_id": atJson.records[0].fields['redirect_id'],
+    "order_id": atJson.records[0].fields['order_id'],
     "Paid": amountPaid,
   },
 };
 
 // add birthday if we have it
-if (birthdate !== "") {
-  paidBody.fields['Birthdate'] = birthdate;
+if (atJson.records[0].fields['Birthdate'] !== "") {
+  paidBody.fields['Birthdate'] = atJson.records[0].fields['Birthdate'];
 }
 
 console.log(paidBody);
