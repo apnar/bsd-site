@@ -105,10 +105,10 @@
 </head>
 
 <body class="c17">
-  <form action="send_form_email_reg1.php" method="post">
+  <form action="/api/submit" method="post">
     <h3>Welcome to the BumpSetDrink Online Registration Page!</h3>
 
-    <span class="yowza">REGISTRATION FOR FALL 2024 IS NOW OPEN!</span>
+    <span class="yowza">REGISTRATION FOR SPRING 2025 IS NOW OPEN!</span>
     <!-- WHEN REGISTRATION IS TO BE OPEN, ENSURE "SUBMIT" BUTTON AT BOTTOM IS AVAILABLE -->
 
     <p class="c4">
@@ -134,17 +134,17 @@
     guardian. &nbsp;Players 16-17 are required to have a parent or guardian
     present during their matches.</span><br/></p>
 
-    <p class="c4 c4hey">Fall 2024 Season details:</p>
+    <p class="c4 c4hey">Spring 2025 Season details:</p>
 
     <!-- REMEMBER: -->
     <!-- REMEMBER: When setting up for next season, uncomment the "Send Registration Info" button at bottom -->
     <!-- REMEMBER: -->
     <ul>
-      <li><b>Mon Jul 29</b> &mdash; Registration ends ($85 all players thru this date; $95 afterward)
-      <li><b>Aug 8, Aug 15, Aug 22</b> &mdash; Preseason/tryouts (<i>the first tryouts are focused mostly on <u>NEW</u> players</i>)</li>
-      <li><b>Aug 29</b> &mdash; NO PLAY (division drafts take place during this time)
-      <li><b>Sep 5 thru Oct 10</b> &mdash; Regular season</li>
-      <li><b>Oct 17, Oct 24, Nov 7</b> &mdash; Playoffs! <i>(no matches on Halloween!)</i></li>
+      <li><b>Mon Feb 24</b> &mdash; Registration ends ($90 all players thru this date; $100 afterward)
+      <li><b>Mar 6, Mar 13, Mar 20</b> &mdash; Preseason/tryouts (<i>the first tryouts are focused mostly on <u>NEW</u> players</i>)</li>
+      <li><b>Mar 27</b> &mdash; NO PLAY (division drafts take place during this time)
+      <li><b>Apr 3 thru May 8</b> &mdash; Regular season</li>
+      <li><b>May 15, May 22, May 29</b> &mdash; Playoffs!</li>
     </ul>
 
     <p class="c4"><span class="hey">IMPORTANT DISCLAIMER:</span>
@@ -187,21 +187,22 @@
     <br/>
     <input name="subject" value="BSD Registration" type="hidden">
     <input name="recipient" value="registration@bumpsetdrink.com,webmaster@bumpsetdrink.com,dee@bumpsetdrink.com,steve@bumpsetdrink.com" type= "hidden">
-    <input name="required" value="firstname,lastname,phone,email,gendermale,captain,experience,liability" type= "hidden">
+    <input name="required" value="firstname,lastname,phone,email,gendermale,captain,experience,liability,height_in,height_ft" type= "hidden">
     <input name="redirect" value="https://www.bumpsetdrink.com/regstep2.html" type="hidden">
+    <input name="errorsite" value="https://www.bumpsetdrink.com/regstep1-worker.html" type="hidden">
 
     <!-- <table style="border-collapse: collapse; width: 90%;"> -->
     <table border="1">
       <tbody>
         <tr>
           <td align="center" valign="center">First Name:</td>
-          <td valign="center"><input name="firstname" size="30" type="text" required />
+          <td valign="center"><input name="firstname" size="30" type="text" pattern="^\S+.*" title="Cannot start with a space" required />
           <span class="validity"></span>
         </tr>
 
         <tr>
           <td align="center" valign="center">Last Name:</td>
-          <td valign="center"><input name="lastname" size="30" type="text" required />
+          <td valign="center"><input name="lastname"  size="30" type="text" pattern="^\S+.*" title="Cannot start with a space" required />
           <span class="validity"></span>
         </tr>
 
@@ -215,6 +216,7 @@
           <td align="center" valign="center">E-mail Address:</td>
           <td valign="center"><input name="email" size="50" type="email" placeholder="name@gmail.com" required />
           <span class="validity"></span>
+		  <br/><br/>
           <span class="bold"> &nbsp; &nbsp; &nbsp; <u>NOTE</u>: BSD primarily uses emails to communicate with players</span>
         </tr>
 
@@ -232,8 +234,8 @@
             </div></span>
           </td>
           <td valign="center">
-            <input name="gendermale" id="male_yes" value="yes" type="radio" required> <label for="male_yes">Yes</label> &nbsp; &nbsp;
-            <input name="gendermale" id="male_no"  value="no"  type="radio" required> <label for="male_no" >No</label>
+            <input name="gendermale" id="male_yes" value="true" type="radio" required> <label for="male_yes">Yes</label> &nbsp; &nbsp;
+            <input name="gendermale" id="male_no"  value="false"  type="radio" required> <label for="male_no" >No</label>
           </td>
         </tr>
 
@@ -260,21 +262,41 @@
 
         <tr>
           <td align="center" valign="center">Height:<br/></td>
-          <td valign="center"><input name="height" size="60" maxlength=60 type="text" placeholder="5' 8&quot;" required />
+          <td valign="center">
+          <select name="height_ft" id="height_ft" required>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+          </select> Feet
+          <select name="height_in" id="height_in" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6" selected>6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+          </select> Inches (round up to nearest inch)
           <span class="validity"></span>
         </tr>
 
         <tr>
           <td align="center" valign="center">Age:</td>
           <td valign="center">
-            <input name="age" type="radio" id="20+"   value="20+" checked onclick="hideBirthDate()"> <label for="20+"  >20 and older</label> &nbsp; &nbsp;
-            <input name="age" type="radio" id="18-19" value="18-19"       onclick="hideBirthDate()"> <label for="18-19">       18-19</label> &nbsp; &nbsp;
+            <input name="age" type="radio" id="20+"   value="20+" checked onclick="hideBirthDate()" > <label for="20+"  >20 and older</label> &nbsp; &nbsp;
+            <input name="age" type="radio" id="18-19" value="18-19"       onclick="hideBirthDate()" > <label for="18-19">       18-19</label> &nbsp; &nbsp;
             <input name="age" type="radio" id="16-17" value="16-17"       onclick="showBirthDate(1)"> <label for="16-17">       16-17</label> &nbsp; &nbsp;
             <input name="age" type="radio" id="14-15" value="14-15"       onclick="showBirthDate(0)"> <label for="14-15">       14-15</label> &nbsp; &nbsp;
+	    <br/>
             <span class="optional" id="birthdateField">
-              <label for="birthdate">Birthdate:</label>
-              <input name="birthdate" size="10" type="text" maxlength="10">
-              <i>mm/dd/yyyy</i>
+              Birthdate:
+              <input name="birthdate" size="10" type="text" pattern="^[0-1][0-9]/[0-3][0-9]/20[01][0-9]$" placeholder="mm/dd/yyyy" maxlength="10">
             </span>
             <span> &nbsp; </span>
             <span style="position:relative; width: 450px; valign:center;">
@@ -304,7 +326,7 @@
             If requesting to pair, specify with whom to pair and the reason for pairing.  <b>OTHERWISE LEAVE BLANK.</b><br/>
              
             <textarea name="pairing_info" cols="60" rows="2" wrap="soft"></textarea><br/>
-            <small><i><u>NOTE</u>: Players 14-15 years old are <b>required</b> to pair with their parent /
+            <small><i>Players 14-15 years old are <b>required</b> to pair with their parent /
             guardian.</i></small>
           </td>
         </tr>
@@ -337,10 +359,10 @@
           <td align="center" valign="center">Positions You Are Comfortable Playing</td>
 
           <td valign="center">
-            <input type="checkbox" name="p_hitter" value="hitter">hitter</input>
-            <input type="checkbox" name="p_setter" value="setter">setter</input>
-            <input type="checkbox" name="p_passer" value="passer">passer</input>
-            <input type="checkbox" name="p_other"  value="other" >other</input>
+            <input type="checkbox" id="p_hitter" name="p_hitter" value="hitter"><label for="p_hitter">hitter</label></input> &nbsp;
+            <input type="checkbox" id="p_setter" name="p_setter" value="setter"><label for="p_setter">setter</label></input> &nbsp;
+            <input type="checkbox" id="p_passer" name="p_passer" value="passer"><label for="p_passer">passer</label></input> &nbsp;
+            <input type="checkbox" id="p_other"  name="p_other"  value="other" ><label for="p_other" >other</label></input>
             <br><small><i>REMINDER: BSD is a co-ed league played on a men's height net</i></small>
           </td>
         </tr>
@@ -366,23 +388,23 @@
 
         <tr>
           <td align="center" valign="center">Dates You Will <b><u>MISS</u></b><br><br>
-          <i>Check the boxes for dates that you <u>CANNOT</u> play</i></td>
+          <i>Check the boxes for dates that you <b><u>CANNOT</u></b> play</i></td>
           <td valign="center">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; TRYOUTS:
-            <input type="checkbox" id="miss0808" name="miss0808" value="08/08" onchange="checkMissingNonPlayoffs()">Aug  8</input>
-            <input type="checkbox" id="miss0815" name="miss0815" value="08/15" onchange="checkMissingNonPlayoffs()">Aug 15</input>
-            <input type="checkbox" id="miss0822" name="miss0822" value="08/22" onchange="checkMissingNonPlayoffs()">Aug 22</input>
+            <input type="checkbox" id="miss0306" name="miss0306" value="03/06" onchange="checkMissingNonPlayoffs()"><label for="miss0306">Mar  6</label></input>
+            <input type="checkbox" id="miss0313" name="miss0313" value="03/13" onchange="checkMissingNonPlayoffs()"><label for="miss0313">Mar 13</label></input>
+            <input type="checkbox" id="miss0320" name="miss0320" value="03/20" onchange="checkMissingNonPlayoffs()"><label for="miss0320">Mar 20</label></input>
             <br>REGULAR SEASON:
-            <input type="checkbox" id="miss0905" name="miss0905" value="09/05" onchange="checkMissingNonPlayoffs()">Sep  5</input>
-            <input type="checkbox" id="miss0912" name="miss0912" value="09/12" onchange="checkMissingNonPlayoffs()">Sep 12</input>
-            <input type="checkbox" id="miss0919" name="miss0919" value="09/19" onchange="checkMissingNonPlayoffs()">Sep 19</input>
-            <input type="checkbox" id="miss0926" name="miss0926" value="09/26" onchange="checkMissingNonPlayoffs()">Sep 26</input>
-            <input type="checkbox" id="miss1003" name="miss1003" value="10/03" onchange="checkMissingNonPlayoffs()">Oct  3</input>
-            <input type="checkbox" id="miss1010" name="miss1010" value="10/10" onchange="checkMissingNonPlayoffs()">Oct 10</input>
+            <input type="checkbox" id="miss0403" name="miss0403" value="04/03" onchange="checkMissingNonPlayoffs()"><label for="miss0403">Apr  3</label></input>
+            <input type="checkbox" id="miss0410" name="miss0410" value="04/10" onchange="checkMissingNonPlayoffs()"><label for="miss0410">Apr 10</label></input>
+            <input type="checkbox" id="miss0417" name="miss0417" value="04/17" onchange="checkMissingNonPlayoffs()"><label for="miss0417">Apr 17</label></input>
+            <input type="checkbox" id="miss0424" name="miss0424" value="04/24" onchange="checkMissingNonPlayoffs()"><label for="miss0424">Apr 24</label></input>
+            <input type="checkbox" id="miss0501" name="miss0501" value="05/01" onchange="checkMissingNonPlayoffs()"><label for="miss0501">May  1</label></input>
+            <input type="checkbox" id="miss0508" name="miss0508" value="05/08" onchange="checkMissingNonPlayoffs()"><label for="miss0508">May  8</label></input>
             <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; PLAYOFFS:
-            <input type="checkbox" id="miss1017" name="miss1017" value="10/17" onchange="checkMissingPlayoffs()"   >Oct 17</input>
-            <input type="checkbox" id="miss1024" name="miss1024" value="10/24" onchange="checkMissingPlayoffs()"   >Oct 24</input>
-            <input type="checkbox" id="miss1107" name="miss1107" value="11/07" onchange="checkMissingPlayoffs()"   >Nov  7</input>
+            <input type="checkbox" id="miss0515" name="miss0515" value="05/15" onchange="checkMissingPlayoffs()"   ><label for="miss0515">May 15</label></input>
+            <input type="checkbox" id="miss0522" name="miss0522" value="05/22" onchange="checkMissingPlayoffs()"   ><label for="miss0522">May 22</label></input>
+            <input type="checkbox" id="miss0529" name="miss0529" value="05/29" onchange="checkMissingPlayoffs()"   ><label for="miss0529">May 29</label></input>
           </td>
         </tr>
 
@@ -390,13 +412,13 @@
           <td align="center" valign="center">Want to Play Tryouts Week 1?</td>
           <td valign="center">
             <p><i>This season week 1 of the tryouts is limited to 96 players and 
-            will be mostly focused on skills drills for <u>NEW</u> players.<br>
+            will be mostly focused on skills drills for <u>NEW</u> players.<br><br>
             Returning players who check "yes" here will be considered for any
-            available slots that week but should <b>NOT</b> assume they will get<br>
+            available slots that week but should <b>NOT</b> assume they will get
             to play.&nbsp; We will contact all players directly who are requested
             to attend the first week.
             </i></p>
-            <input type="checkbox" name="tryoutweekone" value="yes">Yes</input>
+            <input type="checkbox" name="tryoutweekone" value="true">Yes</input>
             <!-- <input name="tryoutweekone" id="yes" value="yes" type="radio"> <label for="yes">Yes</label> &nbsp; &nbsp; -->
           </td>
         </tr>
@@ -472,7 +494,7 @@
       function is_element_checked(e) {
         count += (document.getElementById(e).checked) ? 1 : 0;
       }
-      ["miss0808", "miss0815", "miss0822", "miss0905", "miss0912", "miss0919", "miss0926", "miss1003", "miss1010"].forEach(is_element_checked);
+      ["miss0306", "miss0313", "miss0320", "miss0403", "miss0410", "miss0417", "miss0424", "miss0501", "miss0508"].forEach(is_element_checked);
       if (count > 3) {
         if (count > lastcount) {
           alert("Are you sure you want to play this season?  You've listed quite a few dates (tryouts & regular season) that you will miss.");
@@ -486,8 +508,8 @@
       function is_element_checked(e) {
         count += (document.getElementById(e).checked) ? 1 : 0;
       }
-      ["miss1017", "miss1024", "miss1107"].forEach(is_element_checked);
-      if (count > 2) {
+      ["miss0515", "miss0522", "miss0529"].forEach(is_element_checked);
+      if (count == 3) {
         alert("Are you really going to miss all playoff matches?  Captains have requested we only accept players who plan to play at least 1 match of the playoffs.");
       }
     }
