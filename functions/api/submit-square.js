@@ -13,7 +13,7 @@ async function submitHandler(context) {
 // name to show for item in Square
   const itemName = "BSD Spring 2025 Fee";
 // cost of item in cents
-  const itemCost = 100;
+  const itemCost = 9000;
 
   const { firstname, lastname, phone, email, gendermale, pronouns,
     mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,
@@ -77,7 +77,7 @@ async function submitHandler(context) {
 
 // call square to create payment page
   const squareResp = await fetch(
-    `https://connect.squareupsandbox.com/v2/online-checkout/payment-links`,
+    `https://connect.squareup.com/v2/online-checkout/payment-links`,
     {
       method: "POST",
       body: JSON.stringify(squareReqBody),

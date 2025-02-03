@@ -39,7 +39,7 @@ export async function onRequestGet(context) {
 
 // call square to create payment page
   const squareResp = await fetch(
-    `https://connect.squareupsandbox.com/v2/orders/${myOrderID}`,
+    `https://connect.squareup.com/v2/orders/${myOrderID}`,
     {
       method: "GET",
       headers: {
