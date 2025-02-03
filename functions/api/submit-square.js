@@ -56,7 +56,7 @@ async function submitHandler(context) {
       "redirect_url": "https://www.bumpsetdrink.com/api/squareReturn?id="+myid,
     },
     "quick_pay": {
-      "location_id": "LM5PAYQK9AZA1",
+      "location_id": "D553J590TQAZZ",
       "name": itemName,
       "price_money": {
         "amount": itemCost,
