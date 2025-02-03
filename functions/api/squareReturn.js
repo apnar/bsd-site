@@ -59,6 +59,13 @@ export async function onRequestGet(context) {
   }
 
   let amountPaid = squareJson.order.total_money.amount / 100;
+  const amountDue = squareJson.order.net_amount_due_money.amount;
+  const orderState = squareJson.order.state;
+
+  if((amountDue > 0) || (orderState != "OPEN")) {
+    // redirecting to error site
+    return Response.redirect(errorsite, 303);
+  }
 
   let updateBody = {
     "records": [
