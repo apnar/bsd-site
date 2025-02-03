@@ -140,7 +140,7 @@ const paidResp = await fetch(
   `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_SANDBOX_PAID_TABLE_ID,)}`,
   {
     method: "POST",
-    body: JSON.stringify(reqBody),
+    body: JSON.stringify(paidBody),
     headers: {
       Authorization: `Bearer ${context.env.AIRTABLE_API_KEY}`,
       "Content-type": `application/json`,
