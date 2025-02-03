@@ -53,7 +53,7 @@ async function submitHandler(context) {
       "allow_tipping": false,
       "enable_coupon": false,
       "enable_loyalty": false,
-      "redirect_url": "https://www.bumpsetdrink.com/api/squareReturn?id="+myid,
+      "redirect_url": "https://www.bumpsetdrink.com/api/squareSandboxReturn?id="+myid,
     },
     "quick_pay": {
       "location_id": "LM5PAYQK9AZA1",
@@ -83,7 +83,7 @@ async function submitHandler(context) {
       body: JSON.stringify(squareReqBody),
       headers: {
         "Square-Version": `2025-01-23`,
-        Authorization: `Bearer ${context.env.SQUARE_API_KEY}`,
+        Authorization: `Bearer ${context.env.SQUARE_SANDBOX_API_KEY}`,
         "Content-type": `application/json`,
       },
     },
@@ -134,7 +134,7 @@ async function submitHandler(context) {
 
 // submit to airtable
   const resp = await fetch(
-    `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_TABLE_ID,)}`,
+    `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_SANDBOX_TABLE_ID,)}`,
     {
       method: "POST",
       body: JSON.stringify(reqBody),
