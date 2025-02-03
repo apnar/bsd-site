@@ -10,7 +10,7 @@ export async function onRequestGet(context) {
   let myid = searchParams.get('id');
   console.log("Found redirect ID: " + myid);
 
-  let myGet = "fields%5B%5D=order_id&filterByFormula=%7Bredirect_id%7D%3D'" + myid + "'";
+  let myGet = "filterByFormula=%7Bredirect_id%7D%3D'" + myid + "'";
 
 // use redirect ID to look up order id in airtable
   const resp = await fetch(
@@ -58,7 +58,7 @@ export async function onRequestGet(context) {
     return Response.redirect(errorsite, 303);
   }
 
-  let amountPaid = squareJson.order.total_money.amount / 100;
+  const amountPaid = squareJson.order.total_money.amount / 100;
   const amountDue = squareJson.order.net_amount_due_money.amount;
   const orderState = squareJson.order.state;
 
@@ -100,6 +100,63 @@ export async function onRequestGet(context) {
     // redirecting to error site
     return Response.redirect(errorsite, 303);
   }
+
+// subnmit to Paid player table
+// build data to submit to Air table
+let paidBody = {
+  fields: {
+    "First Name": atJson.records[0].fields['First Name'],
+    "Last Name": atJson.records[0].fields['Last Name'],
+    "Phone": atJson.records[0].fields['Phone'],
+    "Email": atJson.records[0].fields['Email'],
+    "Male": atJson.records[0].fields['Male'],
+    "Pronoun": atJson.records[0].fields['Pronoun'],
+    "Height": atJson.records[0].fields['Height'],
+    "Age": atJson.records[0].fields['Age'],
+    "Pairing Info": atJson.records[0].fields['Pairing Info'],
+    "Captain": atJson.records[0].fields['Captain'],
+    "Experience": atJson.records[0].fields['Experience'],
+    "Position": atJson.records[0].fields['Position'],
+    "Additional Info": atJson.records[0].fields['Additional Info'],
+    "Refer": atJson.records[0].fields['Refer'],
+    "Emergency Contact": atJson.records[0].fields['Emergency Contact'],
+    "Missing Dates": atJson.records[0].fields['Missing Dates'],
+    "Requested Week 1": atJson.records[0].fields['Requested Week 1'],
+    "redirect_id": atJson.records[0].fields['redirect_id'],
+    "order_id": atJson.records[0].fields['order_id'],
+    "Paid": amountPaid,
+  },
+};
+
+// add birthday if we have it
+if (atJson.records[0].fields['Birthdate'] !== "") {
+  paidBody.fields['Birthdate'] = atJson.records[0].fields['Birthdate'];
+}
+
+console.log(paidBody);
+
+// submit to airtable
+const paidResp = await fetch(
+  `https://api.airtable.com/v0/${context.env.AIRTABLE_BASE_ID}/${encodeURIComponent(context.env.AIRTABLE_PAID_TABLE_ID,)}`,
+  {
+    method: "POST",
+    body: JSON.stringify(paidBody),
+    headers: {
+      Authorization: `Bearer ${context.env.AIRTABLE_API_KEY}`,
+      "Content-type": `application/json`,
+    },
+  },
+);
+
+const paidJson = await paidResp.json();
+
+console.log(paidJson);
+
+if (!paidResp.ok) {
+  // redirecting to error site
+  return Response.redirect(errorsite, 303);
+}
+
 
   return Response.redirect(redirect, 303);
   }
