@@ -13,7 +13,7 @@ async function submitHandler(context) {
 // name to show for item in Square
   const itemName = "BSD Spring 2025 Fee";
 // cost of item in cents
-  const itemCost = 9000;
+  const itemCost = 10000;  // $100 Feb 25th 12:01am
 
   const { firstname, lastname, phone, email, gendermale, pronouns,
     mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,
