@@ -51,7 +51,7 @@ async function submitHandler(context) {
     "checkout_options": {
       "ask_for_shipping_address": false,
       "allow_tipping": false,
-      "enable_coupon": false,
+      "enable_coupon": true,
       "enable_loyalty": false,
       "redirect_url": "https://www.bumpsetdrink.com/api/squareReturn?id="+myid,
     },
