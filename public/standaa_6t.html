@@ -13,11 +13,11 @@
 //============================================
 var teamlist = new Array();
 teamlist[1] = {num:1, wins:0, losses:0, name:"Aley"     };
-teamlist[2] = {num:2, wins:0, losses:0, name:"Soo" };
-teamlist[3] = {num:3, wins:0, losses:0, name:"Rundlett"   };
-teamlist[4] = {num:4, wins:0, losses:0, name:"Titus"     };
+teamlist[2] = {num:2, wins:0, losses:0, name:"Soo"      };
+teamlist[3] = {num:3, wins:0, losses:0, name:"Rundlett" };
+teamlist[4] = {num:4, wins:0, losses:0, name:"Titus"    };
 teamlist[5] = {num:5, wins:0, losses:0, name:"Lukens"   };
-teamlist[6] = {num:6, wins:0, losses:0, name:"Skye"   };
+teamlist[6] = {num:6, wins:0, losses:0, name:"Skye"     };
 
 var playdates = ["04/03","04/10","04/17","04/24","05/01","05/08","05/15","05/22","05/29"]
 
@@ -224,8 +224,7 @@ for (d=0; d<playdates.length; d++) {
     </center>
     <hr> <br>
     <center>
-      <table width="447" cellpadding="7" bordercolor="#000000"
-        border="1">
+      <table id="standings" width="447">
         <tbody>
           <tr>
             <td width="14%" height="16" valign="top"><b>Team</b></td>
@@ -244,7 +243,7 @@ for (d=0; d<playdates.length; d++) {
         <tbody>
           <tr>
             <td valign="top">
-              <table style="font-size:larger;" border="1">
+              <table id="schedule">
                 <tbody>
                   <script>
                     writeScheduleTable();
@@ -253,7 +252,7 @@ for (d=0; d<playdates.length; d++) {
               </table>
             </td>
             <td valign="top">
-              <table style="font-size:larger;" border="1">
+              <table id="results">
                 <tbody>
                   <script>
                     writeResultsTable();
@@ -265,10 +264,10 @@ for (d=0; d<playdates.length; d++) {
         </tbody>
       </table>
     </center>
-    <hr> <font face="Helvetica, Arial, sans-serif" size="-1"> Send
-      comments/suggestions about this page to the <a
-        href="mailto:webmaster@bumpsetdrink.com">Webmaster</a>.<br>
-      Send comments/suggestions about the league to: <a
-        href="mailto:comments@bumpsetdrink.com">Comments</a> </font>
+    <hr>
+    <font face="Helvetica, Arial, sans-serif" size="-1">
+      Send comments/suggestions about this page to the <a href="mailto:webmaster@bumpsetdrink.com">Webmaster</a>.<br>
+      Send comments/suggestions about the league to: <a href="mailto:comments@bumpsetdrink.com">Comments</a>
+    </font>
   </body>
 </html>

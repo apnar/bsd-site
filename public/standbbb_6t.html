@@ -224,8 +224,7 @@ for (d=0; d<playdates.length; d++) {
     </center>
     <hr> <br>
     <center>
-      <table width="447" cellpadding="7" bordercolor="#000000"
-        border="1">
+      <table id="standings" width="447">
         <tbody>
           <tr>
             <td width="14%" height="16" valign="top"><b>Team</b></td>
@@ -244,7 +243,7 @@ for (d=0; d<playdates.length; d++) {
         <tbody>
           <tr>
             <td valign="top">
-              <table style="font-size:larger;" border="1">
+              <table id="schedule">
                 <tbody>
                   <script>
                     writeScheduleTable();
@@ -253,7 +252,7 @@ for (d=0; d<playdates.length; d++) {
               </table>
             </td>
             <td valign="top">
-              <table style="font-size:larger;" border="1">
+              <table id="results">
                 <tbody>
                   <script>
                     writeResultsTable();

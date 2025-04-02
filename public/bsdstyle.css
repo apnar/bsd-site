@@ -16,17 +16,17 @@ a:link    { color:#a52a2a; }
 th { font-size:small; text-align:center; font-weight:bold; }
 
 table#standings    { border: 2px solid black; padding:0; text-align:center; width=450; }
-table#standings th { border: 1px solid black; padding:0; text-align:center; font-size:larger; font-weight:bold; }
+table#standings th { border: 1px solid black; padding:0; text-align:center; font-weight:bold; font-size:larger; }
 table#standings td { border: 1px solid black; padding-left:7; padding-right:7; font-size:larger; }
 
 table#schedule     { border: 2px solid black; }
-table#schedule  th { border: 1px solid black; padding:3; text-align:center; }
-table#schedule  td { border: 1px solid black; padding:3; text-align:center; }
+table#schedule  th { border: 1px solid black; padding:3; text-align:center; font-size:larger; }
+table#schedule  td { border: 1px solid black; padding:3; text-align:center; font-size:larger; }
 table#schedule  tr#next { font-weight:bold; }
 
 table#results      { border: 2px solid black; }
-table#results   th { border: 1px solid black; padding:3; text-align:center; }
-table#results   td { border: 1px solid black; padding:3; text-align:center; }
+table#results   th { border: 1px solid black; padding:3; text-align:center; font-size:larger; }
+table#results   td { border: 1px solid black; padding:3; text-align:center; font-size:larger; }
 table#results   td#scores { text-align:left; }
 
 table#seeds        { border-style:double; border-collapse:collapse; text-align:center; }
