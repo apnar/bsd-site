@@ -186,12 +186,12 @@ function writeStandings(level) {
 	//============================================
 	// Standings Table
 	//============================================
-	teamTieBreakerInfo = [];
-	teamlist.sort(compareTwoTeams); // compare function, see below
+	teamTieBreakerInfo = ["","","","","","","","",""]; // [0] not used, [1-8] team numbers
+	teamlist.sort(compareTwoTeams); // compare function, see below; updates teamTieBreakerInfo[] above
 	for (var t=0; t<teamlist.length; t++) {
 		var tieBreakerTag = "";
 		var N = teamlist[t].num; // Shorthand team number for below
-		if (teamTieBreakerInfo[N]) {
+		if (teamTieBreakerInfo[N].length) {
 			var lines = teamTieBreakerInfo[N].includes("<br>") ? 5 : 3;
 			var STYLE = "<style>" + 
 			  " .showTieBreaker"   + N + " { position:relative; font-weight:bold; font-size:65%; color:white; background:rgba(224,32,32,1.00); }" + 
@@ -202,8 +202,8 @@ function writeStandings(level) {
 
 			tieBreakerTag =  "<span class='showTieBreaker" + N + "'><a ref=''> &nbsp; <u>TIED</u> &nbsp; </a></span>";
 			tieBreakerTag += "<span class='hiddenTieBreaker" + N + "'><p>" + teamTieBreakerInfo[N] + "</p></span>";
-			console.log ("Tag: " + tieBreakerTag);
-			console.log ("Style: " + STYLE);
+			// console.log ("Tag: " + tieBreakerTag);
+			// console.log ("Style: " + STYLE);
 		}
 		document.write("<tr>");
 		document.write("<td align='center'>" + teamlist[t].num + "</td>");
@@ -270,17 +270,6 @@ function compareTwoTeams(a, b) {
 	var tieBreakerInfoA = "";
 	var tieBreakerInfoB = "";
 
-	if (teamTieBreakerInfo[a.num]) {
-		tieBreakerInfoA = teamTieBreakerInfo[a.num] + "<br>";
-	} else {
-		tieBreakerInfoA = "";
-	}
-	if (teamTieBreakerInfo[b.num]) {
-		tieBreakerInfoB = teamTieBreakerInfo[b.num] + "<br>";
-	} else {
-		tieBreakerInfoB = "";
-	}
-
 	console.log("TIE: Team " + a.num + " (" + a.name + ") vs Team " + b.num + " (" + b.name + ")");
 
 	for (var d=0; d<dates.length; d++) { // ALL dates that are not playoffs
@@ -306,18 +295,28 @@ function compareTwoTeams(a, b) {
 							aH2HPoints += game.scores[aIndex];
 							bH2HPoints += game.scores[bIndex];
 						} // head-to-head match found
-					} // for g (ALL games in head-to-head match)
+					} // for g (ALL games in match m)
 				} // teams exist for this match & scores were recorded
 			} // for m (ALL matches on this date)
 		} // if NOT playoffs
 	} // for d (ALL dates)
 
+	console.log("     H2HWins (" + aH2HWins + " vs " + bH2HWins + "). " +
+	            "H2HPoints (" + aH2HPoints + " vs " + bH2HPoints + ")" + ". PointDiff (" + aPointDiff + " vs " + bPointDiff + ").");
+
+	// Any head-to-head matches for these two teams?
 	if ((aH2HWins+bH2HWins) > 0) {
-		// At least one head-to-head match found
-		tieBreakerInfoA += "vs " + teamlist[b.num-1].name + ": " + aH2HWins + "-" + bH2HWins + " games, " + aH2HPoints + "-" + bH2HPoints + " pts. [" + aPointDiff + " pt diff,"  + aPointTotal + " total pts]" ;
-		tieBreakerInfoB += "vs " + teamlist[a.num-1].name + ": " + bH2HWins + "-" + aH2HWins + " games, " + bH2HPoints + "-" + aH2HPoints + " pts. [" + bPointDiff + " pt diff,"  + bPointTotal + " total pts]" ;
-		teamTieBreakerInfo[a.num] = tieBreakerInfoA;
-		teamTieBreakerInfo[b.num] = tieBreakerInfoB;
+		// For the 'a' team, ensure we didn't already include the "versus" info for team 'b'
+		if (teamTieBreakerInfo[a.num].indexOf("vs " + teamlist[b.num-1].name + ": ") == -1) {
+			teamTieBreakerInfo[a.num] = "vs " + teamlist[b.num-1].name + ": " + aH2HWins + "-" + bH2HWins + " games, " + aH2HPoints + "-" + bH2HPoints + " pts" +
+			                            ((teamTieBreakerInfo[a.num].length) ? "<br>" : "") + teamTieBreakerInfo[a.num];
+		}
+
+		// For the 'b' team, ensure we didn't already include the "versus" info for team 'a'
+		if (teamTieBreakerInfo[b.num].indexOf("vs " + teamlist[a.num-1].name + ": ") == -1) {
+			teamTieBreakerInfo[b.num] = "vs " + teamlist[a.num-1].name + ": " + bH2HWins + "-" + aH2HWins + " games, " + bH2HPoints + "-" + aH2HPoints + " pts" +
+                                     ((teamTieBreakerInfo[b.num].length) ? "<br>" : "") + teamTieBreakerInfo[b.num];
+		}
 	}
 
 	// Head to head record overall game wins
@@ -330,12 +329,23 @@ function compareTwoTeams(a, b) {
 		return bH2HPoints - aH2HPoints;
 	}
 
+	if (teamTieBreakerInfo[a.num].indexOf("ALL MATCHES") == -1) {
+		teamTieBreakerInfo[a.num] += ((teamTieBreakerInfo[a.num].length) ? "<br>" : "") + 
+		                             "<u>ALL MATCHES</u>: " + aPointDiff + " pt diff, "  + aPointTotal + " total pts" ;
+	}
+
+	if (teamTieBreakerInfo[b.num].indexOf("ALL MATCHES") == -1) {
+		teamTieBreakerInfo[b.num] += ((teamTieBreakerInfo[b.num].length) ? "<br>" : "") + 
+		                             "<u>ALL MATCHES</u>: " + bPointDiff + " pt diff, "  + bPointTotal + " total pts" ;
+	}
+
 	// Point differential comparison
 	if (aPointDiff != bPointDiff) {
 		return bPointDiff - aPointDiff;
 	}
 
 	// Overall points comparison
+	console.log("     Total Points " + aPointTotal + " vs " + bPointTotal);
 	return bPointTotal - aPointTotal;
 } // compareTwoTeams()
 

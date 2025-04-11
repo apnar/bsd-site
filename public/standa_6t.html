@@ -12,12 +12,12 @@
 // Data Setup
 //============================================
 var teamlist = new Array();
-teamlist[1] = {num:1, wins:0, losses:0, name:"Chandrasekaran"      };
-teamlist[2] = {num:2, wins:0, losses:0, name:"Gillick"   };
-teamlist[3] = {num:3, wins:0, losses:0, name:"Walton"      };
-teamlist[4] = {num:4, wins:0, losses:0, name:"Ritthaworn" };
-teamlist[5] = {num:5, wins:0, losses:0, name:"Zuelsdorf"    };
-teamlist[6] = {num:6, wins:0, losses:0, name:"Annamalai"   };
+teamlist[1] = {num:1, wins:0, losses:0, name:"Chandrasekaran" };
+teamlist[2] = {num:2, wins:0, losses:0, name:"Gillick"        };
+teamlist[3] = {num:3, wins:0, losses:0, name:"Walton"         };
+teamlist[4] = {num:4, wins:0, losses:0, name:"Ritthaworn"     };
+teamlist[5] = {num:5, wins:0, losses:0, name:"Zuelsdorf"      };
+teamlist[6] = {num:6, wins:0, losses:0, name:"Annamalai"      };
 
 var playdates = ["04/03","04/10","04/17","04/24","05/01","05/08","05/15","05/22","05/29"]
 
@@ -69,26 +69,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [2,6];
-//	match.games[0].scores = [16,25];
-//	match.games[1].scores = [23,25];
-//	match.games[2].scores = [21,25];
-//	setWins(match);
+	match.games[0].scores = [26,27];
+	match.games[1].scores = [25,21];
+	match.games[2].scores = [21,25];
+	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [3,5];
-//	match.games[0].scores = [13,25];
-//	match.games[1].scores = [19,25];
-//	match.games[2].scores = [25,20];
-//	setWins(match);
+	match.games[0].scores = [25,17];
+	match.games[1].scores = [25,13];
+	match.games[2].scores = [27,26];
+	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [1,4];
-//	match.games[0].scores = [17,25];
-//	match.games[1].scores = [23,25];
-//	match.games[2].scores = [17,25];
-//	setWins(match);
+	match.games[0].scores = [26,24];
+	match.games[1].scores = [12,25];
+	match.games[2].scores = [11,25];
+	setWins(match);
 
 
 // Matches - Week 3
@@ -224,13 +224,13 @@ for (d=0; d<playdates.length; d++) {
     </center>
     <hr> <br>
     <center>
-      <table id="standings" width="447">
+      <table id="standings">
         <tbody>
           <tr>
-            <td width="14%" height="16" valign="top"><b>Team</b></td>
-            <td width="43%" height="16" valign="top"><b>Captain</b></td>
-            <td width="14%" height="16" valign="top"><b>Wins</b></td>
-            <td width="14%" height="16" valign="top"><b>Losses</b></td>
+            <td height="16" valign="top"><b>Team</b></td>
+            <td height="16" valign="top"><b>Captain</b></td>
+            <td height="16" valign="top"><b>Wins</b></td>
+            <td height="16" valign="top"><b>Losses</b></td>
           </tr>
           <script>
             computeRecord();

@@ -69,26 +69,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [4,5];
-//	match.games[0].scores = [25,12];
-//	match.games[1].scores = [20,25];
-//	match.games[2].scores = [25,19];
-//	setWins(match);
+	match.games[0].scores = [18,25];
+	match.games[1].scores = [25,21];
+	match.games[2].scores = [24,26];
+	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [1,2];
-//	match.games[0].scores = [13,25];
-//	match.games[1].scores = [17,25];
-//	match.games[2].scores = [14,25];
-//	setWins(match);
+	match.games[0].scores = [13,25];
+	match.games[1].scores = [10,25];
+	match.games[2].scores = [23,25];
+	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [3,6];
-//	match.games[0].scores = [17,25];
-//	match.games[1].scores = [16,25];
-//	match.games[2].scores = [25,20];
-//	setWins(match);
+	match.games[0].scores = [16,25];
+	match.games[1].scores = [24,26];
+	match.games[2].scores = [16,25];
+	setWins(match);
 
 
 // Matches - Week 3
@@ -224,13 +224,13 @@ for (d=0; d<playdates.length; d++) {
     </center>
     <hr> <br>
     <center>
-      <table id="standings" width="447">
+      <table id="standings">
         <tbody>
           <tr>
-            <td width="14%" height="16" valign="top"><b>Team</b></td>
-            <td width="43%" height="16" valign="top"><b>Captain</b></td>
-            <td width="14%" height="16" valign="top"><b>Wins</b></td>
-            <td width="14%" height="16" valign="top"><b>Losses</b></td>
+            <td height="16" valign="top"><b>Team</b></td>
+            <td height="16" valign="top"><b>Captain</b></td>
+            <td height="16" valign="top"><b>Wins</b></td>
+            <td height="16" valign="top"><b>Losses</b></td>
           </tr>
           <script>
             computeRecord();
