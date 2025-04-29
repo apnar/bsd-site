@@ -237,6 +237,15 @@ function writeStandings(level) {
 //               overall points (points for each game across all
 //               matches/games)
 //
+// EXCEPTION: If there is a circular condition in head-to-head
+//            matches (team A beat team B & team B beat team C &
+//            team C beat team A), the final order among them is
+//            indeterminate -- it is based on the sort algorithm that
+//            invokes this function.  AS WELL, other teams' rankings
+//            may seem skewed because their matchups with the teams
+//            in the circular condition may be decided by other
+//            factors (overall points, for example).
+//
 function compareTwoTeams(a, b) {
 	// Start of season -- no wins/losses, so keep order as-is
 	if (a.wins + a.losses == 0) {
@@ -276,7 +285,8 @@ function compareTwoTeams(a, b) {
 		if (!dates[d].playoffs) {
 			for (var m=0; m<dates[d].matches.length; m++) { // ALL matches on this date
 				var match = dates[d].matches[m];
-				if ((match.teams) ? (match.games[0].scores != null) : false) { // Two element array [team#,team#]
+				if ((match.teams) ? (match.games[0].scores != null) : false) {
+					// Match scores were recorded, proceed with reviewing games in this match
 					aIndex = (match.teams[0] == a.num) ? 0 : (match.teams[1] == a.num) ? 1 : -1;
 					bIndex = (match.teams[0] == b.num) ? 0 : (match.teams[1] == b.num) ? 1 : -1;
 
