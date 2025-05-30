@@ -108,7 +108,7 @@
   <form action="" method="post">
     <h3>Welcome to the BumpSetDrink Online Registration Page!</h3>
 
-    <span class="yowza">REGISTRATION FOR SPRING 2025 IS NOW OPEN!</span>
+    <span class="yowza">REGISTRATION FOR FALL 2025 IS NOW OPEN!</span>
     <!-- WHEN REGISTRATION IS TO BE OPEN, ENSURE "SUBMIT" BUTTON AT BOTTOM IS AVAILABLE -->
 
     <p class="c4">
@@ -134,17 +134,17 @@
     guardian. &nbsp;Players 16-17 are required to have a parent or guardian
     present during their matches.</span><br/></p>
 
-    <p class="c4 c4hey">Spring 2025 Season details:</p>
+    <p class="c4 c4hey">Fall 2025 Season details:</p>
 
     <!-- REMEMBER: -->
     <!-- REMEMBER: When setting up for next season, uncomment the "Send Registration Info" button at bottom -->
     <!-- REMEMBER: -->
     <ul>
-      <li><b>Mon Feb 24</b> &mdash; Registration ends ($90 all players thru this date; $100 afterward)
-      <li><b>Mar 6, Mar 13, Mar 20</b> &mdash; Preseason/tryouts (<i>the first tryouts are focused mostly on <u>NEW</u> players</i>)</li>
-      <li><b>Mar 27</b> &mdash; NO PLAY (division drafts take place during this time)
-      <li><b>Apr 3 thru May 8</b> &mdash; Regular season</li>
-      <li><b>May 15, May 22, May 29</b> &mdash; Playoffs!</li>
+      <li><b>Mon Aug 4</b> &mdash; Registration closes ($90 all players thru this date; $100 afterward)</li>
+      <li><b>Aug 14, Aug 21, Aug 28</b> &mdash; Preseason tryouts (<i>the first tryouts are focused mostly on <u>NEW</u> players</i>)</li>
+      <li><b>Sep 4</b> &mdash; NO PLAY (division drafts take place during this time) </li>
+      <li><b>Sep 11 thru Oct 16</b> &mdash; Regular Season</li>
+      <li><b>Oct 23, Oct 30, Nov 6</b> &mdash; PLAYOFFS!</li>
     </ul>
 
     <p class="c4"><span class="hey">IMPORTANT DISCLAIMER:</span>
@@ -387,24 +387,24 @@
         </tr>
 
         <tr>
-          <td align="center" valign="center">Dates You Will <b><u>MISS</u></b><br><br>
+          <td align="center" valign="center">Dates You <b><u>CANNOT PLAY</u></b><br><br>
           <i>Check the boxes for dates that you <b><u>CANNOT</u></b> play</i></td>
           <td valign="center">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; TRYOUTS:
-            <input type="checkbox" id="miss0306" name="miss0306" value="03/06" onchange="checkMissingNonPlayoffs()"><label for="miss0306">Mar  6</label></input>
-            <input type="checkbox" id="miss0313" name="miss0313" value="03/13" onchange="checkMissingNonPlayoffs()"><label for="miss0313">Mar 13</label></input>
-            <input type="checkbox" id="miss0320" name="miss0320" value="03/20" onchange="checkMissingNonPlayoffs()"><label for="miss0320">Mar 20</label></input>
+            <input type="checkbox" id="miss0814" name="miss0814" value="08/14" onchange="checkMissingNonPlayoffs()"><label for="miss0814">Mar  6</label></input>
+            <input type="checkbox" id="miss0821" name="miss0821" value="08/21" onchange="checkMissingNonPlayoffs()"><label for="miss0821">Mar 13</label></input>
+            <input type="checkbox" id="miss0828" name="miss0828" value="08/28" onchange="checkMissingNonPlayoffs()"><label for="miss0828">Mar 20</label></input>
             <br>REGULAR SEASON:
-            <input type="checkbox" id="miss0403" name="miss0403" value="04/03" onchange="checkMissingNonPlayoffs()"><label for="miss0403">Apr  3</label></input>
-            <input type="checkbox" id="miss0410" name="miss0410" value="04/10" onchange="checkMissingNonPlayoffs()"><label for="miss0410">Apr 10</label></input>
-            <input type="checkbox" id="miss0417" name="miss0417" value="04/17" onchange="checkMissingNonPlayoffs()"><label for="miss0417">Apr 17</label></input>
-            <input type="checkbox" id="miss0424" name="miss0424" value="04/24" onchange="checkMissingNonPlayoffs()"><label for="miss0424">Apr 24</label></input>
-            <input type="checkbox" id="miss0501" name="miss0501" value="05/01" onchange="checkMissingNonPlayoffs()"><label for="miss0501">May  1</label></input>
-            <input type="checkbox" id="miss0508" name="miss0508" value="05/08" onchange="checkMissingNonPlayoffs()"><label for="miss0508">May  8</label></input>
+            <input type="checkbox" id="miss0911" name="miss0911" value="09/11" onchange="checkMissingNonPlayoffs()"><label for="miss0911">Apr  3</label></input>
+            <input type="checkbox" id="miss0918" name="miss0918" value="09/18" onchange="checkMissingNonPlayoffs()"><label for="miss0918">Apr 10</label></input>
+            <input type="checkbox" id="miss0925" name="miss0925" value="09/25" onchange="checkMissingNonPlayoffs()"><label for="miss0925">Apr 17</label></input>
+            <input type="checkbox" id="miss1002" name="miss1002" value="10/02" onchange="checkMissingNonPlayoffs()"><label for="miss1002">Apr 24</label></input>
+            <input type="checkbox" id="miss1009" name="miss1009" value="10/09" onchange="checkMissingNonPlayoffs()"><label for="miss1009">May  1</label></input>
+            <input type="checkbox" id="miss1016" name="miss1016" value="10/16" onchange="checkMissingNonPlayoffs()"><label for="miss1016">May  8</label></input>
             <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; PLAYOFFS:
-            <input type="checkbox" id="miss0515" name="miss0515" value="05/15" onchange="checkMissingPlayoffs()"   ><label for="miss0515">May 15</label></input>
-            <input type="checkbox" id="miss0522" name="miss0522" value="05/22" onchange="checkMissingPlayoffs()"   ><label for="miss0522">May 22</label></input>
-            <input type="checkbox" id="miss0529" name="miss0529" value="05/29" onchange="checkMissingPlayoffs()"   ><label for="miss0529">May 29</label></input>
+            <input type="checkbox" id="miss1023" name="miss1023" value="10/23" onchange="checkMissingPlayoffs()"   ><label for="miss1023">May 15</label></input>
+            <input type="checkbox" id="miss1030" name="miss1030" value="10/30" onchange="checkMissingPlayoffs()"   ><label for="miss1030">May 22</label></input>
+            <input type="checkbox" id="miss1106" name="miss1106" value="11/06" onchange="checkMissingPlayoffs()"   ><label for="miss1106">May 29</label></input>
           </td>
         </tr>
 
@@ -494,7 +494,7 @@
       function is_element_checked(e) {
         count += (document.getElementById(e).checked) ? 1 : 0;
       }
-      ["miss0306", "miss0313", "miss0320", "miss0403", "miss0410", "miss0417", "miss0424", "miss0501", "miss0508"].forEach(is_element_checked);
+      ["miss0814", "miss0821", "miss0828", "miss0911", "miss0918", "miss0925", "miss1002", "miss1009", "miss1016"].forEach(is_element_checked);
       if (count > 3) {
         if (count > lastcount) {
           alert("Are you sure you want to play this season?  You've listed quite a few dates (tryouts & regular season) that you will miss.");
@@ -508,7 +508,7 @@
       function is_element_checked(e) {
         count += (document.getElementById(e).checked) ? 1 : 0;
       }
-      ["miss0515", "miss0522", "miss0529"].forEach(is_element_checked);
+      ["miss1023", "miss1030", "miss1106"].forEach(is_element_checked);
       if (count == 3) {
         alert("Are you really going to miss all playoff matches?  Captains have requested we only accept players who plan to play at least 1 match of the playoffs.");
       }

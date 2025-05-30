@@ -494,7 +494,8 @@ function writePlayoffScheduleTable() {
 				if (dates[d].matches[m].teams != null) {
 					var t1 = getTeamName(dates[d].matches[m].teams[0], "plain");
 					var t2 = getTeamName(dates[d].matches[m].teams[1], "plain");
-					document.write(t1 + " vs " + t2 + "<br/>");
+					var text = t1 + " vs " + t2;
+					document.write(text + "<br/>");
 				}
 			}
 		}
