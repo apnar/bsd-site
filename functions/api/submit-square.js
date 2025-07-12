@@ -11,9 +11,9 @@ async function submitHandler(context) {
   const body = await context.request.formData();
 
 // name to show for item in Square
-  const itemName = "BSD Spring 2025 Fee";
+  const itemName = "BSD Fall 2025 Fee";
 // cost of item in cents
-  const itemCost = 10000;  // $100 Feb 25th 12:01am
+  const itemCost = 9000;  // $90 regular fee
 
   const { firstname, lastname, phone, email, gendermale, pronouns,
     mypronouns, height_ft, height_in, age, birthdate, pairing_info, captain,
