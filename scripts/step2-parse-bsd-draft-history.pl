@@ -12,8 +12,8 @@ open (FILE, 'draft-mapping-fix.csv');
 my %namefix;
 my %data;
 
-my @recentSeasons = ("F24", "S24","F23","U23","S23","F22");
-#my @recentSeasons = ("S24","F23","U23","S23","F22","S22","F21");
+my @recentSeasons = ("S25", "F24", "S24","F23","U23","S23");
+my @rdoSeasons = ("S25","F24","S24","F23","U23","S23","F22","S22","F21","S21","F20","S20","F19","U19","S19");
 my @divisions = ("AA", "A", "ABA", "ABB", "BBB", "BB");
 
 while(my $line = <FILE>) {
@@ -69,9 +69,12 @@ for my $i (0 .. $#divisions)
     foreach (@recentSeasons) {
       my $s = $_;
       my $check = $data{$name}{$s}[0];
-   #   print " checking in $s if $check is $divisions[$i]\n";
+      print " checking in $s if $check is $divisions[$i]\n";
       # check normal division
       if($data{$name}{$_}[0] eq $divisions[$i]) {
+
+
+
         $count += 1;
         $total += $data{$name}{$_}[1];
    #     print "  found level\n";
@@ -103,6 +106,23 @@ for my $i (0 .. $#divisions)
   close (FH); 
   print "$divisions[$i]\n";
 }
+
+  my $filename = "bsd-draft-rdo.csv";
+  open(FH, '>', $filename) or die $!;
+  foreach my $name (keys %data) {
+    foreach (@rdoSeasons) {
+      my $s = $_;
+      my $check = $data{$name}{$s}[0];
+      print "$name checking in $s if $check exists\n";
+      if($data{$name}{$s}[0]) {
+         my ($index) = grep { $divisions[$_] ~~ $data{$name}{$s}[0] } 0 .. $#divisions;
+         $index = $index +1; 
+         print FH "$name,\"\",\"\",\"$index.$data{$name}{$s}[1]\"\n";
+         last;
+      }
+    }
+  }
+  close (FH); 
 
 
 
