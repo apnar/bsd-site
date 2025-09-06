@@ -12,14 +12,14 @@
 // Data Setup
 //============================================
 var teamlist = new Array();
-teamlist[1] = {num:1, wins:0, losses:0, name:"Pachiyappan"   };
-teamlist[2] = {num:2, wins:0, losses:0, name:"Bzhilyanskaya" };
-teamlist[3] = {num:3, wins:0, losses:0, name:"Schiff"        };
-teamlist[4] = {num:4, wins:0, losses:0, name:"da Rocha"      };
-teamlist[5] = {num:5, wins:0, losses:0, name:"Watkins",      nickname:"Happy Hour" };
-teamlist[6] = {num:6, wins:0, losses:0, name:"Glassman"      };
+teamlist[1] = {num:1, wins:0, losses:0, name:"TBD"   };
+teamlist[2] = {num:2, wins:0, losses:0, name:"TBD" };
+teamlist[3] = {num:3, wins:0, losses:0, name:"TBD"        };
+teamlist[4] = {num:4, wins:0, losses:0, name:"TBD"      };
+teamlist[5] = {num:5, wins:0, losses:0, name:"TBD" };
+teamlist[6] = {num:6, wins:0, losses:0, name:"TBD"      };
 
-var playdates = ["04/03","04/10","04/17","04/24","05/01","05/08","05/15","05/22","05/29"]
+var playdates = ["09/11","09/18","09/25","10/02","10/09","10/16","10/23","10/30","11/06"]
 
 dates = new Array();
 for (d=0; d<playdates.length; d++) {
@@ -42,26 +42,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [1,5];
-	match.games[0].scores = [25,10];
-	match.games[1].scores = [25,20];
-	match.games[2].scores = [25,10];
-	setWins(match);
+//	match.games[0].scores = [25,10];
+//	match.games[1].scores = [25,20];
+//	match.games[2].scores = [25,10];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [4,6];
-	match.games[0].scores = [18,25];
-	match.games[1].scores = [25,14];
-	match.games[2].scores = [21,25];
-	setWins(match);
+//	match.games[0].scores = [18,25];
+//	match.games[1].scores = [25,14];
+//	match.games[2].scores = [21,25];
+//	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [2,3];
-	match.games[0].scores = [17,25];
-	match.games[1].scores = [17,25];
-	match.games[2].scores = [25,18];
-	setWins(match);
+//	match.games[0].scores = [17,25];
+//	match.games[1].scores = [17,25];
+//	match.games[2].scores = [25,18];
+//	setWins(match);
 
 
 // Matches - Week 2
@@ -69,26 +69,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [3,4];
-	match.games[0].scores = [15,25];
-	match.games[1].scores = [26,24];
-	match.games[2].scores = [25,18];
-	setWins(match);
+//	match.games[0].scores = [15,25];
+//	match.games[1].scores = [26,24];
+//	match.games[2].scores = [25,18];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [1,6];
-	match.games[0].scores = [26,24];
-	match.games[1].scores = [25,14];
-	match.games[2].scores = [25,12];
-	setWins(match);
+//	match.games[0].scores = [26,24];
+//	match.games[1].scores = [25,14];
+//	match.games[2].scores = [25,12];
+//	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [2,5];
-	match.games[0].scores = [23,25];
-	match.games[1].scores = [21,25];
-	match.games[2].scores = [25,23];
-	setWins(match);
+//	match.games[0].scores = [23,25];
+//	match.games[1].scores = [21,25];
+//	match.games[2].scores = [25,23];
+//	setWins(match);
 
 
 // Matches - Week 3
@@ -96,26 +96,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [2,6];
-	match.games[0].scores = [27,25];
-	match.games[1].scores = [25,16];
-	match.games[2].scores = [25,15];
-	setWins(match);
+//	match.games[0].scores = [27,25];
+//	match.games[1].scores = [25,16];
+//	match.games[2].scores = [25,15];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [3,5];
-	match.games[0].scores = [15,25];
-	match.games[1].scores = [25,27];
-	match.games[2].scores = [25,13];
-	setWins(match);
+//	match.games[0].scores = [15,25];
+//	match.games[1].scores = [25,27];
+//	match.games[2].scores = [25,13];
+//	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [1,4];
-	match.games[0].scores = [25,11];
-	match.games[1].scores = [25,07];
-	match.games[2].scores = [25,21];
-	setWins(match);
+//	match.games[0].scores = [25,11];
+//	match.games[1].scores = [25,07];
+//	match.games[2].scores = [25,21];
+//	setWins(match);
 
 
 // Matches - Week 4
@@ -123,26 +123,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [4,5];
-	match.games[0].scores = [16,25];
-	match.games[1].scores = [12,25];
-	match.games[2].scores = [25,21];
-	setWins(match);
+//	match.games[0].scores = [16,25];
+//	match.games[1].scores = [12,25];
+//	match.games[2].scores = [25,21];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [1,2];
-	match.games[0].scores = [25,21];
-	match.games[1].scores = [25,13];
-	match.games[2].scores = [25,17];
-	setWins(match);
+//	match.games[0].scores = [25,21];
+//	match.games[1].scores = [25,13];
+//	match.games[2].scores = [25,17];
+//	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [3,6];
-	match.games[0].scores = [20,25];
-	match.games[1].scores = [25,18];
-	match.games[2].scores = [25,19];
-	setWins(match);
+//	match.games[0].scores = [20,25];
+//	match.games[1].scores = [25,18];
+//	match.games[2].scores = [25,19];
+//	setWins(match);
 
 
 // Matches - Week 5
@@ -150,26 +150,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [1,3];
-	match.games[0].scores = [25,22];
-	match.games[1].scores = [25,22];
-	match.games[2].scores = [25,19];
-	setWins(match);
+//	match.games[0].scores = [25,22];
+//	match.games[1].scores = [25,22];
+//	match.games[2].scores = [25,19];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [2,4];
-	match.games[0].scores = [25,19];
-	match.games[1].scores = [19,25];
-	match.games[2].scores = [23,25];
-	setWins(match);
+//	match.games[0].scores = [25,19];
+//	match.games[1].scores = [19,25];
+//	match.games[2].scores = [23,25];
+//	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [5,6];
-	match.games[0].scores = [25,23];
-	match.games[1].scores = [19,25];
-	match.games[2].scores = [25,10];
-	setWins(match);
+//	match.games[0].scores = [25,23];
+//	match.games[1].scores = [19,25];
+//	match.games[2].scores = [25,10];
+//	setWins(match);
 
 
 // Matches - Week 6
@@ -177,26 +177,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [2,6];
-	match.games[0].scores = [25,20];
-	match.games[1].scores = [16,25];
-	match.games[2].scores = [25,17];
-	setWins(match);
+//	match.games[0].scores = [25,20];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [25,17];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [3,5];
-	match.games[0].scores = [26,24];
-	match.games[1].scores = [27,25];
-	match.games[2].scores = [15,25];
-	setWins(match);
+//	match.games[0].scores = [26,24];
+//	match.games[1].scores = [27,25];
+//	match.games[2].scores = [15,25];
+//	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [1,4];
-	match.games[0].scores = [25,20];
-	match.games[1].scores = [25,23];
-	match.games[2].scores = [25,22];
-	setWins(match);
+//	match.games[0].scores = [25,20];
+//	match.games[1].scores = [25,23];
+//	match.games[2].scores = [25,22];
+//	setWins(match);
 
 
 // Matches - Week 7
@@ -239,10 +239,6 @@ for (d=0; d<playdates.length; d++) {
         </tbody>
       </table>
       <br>
-	    2nd-place tie-breaker (games head-to-head): Tied 3-3.<br>
-	    2nd-place tie-breaker (points head-to-head): Happy Hour over Schiff, 139-133.<br>
-	    <br>
-	    5th-place tie-breaker (games head-to-head): Glassman over da Rocha, 2 games to 1.<br>
 	    
       <table cellspacing="2" cellpadding="2" border="0">
         <tbody>
