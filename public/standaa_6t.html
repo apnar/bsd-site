@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
-    <title>Spring 2025 AA Division Standings</title>
+    <title>Fall 2025 AA Division Standings</title>
     <link rel="stylesheet" type="text/css" href="bsdstyle.css">
     <script type="text/javascript" src="standings.js"></script>
     <script>
@@ -19,7 +19,7 @@ teamlist[4] = {num:4, wins:0, losses:0, name:"Stafford" };
 teamlist[5] = {num:5, wins:0, losses:0, name:"Soo"      };
 teamlist[6] = {num:6, wins:0, losses:0, name:"McNeer"   };
 
-var playdates = ["09/11","09/18","09/25","10/02","10/09","10/16","10/23","10/30","11/06"]	
+var playdates = ["09/11","09/18","09/25","10/02","10/09","10/16","10/23","10/30","11/06"];
 
 dates = new Array();
 for (d=0; d<playdates.length; d++) {
@@ -42,26 +42,26 @@ for (d=0; d<playdates.length; d++) {
 	match = date.matches[0];
 	match.time = "7:00";
 	match.teams = [2,6];
-//	match.games[0].scores = [25,12];
-//	match.games[1].scores = [16,25];
-//	match.games[2].scores = [27,25];
-//	setWins(match);
+	match.games[0].scores = [18,25];
+	match.games[1].scores = [25,14];
+	match.games[2].scores = [25,12];
+	setWins(match);
 
 	match = date.matches[1];
 	match.time = "8:10";
 	match.teams = [3,5];
-//	match.games[0].scores = [25,23];
-//	match.games[1].scores = [25,21];
-//	match.games[2].scores = [25,22];
-//	setWins(match);
+	match.games[0].scores = [25,20];
+	match.games[1].scores = [23,25];
+	match.games[2].scores = [25,18];
+	setWins(match);
 
 	match = date.matches[2];
 	match.time = "9:20";
 	match.teams = [1,4];
-//	match.games[0].scores = [22,25];
-//	match.games[1].scores = [25,23];
-//	match.games[2].scores = [23,25];
-//	setWins(match);
+	match.games[0].scores = [25,23];
+	match.games[1].scores = [21,25];
+	match.games[2].scores = [13,25];
+	setWins(match);
 
 
 // Matches - Week 2
