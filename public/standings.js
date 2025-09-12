@@ -205,9 +205,11 @@ function writeStandings(level) {
 			// console.log ("Tag: " + tieBreakerTag);
 			// console.log ("Style: " + STYLE);
 		}
+		var nicknameTag = teamlist[t].nickname ? " <span class='nickname'>" + teamlist[t].nickname + " </span>" : "";
+
 		document.write("<tr>");
 		document.write("<td align='center'>" + teamlist[t].num + "</td>");
-		document.write("<td><div><a href='roster" + level + ".html'>" + teamlist[t].name + "</a> <span class='nickname'>" + (teamlist[t].nickname ? teamlist[t].nickname : "") + "</span>" + tieBreakerTag + "</div></td>");
+		document.write("<td><div><a href='roster" + level + ".html'>" + teamlist[t].name + "</a>" + nicknameTag + tieBreakerTag + "</div></td>");
 		document.write("<td align='center'>" + teamlist[t].wins + "</td>");
 		document.write("<td align='center'>" + teamlist[t].losses + "</td>");
 		document.write("</tr>");
