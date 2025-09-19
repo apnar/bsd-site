@@ -195,12 +195,12 @@ function writeStandings(level) {
 			var lines = teamTieBreakerInfo[N].includes("<br>") ? 5 : 3;
 			var STYLE = "<style>" + 
 			  " .showTieBreaker"   + N + " { position:relative; font-weight:bold; font-size:65%; color:white; background:rgba(224,32,32,1.00); }" + 
-			  " .hiddenTieBreaker" + N + " { position:absolute; width:40em; height:" + lines + "em; font-size:65%; color:white; background:rgba(32,108,160,1.00); font-style:italic; visibility:visible; display:none; }" +
+			  " .hiddenTieBreaker" + N + " { position:absolute; width:30em; height:" + lines + "em; font-size:65%; color:white; background:rgba(32,108,160,1.00); font-style:italic; visibility:visible; display:none; }" +
 			  " .showTieBreaker"   + N + ":hover + .hiddenTieBreaker" + N + " { visibility:visible; display:block; z-index:10; }" +
 			  "</style>";
 			document.write(STYLE);
 
-			tieBreakerTag =  "<span class='showTieBreaker" + N + "'><a ref=''> &nbsp; <u>TIED</u> &nbsp; </a></span>";
+			tieBreakerTag =  "&nbsp;<span class='showTieBreaker" + N + "'><a ref=''> <u>TIED</u>&nbsp;</a></span>";
 			tieBreakerTag += "<span class='hiddenTieBreaker" + N + "'><p>" + teamTieBreakerInfo[N] + "</p></span>";
 			// console.log ("Tag: " + tieBreakerTag);
 			// console.log ("Style: " + STYLE);
