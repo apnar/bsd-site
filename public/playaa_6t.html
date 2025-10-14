@@ -11,15 +11,15 @@
 	// Data Setup
 	//============================================
 	var teamlist = new Array();
-	teamlist[0] = {num:1, seed:6, wins:0, losses:0, name:"Aley"     };
-	teamlist[1] = {num:2, seed:1, wins:0, losses:0, name:"Soo"      };
-	teamlist[2] = {num:3, seed:4, wins:0, losses:0, name:"Rundlett" };
-	teamlist[3] = {num:4, seed:5, wins:0, losses:0, name:"Titus"    };
-	teamlist[4] = {num:5, seed:3, wins:0, losses:0, name:"Lukens"   };
-	teamlist[5] = {num:6, seed:2, wins:0, losses:0, name:"Skye"     };
+	teamlist[0] = {num:1, seed:6, wins:0, losses:0, name:"Pham"     };
+	teamlist[1] = {num:2, seed:1, wins:0, losses:0, name:"Lukens"      };
+	teamlist[2] = {num:3, seed:4, wins:0, losses:0, name:"Collier" };
+	teamlist[3] = {num:4, seed:5, wins:0, losses:0, name:"Stafford"    };
+	teamlist[4] = {num:5, seed:3, wins:0, losses:0, name:"Soo"   };
+	teamlist[5] = {num:6, seed:2, wins:0, losses:0, name:"McNeer"     };
 
-	var seeds = [4,2,5,6,3,1]; // Team numbers in seed order S1-S6
-	var playdates = ["05/15","05/22","05/029"]
+	var seeds = [6,4,3,2,1,5]; // Team numbers in seed order S1-S6
+	var playdates = ["10/23","10/30","11/06"]
 
 	for (d=0; d<playdates.length; d++) {
 		dates[d] = new Object();
@@ -44,39 +44,40 @@
 	match.num = 1;
 	match.teams = ["S4","S5"];
 	match.work = "S1";
-	match.games[0].scores = [26,24];
-	match.games[1].scores = [25,21];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "7:50";
 	match.num = 2;
 	match.teams = ["S1","W1"];
 	match.work = "L1";
-	match.games[0].scores = [25,17];
-	match.games[1].scores = [16,25];
-	match.games[2].scores = [19,25];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 	match = date.matches[2];
 	match.time = "8:40";
 	match.num = 3;
 	match.teams = ["S3","S6"];
 	match.work = "S2";
-	match.games[0].scores = [25,19];
-	match.games[1].scores = [22,25];
-	match.games[2].scores = [25,11];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 	match = date.matches[3];
 	match.time = "9:30";
 	match.num = 4;
 	match.teams = ["S2","W3"];
 	match.work = "L3";
-	match.games[0].scores = [25,20];
-	match.games[1].scores = [23,25];
-	match.games[2].scores = [16,25];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 
 	// Matches - Playoff Week 2 ============================
@@ -87,9 +88,10 @@
 	match.num = 5;
 	match.teams = ["L2","L3"];
 	match.work = "W2";
-	match.games[0].scores = [25,12];
-	match.games[1].scores = [25,15];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "7:00";
@@ -97,19 +99,20 @@
 	match.teams = ["L1","L4"];
 	match.work = "W4";
 	match.court = 2;
-	match.games[0].scores = [15,25];
-	match.games[1].scores = [25,18];
-	match.games[2].scores = [21,25];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 	match = date.matches[2];
 	match.time = "7:50";
 	match.num = 7;
 	match.teams = ["W2","W4"];
 	match.work = "L5";
-	match.games[0].scores = [25,20];
-	match.games[1].scores = [25,21];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 	match = date.matches[3];
 	match.time = "7:50";
@@ -117,9 +120,10 @@
 	match.teams = ["W5","W6"];
 	match.work = "L6";
 	match.court = 2;
-	match.games[0].scores = [20,25];
-	match.games[1].scores = [18,25];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 
 	// Matches - Playoff Week 3 ============================
@@ -129,20 +133,20 @@
 	match.num = 9;
 	match.teams = ["L7","W8"];
 	match.work = "W7";
-	match.games[0].scores = [25,21];
-	match.games[1].scores = [18,25];
-	match.games[2].scores = [22,25];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 	match = date.matches[1];
 	match.time = "7:50";
 	match.num = 10;
 	match.teams = ["W7","W9"];
 	match.work = "L9";
-	match.games[0].scores = [25,21];
-	match.games[1].scores = [24,26];
-	match.games[2].scores = [16,25];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
 	// Comment out this section COMPLETELY if ONLY 2 matches were played for the finals night
 	match = date.matches[2];
@@ -150,9 +154,10 @@
 	match.num = 11;
 	match.teams = ["W10","L10"];
 	match.work = "L9";
-	match.games[0].scores = [25,23];
-	match.games[1].scores = [25,21];
-	setWins(match);
+//	match.games[0].scores = [25,17];
+//	match.games[1].scores = [16,25];
+//	match.games[2].scores = [19,25];
+//	setWins(match);
 
   </script>
   </head>
