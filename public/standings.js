@@ -5,11 +5,13 @@
 
 "use strict";
 
-// Setup variables used throughout
+// Setup variables used throughout -- THESE WILL BE INITIALIZED IN EACH DIVISION'S PLAYOFFS HTML PAGE
 var teamlist = []; // Array of Records, one per team in the division.
+var dates    = []; // new Array();
+
+// Setup variables used throughout
 var winner   = []; // INDEX: Playoff Match Number. Holds winning team number for each playoff match
 var loser    = []; // INDEX: Playoff Match Number. Holds losing team number for each playoff match
-var dates    = []; // new Array();
 
 //
 // FUNCTION: getTeamNum <team>
@@ -184,7 +186,7 @@ var teamTieBreakerInfo; // GLOBAL ARRAY.  INDEX: 1-n
 
 function writeStandings(level) {
 	//============================================
-	// Standings Table
+	// Standings Table (REGULAR SEASON)
 	//============================================
 	teamTieBreakerInfo = ["","","","","","","","",""]; // [0] not used, [1-8] team numbers
 	teamlist.sort(compareTwoTeams); // compare function, see below; updates teamTieBreakerInfo[] above
@@ -643,9 +645,11 @@ function writeSeedsTable() {
 	document.write("<th>Team</th>");
 	document.write("</tr>");
 	for (var s=0; s<seeds.length; s++) {
+		var nicknameTag = teamlist[seeds[s]-1].nickname ? " <span class='nickname'>" + teamlist[seeds[s]-1].nickname + " </span>" : "";
+
 		document.write("<tr>");
 		document.write("<td align='center'>" + (s+1) + "<br></th>");
-		document.write("<td align='center'>" + teamlist[seeds[s]-1].name + "<br></th>");
+		document.write("<td align='center'>" + teamlist[seeds[s]-1].name + nicknameTag + "<br></th>");
 		document.write("</tr>");
 	}
 } // writeSeedsTable()
